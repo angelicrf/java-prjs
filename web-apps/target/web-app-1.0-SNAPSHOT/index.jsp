@@ -9,7 +9,7 @@
 <body class="btn-info">
 <div class="container btn-primary mt-4 text-center pt-4 calcMain">
     <h2>Calculator app</h2>
-    <form action="calculate" method="get">
+    <form action="calculate" method="post">
     <label class="mb-2">
         <input type="text" name="numOne">
     </label>
