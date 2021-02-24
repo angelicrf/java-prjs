@@ -14,9 +14,13 @@
           <element id="module-output" name="web-app" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.squareup.okhttp:okhttp:2.7.5" />
+          <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.6.0" />
+          <element id="library" level="project" name="Maven: org.json:json:2.7.5" />
           <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver:3.12.7" />
           <element id="library" level="project" name="Maven: org.mongodb:bson:3.12.7" />
           <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver-core:3.12.7" />
+          <element id="library" level="project" name="Maven: org.json:org.json:chargebee-1.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">
