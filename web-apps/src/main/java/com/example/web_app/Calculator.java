@@ -24,21 +24,66 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @WebServlet(name = "calculator", value = "/calculate")
 
 public class Calculator extends HttpServlet {
 
+    OkHttpClient client = new OkHttpClient();
+    Object tournamentName = new Object();
+    Object toursInfo = new Object();
+    List<String> nameArray = new ArrayList<String>();
+    List<String> firstnameArray = new ArrayList<String>();
+    List<String> countryArray = new ArrayList<String>();
+    List<String> tourArray = new ArrayList<String>();
+    int calcResult = 0;
+
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
        // response.setContentType("text/html");
-
-        String getNumOne = request.getParameter("numOne");
-        String getNUmTwo = request.getParameter("numTwo");
-
-        int calcResult = Integer.parseInt(getNumOne) + Integer.parseInt(getNUmTwo);
-
-
         PrintWriter out = response.getWriter();
+        String getNumOne = this.strReqParam(request,"numOne");
+        String getNumTwo = this.strReqParam(request,"numTwo");
+        // FUNCS
+        CompletableFuture.runAsync(() -> {
+            calcResult = calcResultInts(getNumOne, getNumTwo);
+        request.setAttribute("numCalc", Integer.toString(calcResult));
+        });
+        CompletableFuture.runAsync(() -> {
+            cltMongoDb(request);
+        });
+        CompletableFuture.runAsync(() -> {
+            try {
+                getTournamentInfo(request);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        CompletableFuture.runAsync(() -> {
+            try {
+                getGolfTours(request);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        try{
+            Thread.sleep(5000);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/calculate.jsp");
+            dispatcher.forward(request,response);
+        } catch (ServletException | IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        //out.println("Num One is " +  getNumOne + " Num two is " + getNUmTwo + " result is " + calcResult);
+    }
+    private String strReqParam(HttpServletRequest request, String param){
+        return request.getParameter(param);
+    }
+    private int calcResultInts(String a, String b){
+        return Integer.parseInt(a) + Integer.parseInt(b);
+    }
+    private void cltMongoDb(HttpServletRequest request){
         MongoClient mongoClient = MongoClients.create("mongodb+srv://new-admin-calc:123456calc@clustercalc.xuacu.mongodb.net/calculate?retryWrites=true&w=majority");
         MongoDatabase database =  mongoClient.getDatabase("calculate");
         MongoCollection<Document> collection = database.getCollection("inventory");
@@ -46,45 +91,69 @@ public class Calculator extends HttpServlet {
                 .append("type", "SimpleData")
                 .append("count", 32)
                 .append("versions", Arrays.asList("One", "Two", "Three"))
-                .append("info", new Document("DataOne", 769).append("CalcResult", calcResult));
+                .append("info", new Document("DataOne", 769).append("CalcResult", this.calcResult));
         Iterator<Document> iter = collection.find(doc).iterator();
+        //if else
         org.bson.Document nextDocument = iter.next();
-        Object myData = nextDocument.get("name");
+        request.setAttribute("clientName", nextDocument.get("name").toString());
         //collection.insertOne(doc);
-        OkHttpClient client = new OkHttpClient();
-
-        Request request2 = new Request.Builder()
-                .url("https://golf-leaderboard-data.p.rapidapi.com/entry-list/219")
-                .method("GET", null)
-                .addHeader("Content-Type", "application/json")
-                .addHeader("x-rapidapi-key", "5ff79c8426msh12670cfaa225a29p18acffjsn568144cb720f")
-                .addHeader("x-rapidapi-host", "golf-leaderboard-data.p.rapidapi.com")
-                .build();
-        Response response2 = client.newCall(request2).execute();
-        String json = response2.body().string();
-        Object tournamentName = new Object();
-        JSONArray playerName = new JSONArray();
-        List<String> nameArray = new ArrayList<String>();
-
-        try {
-            JSONObject jst = new JSONObject(json);
-            tournamentName = jst.getJSONObject("results").getJSONObject("tournament").get("name");
-            playerName = jst.getJSONObject("results").getJSONArray("entry_list");
-            for (int i = 0 ; i < playerName.length(); i++){
-                JSONObject obj = playerName.getJSONObject(i);
-                nameArray.add(obj.getString("last_name"));
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        request.setAttribute("numCalc", Integer.toString(calcResult));
-        request.setAttribute("clientName", myData.toString());
-        request.setAttribute("tournamentName", tournamentName.toString());
-        request.setAttribute("playerNames", nameArray);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/calculate.jsp");
-        dispatcher.forward(request,response);
-        //out.println("Num One is " +  getNumOne + " Num two is " + getNUmTwo + " result is " + calcResult);
     }
+ private void getTournamentInfo(HttpServletRequest request) throws IOException {
+     Request request2 = new Request.Builder()
+             .url("https://golf-leaderboard-data.p.rapidapi.com/entry-list/219")
+             .method("GET", null)
+             .addHeader("Content-Type", "application/json")
+             .addHeader("x-rapidapi-key", "5ff79c8426msh12670cfaa225a29p18acffjsn568144cb720f")
+             .addHeader("x-rapidapi-host", "golf-leaderboard-data.p.rapidapi.com")
+             .build();
+     Response response2 = this.client.newCall(request2).execute();
 
+     String json = response2.body().string();
+     JSONArray playerName = new JSONArray();
+
+     try {
+         JSONObject jst = new JSONObject(json);
+         this.tournamentName = jst.getJSONObject("results").getJSONObject("tournament").get("name");
+         request.setAttribute("tournamentName", this.tournamentName.toString());
+         playerName = jst.getJSONObject("results").getJSONArray("entry_list");
+         for (int i = 0 ; i < playerName.length(); i++){
+             JSONObject obj = playerName.getJSONObject(i);
+             this.nameArray.add(obj.getString("last_name"));
+             this.firstnameArray.add(obj.getString("first_name"));
+             this.countryArray.add(obj.getString("country"));
+         }
+         request.setAttribute("playerNames", this.nameArray);
+         request.setAttribute("playersFirstNames", this.firstnameArray);
+         request.setAttribute("country", this.countryArray);
+     } catch (JSONException e) {
+         e.printStackTrace();
+     }
+ }
+ private void getGolfTours(HttpServletRequest request) throws IOException {
+     Request request2 = new Request.Builder()
+             .url("https://golf-leaderboard-data.p.rapidapi.com/tours")
+             .method("GET", null)
+             .addHeader("Content-Type", "application/json")
+             .addHeader("x-rapidapi-key", "5ff79c8426msh12670cfaa225a29p18acffjsn568144cb720f")
+             .addHeader("x-rapidapi-host", "golf-leaderboard-data.p.rapidapi.com")
+             .build();
+     Response response2 = this.client.newCall(request2).execute();
+
+     String json = response2.body().string();
+     JSONArray allTours = new JSONArray();
+
+     try {
+         JSONObject jst = new JSONObject(json);
+         this.toursInfo = jst.getJSONObject("meta").getString("description");
+         request.setAttribute("tourDescript", this.toursInfo.toString());
+         allTours = jst.getJSONArray("results");
+         for (int i = 0 ; i < allTours.length(); i++){
+             JSONObject obj = allTours.getJSONObject(i);
+             this.tourArray.add(obj.getString("tour_name"));
+         }
+         request.setAttribute("golfTours", this.tourArray);
+     } catch (JSONException e) {
+         e.printStackTrace();
+     }
+ }
 }
