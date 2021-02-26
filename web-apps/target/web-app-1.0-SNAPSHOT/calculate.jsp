@@ -38,13 +38,9 @@
      <%ArrayList<String> listPlayers = (ArrayList<String>) request.getAttribute("playerNames");%>
      <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) request.getAttribute("playersFirstNames");%>
      <%ArrayList<String> listCountry = (ArrayList<String>) request.getAttribute("country");%>
-     <%ArrayList<String> listTours = (ArrayList<String>) request.getAttribute("golfTours");%>
-
-        <table class="mt-4 table text-center border border-dark table-responsive table-hover table-striped tbStyle">
+        <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle">
             <tr><th>Players First Name</th><th>Players Last Name</th><th>Country</th></tr>
-             <%--<%for (String listTour : listTours) {
-                     out.print("<tr><td>" + listTour + "</td></tr>"); }%>--%>
-           <% for (int i=0; i< listPlayers.size();i++){ %>
+            <% for (int i=0; i< listPlayers.size();i++){ %>
             <tr>
                 <td> <%=listPlayers.get(i) %>  </td>
                 <td> <%=listFirstNamePlayers.get(i) %>  </td>

@@ -22,6 +22,12 @@
     </form>
 
 </div>
+<div class="container btn-primary mt-4 text-center pt-4 calcMain">
+    <h2>ToursInfo</h2>
+    <form action="tours" method="post">
+        <input type="submit" class="text-center mb-3 btn btn-dark border-dark newBtn" value="ToursInfo">
+    </form>
+</div>
 <br/>
 </body>
 </html>

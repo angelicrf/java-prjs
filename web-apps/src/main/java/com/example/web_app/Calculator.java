@@ -32,11 +32,10 @@ public class Calculator extends HttpServlet {
 
     OkHttpClient client = new OkHttpClient();
     Object tournamentName = new Object();
-    Object toursInfo = new Object();
     List<String> nameArray = new ArrayList<String>();
     List<String> firstnameArray = new ArrayList<String>();
     List<String> countryArray = new ArrayList<String>();
-    List<String> tourArray = new ArrayList<String>();
+
     int calcResult = 0;
 
 
@@ -60,13 +59,7 @@ public class Calculator extends HttpServlet {
                 e.printStackTrace();
             }
         });
-        CompletableFuture.runAsync(() -> {
-            try {
-                getGolfTours(request);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+
 
         try{
             Thread.sleep(5000);
@@ -77,6 +70,7 @@ public class Calculator extends HttpServlet {
         }
         //out.println("Num One is " +  getNumOne + " Num two is " + getNUmTwo + " result is " + calcResult);
     }
+
     private String strReqParam(HttpServletRequest request, String param){
         return request.getParameter(param);
     }
@@ -129,31 +123,5 @@ public class Calculator extends HttpServlet {
          e.printStackTrace();
      }
  }
- private void getGolfTours(HttpServletRequest request) throws IOException {
-     Request request2 = new Request.Builder()
-             .url("https://golf-leaderboard-data.p.rapidapi.com/tours")
-             .method("GET", null)
-             .addHeader("Content-Type", "application/json")
-             .addHeader("x-rapidapi-key", "5ff79c8426msh12670cfaa225a29p18acffjsn568144cb720f")
-             .addHeader("x-rapidapi-host", "golf-leaderboard-data.p.rapidapi.com")
-             .build();
-     Response response2 = this.client.newCall(request2).execute();
 
-     String json = response2.body().string();
-     JSONArray allTours = new JSONArray();
-
-     try {
-         JSONObject jst = new JSONObject(json);
-         this.toursInfo = jst.getJSONObject("meta").getString("description");
-         request.setAttribute("tourDescript", this.toursInfo.toString());
-         allTours = jst.getJSONArray("results");
-         for (int i = 0 ; i < allTours.length(); i++){
-             JSONObject obj = allTours.getJSONObject(i);
-             this.tourArray.add(obj.getString("tour_name"));
-         }
-         request.setAttribute("golfTours", this.tourArray);
-     } catch (JSONException e) {
-         e.printStackTrace();
-     }
- }
 }
