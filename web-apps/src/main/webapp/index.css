@@ -1,8 +1,14 @@
-.newBtn, .container{
+.newBtn, .container {
     border-radius: 15px;
+}
+.bdStyle{
+    background-image: url(./images/golfMain.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 .calcMain{
     width: 400px;
+    background-color: #c6cece;
 }
 .tbStyle{
     width: 500px;

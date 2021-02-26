@@ -27,13 +27,13 @@
 <h2 class="btn-danger text-center ">The result is: <%= request.getAttribute("numCalc")%></h2>
     <div class="border border-dark btn-outline-secondary mt-4 text-center">
         <%  int[] numArray = {65,73,79,54};%>
-        <% for (int j : numArray) {
-            out.print("<p>" + j + "</p>");
-        }%>
+        <% for (int j : numArray) { %>
+        <p><%=j%>
+        </p>
+        <%}%>
     </div>
     <h2 class="mt-4 btn-danger text-center">Client Name is : <%= request.getAttribute("clientName")%></h2>
     <h2 class="mt-4 btn-danger text-center"><%= request.getAttribute("tournamentName")%></h2>
-    <h2 class="mt-4 btn-danger text-center"><%= request.getAttribute("tourDescript")%></h2>
     <div class="text-center mt-4">
      <%ArrayList<String> listPlayers = (ArrayList<String>) request.getAttribute("playerNames");%>
      <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) request.getAttribute("playersFirstNames");%>

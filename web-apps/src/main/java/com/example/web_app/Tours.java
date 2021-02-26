@@ -35,9 +35,25 @@ public class Tours extends HttpServlet {
                 e.printStackTrace();
             }
         });
-        CompletableFuture.runAsync(() -> {
+    /*    CompletableFuture.runAsync(() -> {
             try {
                 getSportPhotos(request);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });*/
+        try{
+            Thread.sleep(2000);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/tours.jsp");
+            dispatcher.forward(request,response);
+        } catch (ServletException | IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void doGet(HttpServletRequest request, HttpServletResponse response){
+        CompletableFuture.runAsync(() -> {
+            try {
+                getGolfTours(request);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -66,7 +82,7 @@ public class Tours extends HttpServlet {
         try {
             JSONObject jst = new JSONObject(json);
             this.toursInfo = jst.getJSONObject("meta").getString("description");
-            request.setAttribute("tourDescript", this.toursInfo.toString());
+                    request.setAttribute("tourDescript", this.toursInfo.toString());
             allTours = jst.getJSONArray("results");
             for (int i = 0 ; i < allTours.length(); i++){
                 JSONObject obj = allTours.getJSONObject(i);
@@ -94,14 +110,13 @@ public class Tours extends HttpServlet {
 
         try {
             JSONObject jst = new JSONObject(json);
-            this.toursInfo = jst.getJSONArray("categories").getJSONObject(0).getJSONArray("tiles").getJSONObject(0).getJSONObject("image").getString("contentUrl");
+            //this.toursPhInfo = jst.getJSONArray("categories").getJSONObject(0).getJSONArray("tiles").getJSONObject(0).getJSONObject("image").getString("contentUrl");
                     //.getJSONObject("meta").getString("description");
             request.setAttribute("trPhDescript", this.toursInfo.toString());
             allTrsPhotos = jst.getJSONArray("categories");
             for (int i = 0 ; i < allTrsPhotos.length(); i++){
                 JSONObject obj = allTrsPhotos.getJSONObject(i);
                 this.tourPhotosArray.add(obj.getJSONArray("tiles").getJSONObject(0).getJSONObject("image").getString("contentUrl"));
-                        //.getString("tour_name"));
             }
             request.setAttribute("golfTrPhotos", this.tourPhotosArray);
         } catch (JSONException e) {

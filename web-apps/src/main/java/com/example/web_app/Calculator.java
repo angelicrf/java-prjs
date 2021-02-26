@@ -70,6 +70,15 @@ public class Calculator extends HttpServlet {
         }
         //out.println("Num One is " +  getNumOne + " Num two is " + getNUmTwo + " result is " + calcResult);
     }
+    public void doGet(HttpServletRequest request, HttpServletResponse response){
+        try{
+            Thread.sleep(2000);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/calculate.jsp");
+            dispatcher.forward(request,response);
+        } catch (ServletException | IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     private String strReqParam(HttpServletRequest request, String param){
         return request.getParameter(param);
