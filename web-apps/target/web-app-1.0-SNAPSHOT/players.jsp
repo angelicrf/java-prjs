@@ -1,19 +1,33 @@
+
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="com.mongodb.connection.ClusterSettings" %>
+<%@ page import="static java.util.Arrays.asList" %>
+
+<%@ page import="java.util.Arrays" %>
+
+<%@ page import="com.mongodb.client.MongoClient" %>
+<%@ page import="com.mongodb.client.MongoClients" %>
+<%@ page import="com.mongodb.client.MongoDatabase" %>
+<%@ page import="org.bson.Document" %>
+<%@ page import="com.mongodb.client.MongoCollection" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="org.json.JSONObject" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="./index.css">
+    <link type="text/css" rel="stylesheet" href="index.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>tours</title>
+    <title>calculator</title>
 </head>
-<body>
-<script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
+<body class="btn-light">
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,49 +42,31 @@
         </div>
     </div>
 </div>
-<h1>Tours Info</h1>
-<div class="container mt-4">
-    <form method="post" action="tours">
-        <input class="btn btn-danger" type="submit" value="GetEvents"/>
-    </form>
-    <%ArrayList<String> listTours = (ArrayList<String>) request.getAttribute("golfTopics");%>
-    <%ArrayList<String> listDescriptions = (ArrayList<String>) request.getAttribute("golfDescriptions");%>
-    <%ArrayList<String> listMarketNames = (ArrayList<String>) request.getAttribute("golfMarketNames");%>
-    <%ArrayList<Integer> listPriceAmns = (ArrayList<Integer>) request.getAttribute("golfPriceAmt");%>
-       <%ArrayList<String> listAddresses = (ArrayList<String>) request.getAttribute("golfAddresses");%>
-       <%ArrayList<String> listCityNames = (ArrayList<String>) request.getAttribute("golfCityNames");%>
-       <%ArrayList<String> listStateNames = (ArrayList<String>) request.getAttribute("golfStateProvince");%>
-       <%ArrayList<String> listContactPhone = (ArrayList<String>) request.getAttribute("golfContactPhone");%>
-       <%ArrayList<String> listPlaceNames = (ArrayList<String>) request.getAttribute("golfPlaceNames");%>
-       <%ArrayList<String> listImageUrls = (ArrayList<String>) request.getAttribute("golfImageUrls");%>
-       <%ArrayList<String> listAssetNames = (ArrayList<String>) request.getAttribute("golfAssetNames");%>
-       <%ArrayList<String> listOrgNames = (ArrayList<String>) request.getAttribute("golfOrgNames");%>
-       <%ArrayList<String> listSalesStats = (ArrayList<String>) request.getAttribute("golfSalesStats");%>
-<%-- <%ArrayList<String> listTrsPhotos = (ArrayList<String>) request.getAttribute("golfTrPhotos");%>;--%>
-    <%if(listTours != null) {%>
-     <div class="row">
-     <%  for (int i =0; i < listTours.size(); i++) { %>
-         <div class="col-lg-8 btn btn-primary px-1 mx-1 mb-2" role="button" aria-expanded="false" aria-controls="tours-headers">
-             <h2><a data-toggle="collapse" href="#tours-headers-<%=i%>" style="color: beige"><%=listTours.get(i)%></a></h2>
-         </div>
-         <div class="collapse" id="tours-headers-<%=i%>" >
-             <div class="card col-lg-8 card-body">
-             <p>Description: <%=listDescriptions.get(i)%></p>
-                 <p>MarketNames: <%=listMarketNames.get(i)%></p>
-                 <p>AssetPrice: <%=listPriceAmns.get(i)%></p>
-                 <p>Address: <%=listAddresses.get(i)%></p>
-                 <p>City: <%=listCityNames.get(i)%>, <%=listStateNames.get(i)%></p>
-                 <p>Place Name: <%=listPlaceNames.get(i)%></p>
-                 <img src="<%=listImageUrls.get(i)%>" alt="tourImg" style="width: 150px; height: 150px; border-radius: 10px;" />
-                 <p>Asset Name: <%=listAssetNames.get(i)%></p>
-                 <p>Organization Name: <%=listOrgNames.get(i)%></p>
-                 <p>Sales Status: <%=listSalesStats.get(i)%></p>
-                 <p>Phone: <%= listContactPhone.get(i)%></p>
-             </div>
-         </div>
-         <%} %>
-     </div>
-    <% }%>
+<div class="container">
+    <div class="border border-dark btn-outline-secondary mt-4 text-center">
+        <%  int[] numArray = {65,73,79,54};%>
+        <% for (int j : numArray) { %>
+        <p><%=j%>
+        </p>
+        <%}%>
+    </div>
+    <h2 class="mt-4 btn-danger text-center">Client Name is : <%= request.getAttribute("clientName")%></h2>
+    <h2 class="mt-4 btn-danger text-center"><%= request.getAttribute("tournamentName")%></h2>
+ <div class="text-center mt-4">
+ <%ArrayList<String> listPlayers = (ArrayList<String>) request.getAttribute("playerNames");%>
+ <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) request.getAttribute("playersFirstNames");%>
+ <%ArrayList<String> listCountry = (ArrayList<String>) request.getAttribute("country");%>
+    <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle">
+        <tr><th>Players First Name</th><th>Players Last Name</th><th>Country</th></tr>
+        <% for (int i=0; i< listPlayers.size();i++){ %>
+        <tr>
+            <td> <%=listPlayers.get(i) %>  </td>
+            <td> <%=listFirstNamePlayers.get(i) %>  </td>
+            <td> <%=listCountry.get(i) %>  </td>
+            <%} %>
+        </tr>
+    </table>
+</div>
 </div>
 <footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">
     <div class='container-fluid'>

@@ -1,19 +1,16 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="./index.css">
+    <link type="text/css" rel="stylesheet" href="index.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>tours</title>
+    <title>leaders</title>
 </head>
 <body>
-<script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,49 +25,9 @@
         </div>
     </div>
 </div>
-<h1>Tours Info</h1>
-<div class="container mt-4">
-    <form method="post" action="tours">
-        <input class="btn btn-danger" type="submit" value="GetEvents"/>
-    </form>
-    <%ArrayList<String> listTours = (ArrayList<String>) request.getAttribute("golfTopics");%>
-    <%ArrayList<String> listDescriptions = (ArrayList<String>) request.getAttribute("golfDescriptions");%>
-    <%ArrayList<String> listMarketNames = (ArrayList<String>) request.getAttribute("golfMarketNames");%>
-    <%ArrayList<Integer> listPriceAmns = (ArrayList<Integer>) request.getAttribute("golfPriceAmt");%>
-       <%ArrayList<String> listAddresses = (ArrayList<String>) request.getAttribute("golfAddresses");%>
-       <%ArrayList<String> listCityNames = (ArrayList<String>) request.getAttribute("golfCityNames");%>
-       <%ArrayList<String> listStateNames = (ArrayList<String>) request.getAttribute("golfStateProvince");%>
-       <%ArrayList<String> listContactPhone = (ArrayList<String>) request.getAttribute("golfContactPhone");%>
-       <%ArrayList<String> listPlaceNames = (ArrayList<String>) request.getAttribute("golfPlaceNames");%>
-       <%ArrayList<String> listImageUrls = (ArrayList<String>) request.getAttribute("golfImageUrls");%>
-       <%ArrayList<String> listAssetNames = (ArrayList<String>) request.getAttribute("golfAssetNames");%>
-       <%ArrayList<String> listOrgNames = (ArrayList<String>) request.getAttribute("golfOrgNames");%>
-       <%ArrayList<String> listSalesStats = (ArrayList<String>) request.getAttribute("golfSalesStats");%>
-<%-- <%ArrayList<String> listTrsPhotos = (ArrayList<String>) request.getAttribute("golfTrPhotos");%>;--%>
-    <%if(listTours != null) {%>
-     <div class="row">
-     <%  for (int i =0; i < listTours.size(); i++) { %>
-         <div class="col-lg-8 btn btn-primary px-1 mx-1 mb-2" role="button" aria-expanded="false" aria-controls="tours-headers">
-             <h2><a data-toggle="collapse" href="#tours-headers-<%=i%>" style="color: beige"><%=listTours.get(i)%></a></h2>
-         </div>
-         <div class="collapse" id="tours-headers-<%=i%>" >
-             <div class="card col-lg-8 card-body">
-             <p>Description: <%=listDescriptions.get(i)%></p>
-                 <p>MarketNames: <%=listMarketNames.get(i)%></p>
-                 <p>AssetPrice: <%=listPriceAmns.get(i)%></p>
-                 <p>Address: <%=listAddresses.get(i)%></p>
-                 <p>City: <%=listCityNames.get(i)%>, <%=listStateNames.get(i)%></p>
-                 <p>Place Name: <%=listPlaceNames.get(i)%></p>
-                 <img src="<%=listImageUrls.get(i)%>" alt="tourImg" style="width: 150px; height: 150px; border-radius: 10px;" />
-                 <p>Asset Name: <%=listAssetNames.get(i)%></p>
-                 <p>Organization Name: <%=listOrgNames.get(i)%></p>
-                 <p>Sales Status: <%=listSalesStats.get(i)%></p>
-                 <p>Phone: <%= listContactPhone.get(i)%></p>
-             </div>
-         </div>
-         <%} %>
-     </div>
-    <% }%>
+<div class="container btn btn-danger" style="margin-top: 100px">
+    <p>name is <%request.getAttribute("name");%></p>
+    <p>password is <%=request.getAttribute("password")%></p>
 </div>
 <footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">
     <div class='container-fluid'>
