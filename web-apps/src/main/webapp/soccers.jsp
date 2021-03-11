@@ -1,4 +1,3 @@
-<%@ page import="org.json.JSONObject" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -11,7 +10,7 @@
             crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>calculator</title>
+    <title>Succers Players</title>
 </head>
 <body class="btn-light">
 <div class="pos-f-t">
@@ -29,25 +28,27 @@
     </div>
 </div>
 <div class="container">
-    <h2 class="mt-4 btn-danger text-center">Client Name is : <%= request.getAttribute("clientName")%></h2>
-    <h2 class="mt-4 btn-danger text-center"><%= request.getAttribute("tournamentName")%></h2>
- <div class="text-center mt-4">
- <%ArrayList<String> listPlayers = (ArrayList<String>) request.getAttribute("playerNames");%>
- <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) request.getAttribute("playersFirstNames");%>
- <%ArrayList<String> listCountry = (ArrayList<String>) request.getAttribute("country");%>
+<form method="get" action="soccers">
+    <input class="btn btn-danger mt-4" type="submit" value="Soccer Players"/>
+</form>
+    <br>
+
+<%ArrayList<String> listSPlayersFirst = (ArrayList<String>) request.getAttribute("sPlayersFirstNames");%>
+<%ArrayList<String> listSPlayersLast = (ArrayList<String>) request.getAttribute("sPlayersLastNames");%>
+    <%if(listSPlayersFirst != null && listSPlayersLast != null) {%>
     <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle">
-        <tr><th>Players First Name</th><th>Players Last Name</th><th>Country</th></tr>
-        <% for (int i=0; i< listPlayers.size();i++){ %>
-        <tr>
-            <td> <%=listPlayers.get(i) %>  </td>
-            <td> <%=listFirstNamePlayers.get(i) %>  </td>
-            <td> <%=listCountry.get(i) %>  </td>
-            <%} %>
-        </tr>
+    <tr><th>Players First Name</th><th>Players Last Name</th><th>Country</th></tr>
+    <% for (int i=0; i< listSPlayersFirst.size();i++){ %>
+    <tr>
+        <td> <%=listSPlayersFirst.get(i) %>  </td>
+        <td> <%=listSPlayersLast.get(i) %>  </td>
+        <%--     <td> <%=listCountry.get(i) %>  </td>--%>
+        <%} %>
+    </tr>
     </table>
+    <%}%>
 </div>
-</div>
-<footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">
+<footer style="position: fixed; margin-left: -50px; margin-right: -70px; bottom: 0;">
     <div class='container-fluid'>
         <div class="card">
             <div class="heading text-center">

@@ -29,11 +29,6 @@ public class Players extends HttpServlet {
     List<String> countryArray = new ArrayList<String>();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-       // response.setContentType("text/html");
-      //  PrintWriter out = response.getWriter();
-        //out.print("<html><body>" +
-                   //"<h2>Here is players page</h2>" +
-                 //  "</body></html>");
         CompletableFuture.runAsync(() -> {
             try {
                 getTournamentInfo(request);
