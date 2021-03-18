@@ -49,9 +49,7 @@ public class CalendarClub extends HttpServlet{
         try{
             Thread.sleep(9000);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/calendarclbs.jsp");
-            System.out.println("first");
             dispatcher.forward(request,response);
-            System.out.println("second");
         } catch (ServletException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
