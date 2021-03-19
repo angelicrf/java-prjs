@@ -5,6 +5,9 @@
     <title>Home</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-scope" content="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid">
+    <meta name="google-signin-client_id" content="502305783354-sr48jg1hnse1lehoce3au065rquob8f0">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="index.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -54,11 +57,60 @@
         </label>
         <input type="submit" class="text-center mb-3 btn btn-danger border-dark newBtn" value="SignUp">
     </form>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <script>
+        function onSignIn(googleUser) {
+            // Useful data for your client-side scripts:
+            let profile = googleUser.getBasicProfile();
+            let id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+
+                //let styleDocs = document.createElement("div");
+
+                let textOne = document.createElement('h2');
+                let textTwo = document.createElement('h2');
+                let textThree = document.createElement('h2');
+                let textFour = document.createElement('h2');
+                let textFive = document.createElement('img');
+
+
+            if(profile.getEmail() != null) {
+               let dataTextOne = document.createTextNode(profile.getGivenName());
+               let dataTextTwo = document.createTextNode(profile.getEmail());
+               let dataTextThree = document.createTextNode(profile.getFamilyName());
+               let dataTextFour = document.createTextNode(profile.getId());
+
+               textFive.height = "200";
+               textFive.width = "200";
+               textFive.title = "userImage";
+               textFive.src = profile.getImageUrl();
+
+               textOne.appendChild(dataTextOne);
+               textTwo.appendChild(dataTextTwo);
+               textThree.appendChild(dataTextThree);
+               textFour.appendChild(dataTextFour);
+
+               document.body.appendChild(textOne);
+               document.body.appendChild(textTwo);
+               document.body.appendChild(textThree);
+               document.body.appendChild(textFour);
+               document.body.appendChild(textFive);
+           }
+        }
+        function signOut() {
+            let auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
+    <a href="${pageContext.request.contextPath}/" onclick="signOut();">Sign out</a>
 </div>
-<div class="container">
-<%--<form method="get" action="players">
-    <button type="submit" class="btn-danger btn"> Players</button>
-</form>--%>
 <footer style="position: absolute; margin-left: -70px; margin-right: -60px; bottom: 0;">
     <div class='container-fluid'>
         <div class="card">
