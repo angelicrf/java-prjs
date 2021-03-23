@@ -21,7 +21,7 @@
     </form>
     <% Object getMsg = request.getAttribute("msgData");%>
    <% if(getMsg != null){%>
-    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=502305783354-oscnu3587fcbeha1p1h0uk681qpgapmi.apps.googleusercontent.com&response_type=code&scope=https://www.googleapis.com/auth/calendar.calendarlist.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email&redirect_uri=http://localhost:8081/web_app_war_exploded/calendarclbs&access_type=offline" role="button">GLogin</a>
+    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=502305783354-sr48jg1hnse1lehoce3au065rquob8f0.apps.googleusercontent.com&response_type=code&scope=https://www.googleapis.com/auth/calendar.calendarlist.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar.settings.readonly https://www.googleapis.com/auth/calendar.events.public.readonly&redirect_uri=http://localhost:8081/web_app_war_exploded/calendarclbs&access_type=online" role="button">GLogin</a>
     <br>
     <%}%>
 </div>
