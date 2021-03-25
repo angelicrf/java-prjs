@@ -1,4 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
@@ -28,15 +29,16 @@
         <input class="btn btn-danger mt-4" type="submit" value="Get AccessToken"/>
     </form>
     <br>
-        <% ArrayList<String> getId = (ArrayList<String>)  request.getAttribute("setId");
-           ArrayList<String> getValue = (ArrayList<String>) request.getAttribute("setValue");
-            if(getId != null && getValue != null ){
-               for(int i = 0; i < getId.size(); i ++){%>
-           <ul class="list-group">
-               <li class="list-group-item list-group-item-primary"><%= getId.get(i)%></li>
-               <li class="list-group-item list-group-item-info"><%= getValue.get(i)%></li>
-           </ul>
-        <%}}}%>
+      <%}%>
+    <% ArrayList<String> getId = (ArrayList<String>)  request.getAttribute("setId"); %>
+    <% ArrayList<String> getValue = (ArrayList<String>) request.getAttribute("setValue");%>
+    <%if(getId != null || getValue != null){
+     for(int i = 0; i < Objects.requireNonNull(getId).size(); i ++){%>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-primary"><%= getId.get(i)%></li>
+            <li class="list-group-item list-group-item-info"><%= getValue.get(i)%></li>
+        </ul>
+    <%}}%>
 </div>
 </body>
 </html>

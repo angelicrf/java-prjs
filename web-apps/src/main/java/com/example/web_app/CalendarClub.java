@@ -18,7 +18,6 @@ import java.util.concurrent.CompletableFuture;
 
 @WebServlet(name = "calendarclub", value = "/calendarclbs")
 public class CalendarClub extends HttpServlet{
-    ///auth/calendar.calendarlist.readonly
     String storeCode = null;
     String storeAccTkn = null;
     String API_KEY = "AIzaSyCDxl-kP_cWQXry6FO7lpewcZ6OvIVmbkg";
@@ -85,6 +84,7 @@ public class CalendarClub extends HttpServlet{
    public String getCodeFromUrl(HttpServletRequest request){
         System.out.println("getCodeFromUrl called");
         this.storeCode = request.getParameter("code");
+        System.out.println("code is " + this.storeCode);
         return this.storeCode;
    }
    public String generateAccessToken(String cd) throws IOException, JSONException {
@@ -98,13 +98,14 @@ public class CalendarClub extends HttpServlet{
                .addHeader("Content-Type", "application/x-www-form-urlencoded")
                .build();
        System.out.println("after build");
-       //create another promise
        Response response2 = this.client.newCall(request2).execute();
        String bodyData = response2.body().string();
+       System.out.println("body is " + bodyData);
        JSONObject jsonObject = new JSONObject(bodyData);
-       String mdAccessTken =  jsonObject.getString("access_token");
-       this.storeAccTkn = mdAccessTken.substring(1, mdAccessTken.length() -1);
-       return  this.storeAccTkn;
+       this.storeAccTkn =  jsonObject.getString("access_token");
+       String mdAccessTkn = this.storeAccTkn.substring(1, this.storeAccTkn.length() -1);
+       System.out.println("mdAccessToken " + mdAccessTkn);
+       return this.storeAccTkn;
     }
 
     public void getCalendarListGolf(HttpServletRequest request,String acTkn, String apiKey) throws IOException, JSONException {
@@ -112,26 +113,23 @@ public class CalendarClub extends HttpServlet{
         Request request3 = new Request.Builder()
                 .url("https://www.googleapis.com/calendar/v3/users/me/settings?key=" + apiKey)
                 .method("GET", null)
-                .addHeader("Authorization", acTkn)
-                .addHeader("Content-Type", "applicationx-www-form-urlencoded")
+                .addHeader("Authorization", "Bearer " +  acTkn)
+                .addHeader("Content-Type", "application/json")
                 .build();
         System.out.println("after request2");
         Response response3 = this.client.newCall(request3).execute();
         String dataObj = response3.body().string();
         System.out.println("dataObj " + dataObj);
         JSONObject jsObject = new JSONObject(dataObj);
-        System.out.println("jsObject is " + jsObject);
-        //JSONParser.parse(response2.body().string()).getAsJsonObject();
-        //JsonElement jsonElement = jsonObject.get("items");
         JSONArray jsArray = jsObject.optJSONArray("items");
 
        for (int i = 0; i < jsArray.length(); i++) {
-           System.out.println(i + ". Array element Content:" + jsArray.get(i));
-           String value = jsArray.getJSONObject(i).getString("value");
-           String id = jsArray.getJSONObject(i).getString("id");
-           System.out.println("\t value:" + value + " id:" + id);
+           String value = jsArray.getJSONObject(i).optString("value");
+           String id = jsArray.getJSONObject(i).optString("id");
+
            this.valueSetting.add(value);
            this.idSetting.add(id);
+           //System.out.println("value:" + this.valueSetting + " id:" + this.idSetting);
            request.setAttribute("setId", this.idSetting);
            request.setAttribute("setValue", this.valueSetting);
        }
