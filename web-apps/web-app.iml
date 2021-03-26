@@ -19,7 +19,9 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="web-app" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -43,6 +45,7 @@
     <orderEntry type="library" name="popper.js" level="application" />
     <orderEntry type="library" name="bootstrap-toggle" level="application" />
     <orderEntry type="library" name="jquery-3.6.0" level="application" />
+    <orderEntry type="library" name="platform" level="application" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.30.11" level="project" />
     <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client:1.31.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.http-client:google-http-client:1.37.0" level="project" />
@@ -79,6 +82,8 @@
     <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.json:org.json:chargebee-1.0" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.12.8" level="project" />
-    <orderEntry type="library" name="platform" level="application" />
+    <orderEntry type="library" name="jquery-3.6.0" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="all" level="application" />
   </component>
 </module>

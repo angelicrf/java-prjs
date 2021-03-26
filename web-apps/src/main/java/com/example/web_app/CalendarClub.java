@@ -129,7 +129,6 @@ public class CalendarClub extends HttpServlet{
 
            this.valueSetting.add(value);
            this.idSetting.add(id);
-           //System.out.println("value:" + this.valueSetting + " id:" + this.idSetting);
            request.setAttribute("setId", this.idSetting);
            request.setAttribute("setValue", this.valueSetting);
        }

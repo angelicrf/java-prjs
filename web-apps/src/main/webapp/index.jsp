@@ -62,8 +62,8 @@
         </label>
         <input type="submit" class="text-center mb-3 btn btn-danger border-dark newBtn" value="SignUp">
     </form>
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-    <a href="${pageContext.request.contextPath}/" onclick="signOut();">Sign out</a>
+    <div class="g-signin2" style="width: 280px;margin-left: 45px;" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <a class="btn btn-danger mb-2 mt-2" style="width: 280px;border: #616161; border-radius: 15px;" href="${pageContext.request.contextPath}/" onclick="signOut();">Sign out</a>
 </div>
 <script>
     function onSignIn(googleUser) {
