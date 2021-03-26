@@ -8,10 +8,10 @@
             crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>leaders</title>
+    <title>Login</title>
 </head>
-<body>
-<div class="pos-f-t">
+<body style="height: 1300px;">
+<div class="pos-f-1t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -25,11 +25,12 @@
         </div>
     </div>
 </div>
-<div class="container btn btn-danger" style="margin-top: 100px">
-    <p>name is <%request.getAttribute("name");%></p>
-    <p>password is <%=request.getAttribute("password")%></p>
+<div class="container" style="margin-top: 100px">
+    <h2>LoginPage</h2>
+    <div id="displayData"></div>
+<%--    <button class="btn btn-info mt-4" onclick="userDisplayInfo()">userInfo</button>--%>
 </div>
-<footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">
+<footer style="position: fixed; margin-left: -50px; margin-right: -60px; bottom: 0;">
     <div class='container-fluid'>
         <div class="card">
             <div class="heading text-center">
@@ -85,5 +86,28 @@
         </div>
     </div>
 </footer>
+<script>
+    setTimeout(() => {
+        if(localStorage.getItem('userName') != null) {
+            let getName = localStorage.getItem('userName');
+            document.getElementById("displayData").innerText = "Username is " + getName;
+           if(localStorage.getItem('userLName') != null){
+               let getLName = localStorage.getItem('userLName');
+               let getId = localStorage.getItem('userId');
+               let getAccessToken = localStorage.getItem('userAccessToken');
+               document.getElementById("displayData").innerText = "Username is " + getName +
+                     " userLastName " + getLName
+                   + " userid " + getId
+                   + " userAccessToken " + getAccessToken;
+           }
+        }else{
+            document.getElementById("displayData").innerText = "Please Login ...";
+            setTimeout(() => {
+                location.replace("http://localhost:8081/web_app_war_exploded/");
+            },2000);
+        }
+    },2000);
+
+</script>
 </body>
 </html>

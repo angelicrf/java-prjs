@@ -35,6 +35,8 @@
                <p><label><i class="fas fa-users mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/players.jsp">Golf Players</a></p>
                <p><label><i class="fas fa-users mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/soccers.jsp">Soccer Players</a></p>
                <p><label><i class="fas fa-calendar mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/calendarclbs.jsp">Calendar</a></p>
+               <p><label><i class="fas fa-users mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/users.jsp">Users</a></p>
+               <p><label><i class="fas fa-login mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/login.jsp">Login</a></p>
         </div>
     </div>
 </div>
@@ -43,13 +45,24 @@
     <% if (request.getAttribute("clientName") == null){ %>
         <p>client</p>
     <%} else {%>
-    <p>Welcome <%= request.getAttribute("clientName")%></p>
+    <%Object usrName = request.getAttribute("clientName");%>
+    <p id="dispInfo" >Welcome  <%=usrName%> </p>
+    <script type="text/javascript">
+        function signedInUser(){
+            console.log("info hit");
+
+            let userName = document.getElementById("dispInfo").innerHTML;
+            let mduserName = userName.substring(9, userName.length);
+            console.log( "paramName is " + mduserName);
+            localStorage.setItem('userName', mduserName);
+        }
+        signedInUser();
+    </script>
     <%}%>
     <form action="login" method="get">
-        <label class="mb-2">
+        <label class="mb-2" >
             <input type="text" name="name">
         </label>
-        <br>
         <label class="mb-2">
             <input type="text" name="password">
         </label>
@@ -62,6 +75,7 @@
         </label>
         <input type="submit" class="text-center mb-3 btn btn-danger border-dark newBtn" value="SignUp">
     </form>
+
     <div class="g-signin2" style="width: 280px;margin-left: 45px;" data-onsuccess="onSignIn" data-theme="dark"></div>
     <a class="btn btn-danger mb-2 mt-2" style="width: 280px;border: #616161; border-radius: 15px;" href="${pageContext.request.contextPath}/" onclick="signOut();">Sign out</a>
 </div>
@@ -73,6 +87,7 @@
         let keepAccessToken = googleUser.getAuthResponse().acess_token;
         console.log(id_token);
         console.log(keepAccessToken);
+
 
         let usrFirst = document.getElementById("userName");
             usrFirst.title = profile.getGivenName();
@@ -88,6 +103,11 @@
         textFive.title = "userImageShow";
         textFive.src = profile.getImageUrl();
 
+        localStorage.setItem('userName', usrFirst.title);
+        localStorage.setItem('userLName', usrLName.title);
+        localStorage.setItem('userId',  usrId_.title);
+        localStorage.setItem('userAccessToken',  keepAccessToken);
+
         getUserImg.appendChild(textFive);
         let dsPlData = document.getElementById("displayData");
             dsPlData.style.color = "white";
@@ -100,6 +120,7 @@
             console.log('User signed out.');
         });
     }
+
 </script>
 
 <script src="https://apis.google.com/js/platform.js"  async defer></script>
