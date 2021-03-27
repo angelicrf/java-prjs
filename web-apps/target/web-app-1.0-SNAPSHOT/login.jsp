@@ -30,7 +30,7 @@
     <div id="displayData"></div>
 <%--    <button class="btn btn-info mt-4" onclick="userDisplayInfo()">userInfo</button>--%>
 </div>
-<footer style="position: fixed; margin-left: -50px; margin-right: -60px; bottom: 0;">
+<footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">
     <div class='container-fluid'>
         <div class="card">
             <div class="heading text-center">
