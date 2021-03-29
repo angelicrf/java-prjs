@@ -23,6 +23,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div id="userName"></div>
+        <div id="gUserName"></div>
         <div id="userLastName"></div>
         <div id="userId"></div>
         <div id="displayData"></div>
@@ -36,7 +37,7 @@
                <p><label><i class="fas fa-futbol mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/soccers.jsp">Soccer Players</a></p>
                <p><label><i class="fas fa-calendar mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/calendarclbs.jsp">Calendar</a></p>
                <p><label><i class="fas fa-users mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/users.jsp">Users</a></p>
-               <p><label><i class="fas fa-user-circle mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/login.jsp">Login</a></p>
+               <p><label><i class="fas fa-user-circle mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/login.jsp">My Account</a></p>
         </div>
     </div>
 </div>
@@ -54,6 +55,7 @@
             let userName = document.getElementById("dispInfo").getAttribute("data-value");
             console.log( "paramName is " + userName);
             localStorage.setItem('userName', userName);
+            localStorage.setItem('userLogin', "logged");
         }
         signedInUser();
     </script>
@@ -83,12 +85,12 @@
         // Useful data for your client-side scripts:
         let profile = googleUser.getBasicProfile();
         let id_token = googleUser.getAuthResponse().id_token;
-        let keepAccessToken = googleUser.getAuthResponse().acess_token;
+        let keepAccessToken = googleUser.getAuthResponse().access_token;
         console.log(id_token);
         console.log(keepAccessToken);
 
 
-        let usrFirst = document.getElementById("userName");
+        let usrFirst = document.getElementById("gUserName");
             usrFirst.title = profile.getGivenName();
         let usrLName = document.getElementById("userLastName");
             usrLName.title = profile.getFamilyName();
@@ -102,10 +104,11 @@
         textFive.title = "userImageShow";
         textFive.src = profile.getImageUrl();
 
-        localStorage.setItem('userName', usrFirst.title);
+        localStorage.setItem('gUserName', usrFirst.title);
         localStorage.setItem('userLName', usrLName.title);
         localStorage.setItem('userId',  usrId_.title);
         localStorage.setItem('userAccessToken',  keepAccessToken);
+        localStorage.setItem('userLogin', "logged");
 
         getUserImg.appendChild(textFive);
         let dsPlData = document.getElementById("displayData");

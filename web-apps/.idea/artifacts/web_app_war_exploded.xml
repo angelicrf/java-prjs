@@ -53,6 +53,8 @@
           <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.6.0" />
           <element id="library" level="project" name="Maven: org.json:org.json:chargebee-1.0" />
           <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:3.12.8" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.4" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">

@@ -10,7 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>Login</title>
 </head>
-<body style="height: 1300px;">
+<body style="height: 2300px;">
 <div class="pos-f-1t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,9 +26,70 @@
     </div>
 </div>
 <div class="container" style="margin-top: 100px">
-    <h2>LoginPage</h2>
     <div id="displayData"></div>
-<%--    <button class="btn btn-info mt-4" onclick="userDisplayInfo()">userInfo</button>--%>
+    <% try { Thread.sleep(3000);%>
+        <script type="text/javascript">
+            if(localStorage.getItem('userLogin') == null) {
+                document.getElementById("displayData").innerText = "Please Login ...";
+                setTimeout(() => {
+                    location.replace("http://localhost:8081/web_app_war_exploded/");
+                },2000);
+            }
+        </script>
+    <div id="showData" style="visibility: hidden">
+            <div class="card" style="width: 25rem;">
+            <div id="generalUser" style="visibility: hidden;">
+                <div class="card-body">
+                    <img class="card-img-top" src="./images/golf-0.jpg" alt="Card image cap">
+                    <p>Edit Image</p>
+                    <form action="login" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" />
+                        <input type="submit" />
+                    </form>
+
+                    <h5 class="card-title">User Profile</h5>
+                    <h4 class="card-content" id="clUserName">here is the data</h4>
+                </div>
+            </div>
+                <div id="gData" style="visibility: hidden;">
+                    <img class="card-img-top" src="./images/golf-0.jpg" alt="Card image cap">
+                    <div class="card-header">User Profile</div>
+                    <ul class="list-group list-group-flush">
+                         <li class="list-group-item" style="color: black" id="clGUserName">here is the data</li>
+                         <li class="list-group-item" style="color: black" id="clUserLName">here is the data</li>
+                         <li class="list-group-item" style="color: black" id="clUserId">here is the data</li>
+                         <li class="list-group-item" style="color: black" id="clUserAccessTkn">here is the data</li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+         <script type="text/javascript">
+             //let getDivText = document.getElementById("displayData").innerText;
+             if(localStorage.getItem("userLogin") != null){
+                 console.log("showdata is ok");
+                 document.getElementById("showData").style.visibility= "visible";
+                 if(localStorage.getItem('userName') != null ) {
+                     document.getElementById("gData").style.display= "none";
+                     document.getElementById("generalUser").style.display= "auto";
+                     document.getElementById("generalUser").style.visibility = "visible";
+                     document.getElementById("clUserName").innerText = "Name: " + localStorage.getItem("userName");
+                 }
+                 if (localStorage.getItem('userId') != null) {
+                     console.log("gdata is ok");
+                     document.getElementById("generalUser").style.display= "none";
+                     document.getElementById("gData").style.display= "auto";
+                     document.getElementById("gData").style.visibility = "visible";
+                     document.getElementById("clGUserName").innerText = "Name : " + localStorage.getItem("gUserName");
+                     document.getElementById("clUserLName").innerText = "Last Name : " + localStorage.getItem("userLName");
+                     document.getElementById("clUserId").innerText = "Id : " + localStorage.getItem("userId");
+                     document.getElementById("clUserAccessTkn").innerText = "AccessToken : " +  localStorage.getItem("userAccessToken");
+                 }
+             }
+         </script>
+    <% }
+    catch (Exception e) {
+        e.printStackTrace();
+    }%>
 </div>
 <footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">
     <div class='container-fluid'>
@@ -86,28 +147,5 @@
         </div>
     </div>
 </footer>
-<script>
-    setTimeout(() => {
-        if(localStorage.getItem('userName') != null) {
-            let getName = localStorage.getItem('userName');
-            document.getElementById("displayData").innerText = "Username is " + getName;
-           if(localStorage.getItem('userLName') != null){
-               let getLName = localStorage.getItem('userLName');
-               let getId = localStorage.getItem('userId');
-               let getAccessToken = localStorage.getItem('userAccessToken');
-               document.getElementById("displayData").innerText = "Username is " + getName +
-                     " userLastName " + getLName
-                   + " userid " + getId
-                   + " userAccessToken " + getAccessToken;
-           }
-        }else{
-            document.getElementById("displayData").innerText = "Please Login ...";
-            setTimeout(() => {
-                location.replace("http://localhost:8081/web_app_war_exploded/");
-            },2000);
-        }
-    },2000);
-
-</script>
 </body>
 </html>
