@@ -6,6 +6,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 import org.bson.Document;
+import sun.text.resources.FormatData;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,43 +15,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @WebServlet(name = "login", value = "/login")
 public class Login extends HttpServlet {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        try {
-            List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-            for (FileItem item : items) {
-                if (item.isFormField()) {
-                    System.out.println("isTextFile");
-                    String fieldName = item.getFieldName();
-                    System.out.println("fieldNAme " + fieldName);
-                    String fieldValue = item.getString();
-                    System.out.println("fieldValue " + fieldValue);
-                    // ... (job here)
-                }
-                else {
-                    System.out.println("isFile");
-                    // Process form file field (input type="file").
-                    String fieldName = item.getFieldName();
-                    System.out.println("fieldName " + fieldName);
-                    String fileName = FilenameUtils.getName(item.getName());
-                    System.out.println("fileName " + fileName);
-                    InputStream fileContent = item.getInputStream();
 
-                    // ... (job here)
-                }
-            }
-        } catch (Exception e) {
-            throw new ServletException("Cannot parse multipart request.", e);
-        }
-    }
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String getName = request.getParameter("name");
         String getPassword = request.getParameter("password");
@@ -62,7 +35,7 @@ public class Login extends HttpServlet {
 
         try{
             Thread.sleep(5000);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request,response);
         } catch (ServletException | IOException | InterruptedException e) {
             e.printStackTrace();

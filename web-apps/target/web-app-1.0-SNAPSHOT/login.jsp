@@ -42,9 +42,9 @@
                 <div class="card-body">
                     <img class="card-img-top" src="./images/golf-0.jpg" alt="Card image cap">
                     <p>Edit Image</p>
-                    <form action="login" method="post" enctype="multipart/form-data">
+                    <form action="upImg" method="post" enctype="multipart/form-data">
                         <input type="file" name="file" />
-                        <input type="submit" />
+                        <input type="submit" value="Upload" />
                     </form>
 
                     <h5 class="card-title">User Profile</h5>
