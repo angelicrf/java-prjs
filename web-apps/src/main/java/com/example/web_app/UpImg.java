@@ -47,7 +47,7 @@ public class UpImg extends HttpServlet {
                     String filePath = "/home/bcuser/Git/java-prjs/web-apps/src/main/webapp/images/" + fileName;
                     Boolean getResult = getFileUpload(fileContent, filePath);
                     if (getResult) {
-                        doGet(request, response, filePath);
+                        doGet(request, response, filePath, true, fileName);
                     } else {
                         System.out.println("there is an error");
                     }
@@ -58,16 +58,18 @@ public class UpImg extends HttpServlet {
         }
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response, String f) throws IOException, ServletException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response, String f, Boolean imgUploaded, String imgName) throws IOException, ServletException {
         try {
             Thread.sleep(5000);
-            response.setContentType("image/jpeg");
-            request.getSession().setAttribute("newPath", f);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/upImg.jsp");
-            System.out.println("done firstGet");
-            dispatcher.forward(request, response);
-            System.out.println("done secondGet");
-        } catch (ServletException | IOException | InterruptedException e) {
+                response.setContentType("image/jpeg");
+                request.getSession().setAttribute("imgUploaded", imgUploaded);
+                request.getSession().setAttribute("imgName", imgName);
+                request.getSession().setAttribute("newPath", f);
+                response.sendRedirect("/login.jsp");
+                System.out.println("done firstGet");
+                //dispatcher.forward(request, response);
+                System.out.println("done secondGet");
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

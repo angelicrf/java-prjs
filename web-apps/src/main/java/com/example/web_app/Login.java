@@ -10,6 +10,7 @@ import sun.text.resources.FormatData;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,13 +23,57 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @WebServlet(name = "login", value = "/login")
-public class Login extends HttpServlet {
+@MultipartConfig
 
+public class Login extends HttpServlet {
+   String fl = "";
+   Boolean imgUpdated = false;
+   String flName = "";
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+            for (FileItem item : items) {
+                if (item.isFormField()) {
+                    System.out.println("isTextFile");
+                    String fieldName = item.getFieldName();
+                    System.out.println("fieldNAme " + fieldName);
+                    String fieldValue = item.getString();
+                    System.out.println("fieldValue " + fieldValue);
+
+                } else {
+                    System.out.println("isFile");
+                    response.setContentType("image/jpeg");
+                    String fileName = FilenameUtils.getName(item.getName());
+                    InputStream fileContent = new BufferedInputStream(item.getInputStream());
+                    String filePath = "/home/bcuser/Git/java-prjs/web-apps/src/main/webapp/images/" + fileName;
+                    Boolean getResult = getFileUpload(fileContent, filePath);
+                    if (getResult) {
+                        this.flName = fileName;
+                        this.imgUpdated = true;
+                        this.fl = filePath;
+                        response.setContentType("image/jpeg");
+                        request.getSession().setAttribute("imgUploaded", this.imgUpdated);
+                        request.getSession().setAttribute("imgName", this.flName);
+                        request.getSession().setAttribute("newPath", this.fl);
+                        doGet(request, response);
+
+                    } else {
+                        System.out.println("there is an error");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new ServletException("Cannot parse multipart request.", e);
+        }
+    }
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String getName = request.getParameter("name");
         String getPassword = request.getParameter("password");
         String getCheckBox = request.getParameter("signUp");
         System.out.println("signUp value" + getCheckBox);
+
         CompletableFuture.runAsync(() -> {
             cltMongoDb(request,getName,getPassword,getCheckBox);
         });
@@ -69,6 +114,33 @@ public class Login extends HttpServlet {
             collection.insertOne(doc);
             request.setAttribute("clientName", clName);
         }
-      };
+      }
+
+    public Boolean getFileUpload(InputStream is, String fPath) {
+        boolean uploaded = false;
+        try {
+            byte[] byt = new byte[is.available()];
+            System.out.println("is available " + is.available());
+            ByteArrayOutputStream bArray = new ByteArrayOutputStream();
+            int i = 0;
+            while ((i = is.read(byt)) > -1) {
+                System.out.println("is Read done");
+                bArray.write(byt,0,i);
+            }
+            bArray.close();
+            is.close();
+
+            byte [] res = bArray.toByteArray();
+            FileOutputStream fs = new FileOutputStream(fPath);
+            fs.write(res);
+            fs.close();
+
+            uploaded = true;
+            return uploaded;
+        } catch (IOException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        }
+        return uploaded;
+    }
 
 }

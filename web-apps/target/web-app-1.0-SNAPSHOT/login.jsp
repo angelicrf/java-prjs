@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="index.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -40,13 +41,21 @@
             <div class="card" style="width: 25rem;">
             <div id="generalUser" style="visibility: hidden;">
                 <div class="card-body">
-                    <img class="card-img-top" src="./images/golf-0.jpg" alt="Card image cap">
+                    <%  System.out.println("session from client " + session.getAttribute("imgUploaded"));
+                        if(session.getAttribute("imgUploaded") == null) {%>
+
+                        <img class="card-img-top" src="./images/golf-0.jpg" alt="Card image cap">
+                        <%}else if(session.getAttribute("imgUploaded").equals(true)){
+                            System.out.println("session from client2 " + session.getAttribute("imgUploaded"));
+                            System.out.println("session from client " + session.getAttribute("imgName"));
+                        %>
+                        <img class="card-img-top" alt="uploaded image" src="./images/<%=session.getAttribute("imgName")%>">
+                    <%}%>
                     <p>Edit Image</p>
-                    <form action="upImg" method="post" enctype="multipart/form-data">
+                    <form action="login" method="post" enctype="multipart/form-data">
                         <input type="file" name="file" />
                         <input type="submit" value="Upload" />
                     </form>
-
                     <h5 class="card-title">User Profile</h5>
                     <h4 class="card-content" id="clUserName">here is the data</h4>
                 </div>
