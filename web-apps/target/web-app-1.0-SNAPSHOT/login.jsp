@@ -61,7 +61,8 @@
                 </div>
             </div>
                 <div id="gData" style="visibility: hidden;">
-                    <img class="card-img-top" src="./images/golf-0.jpg" alt="Card image cap">
+<%--                    <img class="card-img-top" src="./images/golf-0.jpg" alt="Card image cap">--%>
+                    <div class="container card-img-top" id="clUserImg"></div>
                     <div class="card-header">User Profile</div>
                     <ul class="list-group list-group-flush">
                          <li class="list-group-item" style="color: black" id="clGUserName">here is the data</li>
@@ -91,6 +92,15 @@
                      document.getElementById("clGUserName").innerText = "Name : " + localStorage.getItem("gUserName");
                      document.getElementById("clUserLName").innerText = "Last Name : " + localStorage.getItem("userLName");
                      document.getElementById("clUserId").innerText = "Id : " + localStorage.getItem("userId");
+                     let srcImg = localStorage.getItem("gUserImage");
+                     console.log("clientImgUrl is " + srcImg);
+                     let storeUserImg = document.getElementById("clUserImg");
+                     let newUserImg = document.createElement("img");
+                     newUserImg.src = srcImg;
+                     newUserImg.style.width = "300px";
+                     newUserImg.style.height = "300px";
+                     newUserImg.style.marginLeft = "30px";
+                     storeUserImg.append(newUserImg);
                      document.getElementById("clUserAccessTkn").innerText = "AccessToken : " +  localStorage.getItem("userAccessToken");
                  }
              }

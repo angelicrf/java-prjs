@@ -22,12 +22,12 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div id="userName"></div>
-        <div id="gUserName"></div>
-        <div id="userLastName"></div>
-        <div id="userId"></div>
-        <div id="displayData"></div>
-        <div id="userImage"></div>
+        <span id="userName"></span>
+        <span id="gUserName"></span>
+        <span id="userLastName"></span>
+        <span id="userId"></span>
+        <span id="displayData"></span>
+        <span id="userImage"></span>
     </nav>
     <div class="collapse" id="navbarToggleExternalContent">
         <div class="bg-dark p-1">
@@ -118,21 +118,26 @@
 
         let textFive = document.createElement("img");
         let getUserImg = document.getElementById("userImage");
-        textFive.height = 100;
-        textFive.width = 100;
+        textFive.borderRadius = "50%";
+        textFive.height = 50;
+        textFive.width = 50;
         textFive.title = "userImageShow";
         textFive.src = profile.getImageUrl();
+        getUserImg.borderRadius = "50%";
+        getUserImg.height = 50;
+        getUserImg.width = 50;
 
         localStorage.setItem('gUserName', usrFirst.title);
         localStorage.setItem('userLName', usrLName.title);
         localStorage.setItem('userId',  usrId_.title);
         localStorage.setItem('userAccessToken',  keepAccessToken);
+        localStorage.setItem('gUserImage', textFive.src);
         localStorage.setItem('userLogin', "logged");
 
         getUserImg.appendChild(textFive);
         let dsPlData = document.getElementById("displayData");
             dsPlData.style.color = "white";
-            dsPlData.style.marginLeft = "800px";
+           // dsPlData.style.marginLeft = "700px";
             dsPlData.innerText = "Hello " + usrFirst.title + " " + usrLName.title + " " + usrId_.title;
     }
     function signOut() {
@@ -140,6 +145,18 @@
         auth2.signOut().then(function () {
             console.log('User signed out.');
         });
+        if(localStorage.getItem("userLName") != null){
+            localStorage.removeItem("userLName");
+            localStorage.removeItem("userLogin");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("userAccessToken");
+            localStorage.removeItem("gUserName");
+            localStorage.removeItem("gUserImage");
+        }
+        if(localStorage.getItem("userName") != null){
+            localStorage.removeItem("userName");
+            localStorage.removeItem("userLogin");
+        }
     }
 
 </script>
