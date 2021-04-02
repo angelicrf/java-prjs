@@ -2,11 +2,12 @@ package com.example.web_app;
 
 import com.mongodb.client.*;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 import org.bson.Document;
-import sun.text.resources.FormatData;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,10 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -29,60 +27,88 @@ public class Login extends HttpServlet {
    String fl = "";
    Boolean imgUpdated = false;
    String flName = "";
+   Boolean isPostCalled = false;
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-            for (FileItem item : items) {
-                if (item.isFormField()) {
-                    System.out.println("isTextFile");
-                    String fieldName = item.getFieldName();
-                    System.out.println("fieldNAme " + fieldName);
-                    String fieldValue = item.getString();
-                    System.out.println("fieldValue " + fieldValue);
-
-                } else {
-                    System.out.println("isFile");
-                    response.setContentType("image/jpeg");
-                    String fileName = FilenameUtils.getName(item.getName());
-                    InputStream fileContent = new BufferedInputStream(item.getInputStream());
-                    String filePath = "/home/bcuser/Git/java-prjs/web-apps/src/main/webapp/images/" + fileName;
-                    Boolean getResult = getFileUpload(fileContent, filePath);
-                    if (getResult) {
-                        this.flName = fileName;
-                        this.imgUpdated = true;
-                        this.fl = filePath;
-                        response.setContentType("image/jpeg");
-                        request.getSession().setAttribute("imgUploaded", this.imgUpdated);
-                        request.getSession().setAttribute("imgName", this.flName);
-                        request.getSession().setAttribute("newPath", this.fl);
-                        doGet(request, response);
+            System.out.println("doPost Called");
+            //List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(new ServletRequestContext(request));
+            if (ServletFileUpload.isMultipartContent(request)) {
+                System.out.println("it is maltipart");
+                FileItemFactory factory = new DiskFileItemFactory();
+                ServletFileUpload fileUpload = new ServletFileUpload(factory);
+                System.out.println("afterfileUpload " + fileUpload);
+                List <FileItem> items = fileUpload.parseRequest(request);
+                System.out.println("items are " + items);
+                for (FileItem item : items) {
+                       if (item.isFormField()) {
+                        System.out.println("isTextFile");
+                        String fieldName = item.getFieldName();
+                        System.out.println("fieldNAme " + fieldName);
+                        String fieldValue = item.getString();
+                        System.out.println("fieldValue " + fieldValue);
 
                     } else {
-                        System.out.println("there is an error");
+                        System.out.println("isFile");
+                        response.setContentType("image/jpeg");
+                        String fileName = FilenameUtils.getName(item.getName());
+                        InputStream fileContent = new BufferedInputStream(item.getInputStream());
+                        String getFilePath = getServletContext().getRealPath("/");
+                        String mdFilePath = "";
+                        if (getFilePath.contains("target")) {
+                            mdFilePath = getFilePath.split("/target")[0];
+                            System.out.println("without target " + mdFilePath);
+                        }
+                        String filePath = mdFilePath + "/src/main/webapp/images/" + fileName;
+                        Boolean getResult = getFileUpload(fileContent, filePath);
+                        if (getResult) {
+                            this.flName = fileName;
+                            this.imgUpdated = true;
+                            this.fl = filePath;
+                            response.setContentType("image/jpeg");
+                            request.getSession().setAttribute("imgUploaded", this.imgUpdated);
+                            request.getSession().setAttribute("imgName", this.flName);
+                            request.getSession().setAttribute("newPath", this.fl);
+                            doGet(request, response);
+                            isPostCalled = true;
+                        } else {
+                            System.out.println("there is an error");
+                        }
                     }
+                }}} catch(FileUploadException e){
+                    e.printStackTrace();
                 }
             }
-        } catch (Exception e) {
-            throw new ServletException("Cannot parse multipart request.", e);
-        }
-    }
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        @Override
+    public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
         String getName = request.getParameter("name");
         String getPassword = request.getParameter("password");
         String getCheckBox = request.getParameter("signUp");
         System.out.println("signUp value" + getCheckBox);
 
-        CompletableFuture.runAsync(() -> {
-            cltMongoDb(request,getName,getPassword,getCheckBox);
-        });
-
+        if(request.getSession().getAttribute("imgName") == null) {
+            CompletableFuture.runAsync(() -> {
+                cltMongoDb(request, getName, getPassword, getCheckBox);
+            });
+        }
         try{
             Thread.sleep(5000);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
-            dispatcher.forward(request,response);
-        } catch (ServletException | IOException | InterruptedException e) {
+            RequestDispatcher dispatcherOne = null;
+            RequestDispatcher dispatcherTwo = null;
+
+              System.out.println( "values of request is " + request.getSession().getAttribute("imgName"));
+           if( request.getSession().getAttribute("imgName") == null) {
+                dispatcherOne = request.getRequestDispatcher("/index.jsp");
+                dispatcherOne.forward(request,response);
+               // response.reset();
+            }
+            else{
+            dispatcherTwo = request.getRequestDispatcher("/login.jsp");
+            dispatcherTwo.forward(request,response);
+            }
+
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -100,12 +126,7 @@ public class Login extends HttpServlet {
                 if (cursor.hasNext()) {
                     Document document = cursor.next();
                     request.setAttribute("clientName", document.getString("name"));
-                } else {
-
-                    request.setAttribute("clientName", "not-client");
                 }
-                //org.bson.Document nextDocument = iter.next()
-                // nextDocument.get("name").toString());
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }

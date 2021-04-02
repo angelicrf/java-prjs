@@ -43,11 +43,30 @@
 </div>
 <div class="container mt-4 text-center pt-4 calcMain">
     <h2>Golf Clubs Login</h2>
+    <div id="stUserName"></div>
+    <script type="text/javascript">
+        console.log("newLogin local");
+        if(localStorage.getItem("userName") != null){
+            let stDataUser = localStorage.getItem("userName");
+            document.getElementById("stUserName").innerText = "Welcome " + stDataUser;
+        }
+    </script>
     <% if (request.getAttribute("clientName") == null){ %>
-        <p>client</p>
+        <div id="nonClient"></div>
+        <script type="text/javascript">
+            if(localStorage.getItem("userName") == null) {
+                document.getElementById("nonClient").innerText = "client";
+            }
+        </script>
     <%} else {%>
     <%Object usrName = request.getAttribute("clientName");%>
-    <p>Welcome <%=usrName%> </p>
+    <div id="fromUserName" data-value="<%=usrName%>"></div>
+    <script>
+        let compareName = document.getElementById("fromUserName").getAttribute("data-value");
+        if(localStorage.getItem("userName") !== compareName ){
+            document.getElementById("fromUserName").innerText = Welcome + compareName;
+        }
+    </script>
     <div id="dispInfo" data-value=<%=usrName%>></div>
     <script type="text/javascript">
         function signedInUser(){
