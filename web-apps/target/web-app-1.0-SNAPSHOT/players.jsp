@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>calculator</title>
 </head>
-<body class="btn-light">
+<body class="btn-light" style="height: 1300px;">
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,9 +32,13 @@
     <h2 class="mt-4 btn-danger text-center">Client Name is : <%= request.getAttribute("clientName")%></h2>
     <h2 class="mt-4 btn-danger text-center"><%= request.getAttribute("tournamentName")%></h2>
  <div class="text-center mt-4">
+     <form method="get" action="players">
+         <input class="btn btn-info" name="getPlayers"  type="submit" value="GetPlayers"/>
+     </form>
  <%ArrayList<String> listPlayers = (ArrayList<String>) request.getAttribute("playerNames");%>
  <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) request.getAttribute("playersFirstNames");%>
  <%ArrayList<String> listCountry = (ArrayList<String>) request.getAttribute("country");%>
+     <%if(listCountry != null){%>
     <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle">
         <tr><th>Players First Name</th><th>Players Last Name</th><th>Country</th></tr>
         <% for (int i=0; i< listPlayers.size();i++){ %>
@@ -45,6 +49,8 @@
             <%} %>
         </tr>
     </table>
+     <%}else%>
+     <h3>players page</h3>
 </div>
 </div>
 <footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">
