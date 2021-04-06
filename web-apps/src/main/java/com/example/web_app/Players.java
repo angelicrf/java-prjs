@@ -31,13 +31,28 @@ public class Players extends HttpServlet {
     List<String> countryArray = new ArrayList<String>();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        CompletableFuture.runAsync(() -> {
-            try {
-                getTournamentInfo(request);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        Object getPlayerValue = request.getParameter("testName");
+        Object getAllPlayers = request.getParameter("getPlayers");
+        if(getAllPlayers != null) {
+            CompletableFuture.runAsync(() -> {
+                try {
+                    getTournamentInfo(request);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        if(getPlayerValue != null) {
+            CompletableFuture.runAsync(() -> {
+                try {
+                    Thread.sleep(3000);
+                    System.out.println("getName is " + getPlayerValue);
+                    mongodbAddLikePlayers(getPlayerValue.toString(), "Mike", "USA");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
 
        try{
             Thread.sleep(5000);
@@ -61,9 +76,11 @@ public class Players extends HttpServlet {
              if (cursor.hasNext()) {
                  Document document = cursor.next();
                  //display them in login page
+                 System.out.println("not found");
              }
              else{
                  collection.insertOne(doc);
+                 System.out.println("sent to mongo");
              }
          } catch (RuntimeException e) {
              e.printStackTrace();

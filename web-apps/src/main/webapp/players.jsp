@@ -55,10 +55,19 @@
      </tr>
          <%}%>
      </table>
-    <div id="val"></div>
+     <div style="visibility: hidden" id="dsPlayers">
+     <form action="players" method="get" id="frmSbt">
+         <input type="hidden"  id="sbtInfo"/>
+     </form>
+     </div>
+     <%valueArray.add("");%>
      <script type="text/javascript">
          let table = document.getElementById("myTable");
+         let divPlayer = document.getElementById("dsPlayers");
+         let formSbt = document.getElementById("sbtInfo");
+         let formDiv = document.getElementById("frmSbt");
          let getLength = <%=testNames.length%>;
+         let mdRowInfo = "";
          let secCount = 0;
              for(let h = 0; h < parseInt(getLength); h++) {
                  if(localStorage.getItem("setLiked" + h) != null || localStorage.getItem("setDisLike" + h != null)){
@@ -78,17 +87,23 @@
                          }
                      }
                      let stRowInfo = rowInfo.toString().split('\n').filter(el => String(el).trim());
-                     let mdRowInfo = stRowInfo.map(el => String(el).trim());
+                     mdRowInfo = stRowInfo.map(el => String(el).trim());
                      localStorage.setItem("setPlayerLiked" + h, mdRowInfo);
-
+                     //set the actual value
+                     formSbt.setAttribute("value", "testValue");
+                     //name of the param
+                     formSbt.setAttribute("name", "testName");
+                     formDiv.submit();
                  });
                  document.getElementById("thumbsDown" + h).addEventListener("click", (e) => {
                      console.log("buttonDown clicked ");
                      let getSelectedRow = e.target.closest('td').cellIndex;
                      getDataDown(h);
+                     localStorage.setItem("setPlayerDisLike" + h, mdRowInfo);
                  });
              }
-
+        //
+        // let stValuePrLiked = document.getElementById("valPrLiked").getAttribute("data-value");
          function getDataUp(h){
              let valLike = localStorage.getItem("setLiked" + h);
              let count = 3;
