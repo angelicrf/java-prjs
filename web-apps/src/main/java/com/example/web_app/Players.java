@@ -1,8 +1,10 @@
 package com.example.web_app;
 
+import com.mongodb.client.*;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +38,7 @@ public class Players extends HttpServlet {
                 e.printStackTrace();
             }
         });
+
        try{
             Thread.sleep(5000);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/players.jsp");
@@ -45,7 +48,27 @@ public class Players extends HttpServlet {
         }
         //out.println("Num One is " +  getNumOne + " Num two is " + getNUmTwo + " result is " + calcResult);
     }
-
+ private void mongodbAddLikePlayers(String plLikedName,String plLikedLName,String plLikeCountry){
+     MongoClient mongoClient = MongoClients.create("mongodb+srv://new-admin-calc:123456calc@clustercalc.xuacu.mongodb.net/calculate?retryWrites=true&w=majority");
+     MongoDatabase database = mongoClient.getDatabase("calculate");
+     MongoCollection<Document> collection = database.getCollection("likedplayers");
+     Document doc = new Document("likedPlName", plLikedName)
+             .append("likedPlLName", plLikedLName)
+             .append("likedPlCountry",plLikeCountry);
+     FindIterable<Document> iterLiked = collection.find(doc);
+     MongoCursor<Document> cursor = iterLiked.iterator();
+         try {
+             if (cursor.hasNext()) {
+                 Document document = cursor.next();
+                 //display them in login page
+             }
+             else{
+                 collection.insertOne(doc);
+             }
+         } catch (RuntimeException e) {
+             e.printStackTrace();
+         }
+     }
  private void getTournamentInfo(HttpServletRequest request) throws IOException {
      Request request2 = new Request.Builder()
              .url("https://golf-leaderboard-data.p.rapidapi.com/entry-list/219")

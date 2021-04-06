@@ -38,8 +38,7 @@
  <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) request.getAttribute("playersFirstNames");%>
  <%ArrayList<String> listCountry = (ArrayList<String>) request.getAttribute("country");%>
      <%String[] testNames = new String[]{"tg", "tf"};
-         List<Integer> valueArray = new ArrayList<Integer>();
-         List<Integer> downArray = new ArrayList<Integer>();
+         List<String> valueArray = new ArrayList<String>();
        %>
      <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle" id="myTable">
      <tr><th>Like</th><th>First Name</th><th>Id</th></tr>
@@ -56,27 +55,32 @@
      </tr>
          <%}%>
      </table>
-
+    <div id="val"></div>
      <script type="text/javascript">
          let table = document.getElementById("myTable");
          let getLength = <%=testNames.length%>;
          let secCount = 0;
              for(let h = 0; h < parseInt(getLength); h++) {
+                 if(localStorage.getItem("setLiked" + h) != null || localStorage.getItem("setDisLike" + h != null)){
+                     document.getElementById("thmbUp" + h).innerHTML = localStorage.getItem("setLiked" + h);
+                     document.getElementById("thmbDown" + h).innerHTML = localStorage.getItem("setDisLike" + h);
+                 }
                  document.getElementById("thumbsUp" + h).addEventListener("click", (e) => {
                      console.log("button clicked ");
-                     let getSelectedRow = e.target.closest('td').cellIndex;
+                     let getSelectedRow = e.target.closest('td');
+                     const rw = getSelectedRow.parentElement;
                      getDataUp(h);
-                     //console.log("getSelectedRow " + parseInt(getSelectedRow));
-                     //alert("outside rowIndexUp");
-                   /*  for (let i = 0, row; row = table.rows[i]; i++) {
+                     let rowInfo = '';
+                     for (let i = 0, row; row = table.rows[i]; i++) {
                          for (let j = 0, col; col = row.cells[j]; j++) {
-                             let rowsId = table.rows[i].cells[2].textContent.trim();
-                             if (parseInt(rowsId) === parseInt(getSelectedRow)) {
-                                // alert("selectedRow " + parseInt(getSelectedRow));
-                                 getDataUp(h);
-                             }
+                              rowInfo = table.rows[parseInt(rw.rowIndex)].textContent.trim();
+                                 //.cells[1].textContent.trim();
                          }
-                     }*/
+                     }
+                     let stRowInfo = rowInfo.toString().split('\n').filter(el => String(el).trim());
+                     let mdRowInfo = stRowInfo.map(el => String(el).trim());
+                     localStorage.setItem("setPlayerLiked" + h, mdRowInfo);
+
                  });
                  document.getElementById("thumbsDown" + h).addEventListener("click", (e) => {
                      console.log("buttonDown clicked ");
