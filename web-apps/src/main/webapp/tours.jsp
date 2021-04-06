@@ -12,7 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>tours</title>
 </head>
-<body>
+<body style="height: 2100px;">
 <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">

@@ -1,5 +1,6 @@
 <%@ page import="org.json.JSONObject" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -36,20 +37,155 @@
  <%ArrayList<String> listPlayers = (ArrayList<String>) request.getAttribute("playerNames");%>
  <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) request.getAttribute("playersFirstNames");%>
  <%ArrayList<String> listCountry = (ArrayList<String>) request.getAttribute("country");%>
-     <%if(listCountry != null){%>
+     <%String[] testNames = new String[]{"tg", "tf"};
+         List<Integer> valueArray = new ArrayList<Integer>();
+         List<Integer> downArray = new ArrayList<Integer>();
+       %>
+     <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle" id="myTable">
+     <tr><th>Like</th><th>First Name</th><th>Id</th></tr>
+     <% for (int i=0; i< testNames.length;i++){ %>
+     <tr>
+         <td>
+             <button id="thumbsUp<%=i%>"><i class="fa fa-thumbs-up myThmbUp"></i></button>
+             <span id="thmbUp<%=i%>"></span>
+             <button id="thumbsDown<%=i%>"><i class="fa fa-thumbs-down ml-2 myThmbDown"></i></button>
+             <span id="thmbDown<%=i%>"></span>
+         </td>
+         <td><span id="custName"><%=testNames[i] %></span></td>
+         <td><p id="spcId"><%=i%></p></td>
+     </tr>
+         <%}%>
+     </table>
+
+     <script type="text/javascript">
+         let table = document.getElementById("myTable");
+         let getLength = <%=testNames.length%>;
+         let secCount = 0;
+             for(let h = 0; h < parseInt(getLength); h++) {
+                 document.getElementById("thumbsUp" + h).addEventListener("click", (e) => {
+                     console.log("button clicked ");
+                     let getSelectedRow = e.target.closest('td').cellIndex;
+                     getDataUp(h);
+                     //console.log("getSelectedRow " + parseInt(getSelectedRow));
+                     //alert("outside rowIndexUp");
+                   /*  for (let i = 0, row; row = table.rows[i]; i++) {
+                         for (let j = 0, col; col = row.cells[j]; j++) {
+                             let rowsId = table.rows[i].cells[2].textContent.trim();
+                             if (parseInt(rowsId) === parseInt(getSelectedRow)) {
+                                // alert("selectedRow " + parseInt(getSelectedRow));
+                                 getDataUp(h);
+                             }
+                         }
+                     }*/
+                 });
+                 document.getElementById("thumbsDown" + h).addEventListener("click", (e) => {
+                     console.log("buttonDown clicked ");
+                     let getSelectedRow = e.target.closest('td').cellIndex;
+                     getDataDown(h);
+                 });
+             }
+
+         function getDataUp(h){
+             let valLike = localStorage.getItem("setLiked" + h);
+             let count = 3;
+             if(valLike === null) {
+                 console.log("getDataUp Called ");
+                 count++;
+                 document.getElementById("thmbUp" + h).innerHTML = count;
+                 secCount = count;
+                 localStorage.setItem("setLiked" + h, secCount);
+             }else{
+                 valLike++;
+                 localStorage.setItem("setLiked" + h, valLike);
+                 document.getElementById("thmbUp" + h).innerHTML = valLike;
+                 secCount = valLike;
+                 localStorage.setItem("setLiked" + h, secCount);
+             }
+             return secCount;
+         }
+        function getDataDown(h){
+            let valLike = localStorage.getItem("setLiked" + h);
+            let valDislike = localStorage.getItem("setDisLike" + h);
+            let count = 0;
+            let disCount = 3;
+                 if(valDislike === null) {
+                     console.log("val dislike null");
+                     disCount++;
+                     localStorage.setItem("setDisLike" + h, disCount);
+                     document.getElementById("thmbDown" + h).innerHTML = disCount;
+                     if(valLike === null) {
+                         count = secCount;
+                         count--;
+                         localStorage.setItem("setLiked" + h, count);
+                         document.getElementById("thmbUp" + h).innerHTML = count;
+                         return count;
+                     }else{
+                         console.log("vallike-dislike not null");
+                         count = valLike;
+                         valLike--;
+                         localStorage.setItem("setLiked" + h, valLike);
+                         document.getElementById("thmbUp" + h).innerHTML = valLike;
+                         return count;
+                     }
+                 } else{
+                     console.log("dislike notnull");
+                     valDislike++;
+                     localStorage.setItem("setDisLike" + h, valDislike);
+                     document.getElementById("thmbDown" + h).innerHTML = valDislike;
+                     if(valLike === null) {
+                         count = secCount;
+                         count--;
+                         localStorage.setItem("setLiked" + h, count);
+                         document.getElementById("thmbUp" + h).innerHTML = count;
+                         return count;
+                     }else{
+                         console.log("vallike-dislike2 not null");
+                         count = valLike;
+                         valLike--;
+                         localStorage.setItem("setLiked" + h, valLike);
+                         document.getElementById("thmbUp" + h).innerHTML = valLike;
+                         return  count;
+                     }
+                 }
+         }
+     </script>
+
+     <%--<%if(listCountry != null){%>
      <h2 class="mt-4 btn-danger text-center"><%= request.getAttribute("tournamentName")%></h2>
     <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle">
         <tr><th>Players First Name</th><th>Players Last Name</th><th>Country</th></tr>
         <% for (int i=0; i< listPlayers.size();i++){ %>
         <tr>
-            <td> <%=listPlayers.get(i) %>  </td>
+            <td>
+                <div id="hlId" data-value="<%=i%>"></div>
+                <i onclick="myFunction(this)" class="fa fa-thumbs-up myThmbUp"></i>
+                <span id="countedNum<%=i%>"></span>
+                <i onclick="myFunctionTwo(this)" class="fa fa-thumbs-down ml-2 myThmbDown"></i>
+                <span id="countedTwo<%=i%>"></span>
+                <script type="text/javascript">
+                    let count = 3;
+                    let disCount = 3;
+                    function myFunction(x) {
+                        count ++;
+                        document.getElementById("countedNum<%=i%>").innerHTML = count;
+                        return count;
+                    }
+                    function myFunctionTwo(x) {
+                        disCount ++;
+                        document.getElementById("countedTwo<%=i%>").innerHTML = disCount;
+                        count --;
+                        document.getElementById("countedNum").innerHTML = count;
+                        return count;
+                    }
+                </script>
+                <span><%=listPlayers.get(i) %></span>  </td>
             <td> <%=listFirstNamePlayers.get(i) %>  </td>
             <td> <%=listCountry.get(i) %>  </td>
             <%} %>
         </tr>
     </table>
      <%}else%>
-     <h3>players page</h3>
+     <h3>players page</h3>--%>
 </div>
 </div>
 <footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">

@@ -103,3 +103,15 @@ body{
 .follow-text {
     color: #9E9E9E
 }
+.myThmbDown , .myThmbUp {
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.fa-thumbs-up:hover {
+    color: darkblue;
+}
+.fa-thumbs-down:hover{
+    color: darkred;
+}
