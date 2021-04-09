@@ -31,8 +31,9 @@ public class Players extends HttpServlet {
     List<String> countryArray = new ArrayList<String>();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Object getPlayerValue = request.getParameter("testName");
+        Object getPlayerValue = request.getParameter("favName");
         Object getAllPlayers = request.getParameter("getPlayers");
+        Object getRmvPlayer = request.getParameter("favRmv");
         if(getAllPlayers != null) {
             CompletableFuture.runAsync(() -> {
                 try {
@@ -47,13 +48,22 @@ public class Players extends HttpServlet {
                 try {
                     Thread.sleep(3000);
                     System.out.println("getName is " + getPlayerValue);
-                    mongodbAddLikePlayers(getPlayerValue.toString(), "Favorite", "France");
+                    mongodbAddLikePlayers(getPlayerValue.toString(), "LikedHeart", "Germany");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             });
         }
-
+      if(getRmvPlayer != null){
+          CompletableFuture.runAsync(() -> {
+             try {
+                 Thread.sleep(2000);
+                 removeFromMongo(getRmvPlayer.toString());
+             }catch (InterruptedException e){
+                 e.printStackTrace();
+             }
+          });
+      }
        try{
             Thread.sleep(5000);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/players.jsp");
@@ -75,7 +85,6 @@ public class Players extends HttpServlet {
          try {
              if (cursor.hasNext()) {
                  Document document = cursor.next();
-                 //display them in login page
                  System.out.println("not found");
              }
              else{
@@ -86,6 +95,16 @@ public class Players extends HttpServlet {
              e.printStackTrace();
          }
      }
+ private void removeFromMongo(String fvName) {
+     MongoClient mongoClient = MongoClients.create("mongodb+srv://new-admin-calc:123456calc@clustercalc.xuacu.mongodb.net/calculate?retryWrites=true&w=majority");
+     MongoDatabase database = mongoClient.getDatabase("calculate");
+     MongoCollection<Document> collection = database.getCollection("likedplayers");
+     try {
+       collection.deleteOne(new Document("likedPlName", fvName));
+     }catch (Exception e){
+         e.printStackTrace();
+     }
+ }
  private void getTournamentInfo(HttpServletRequest request) throws IOException {
      Request request2 = new Request.Builder()
              .url("https://golf-leaderboard-data.p.rapidapi.com/entry-list/219")

@@ -52,7 +52,7 @@
          </td>
          <td><span id="custName"><%=testNames[i] %></span></td>
          <td><p id="spcId"><%=i%></p></td>
-         <td><button id="heartBtn<%=i%>"><i class="far fa-heart"></i></button></td>
+         <td><button id="heartBtn<%=i%>"><i class="far fa-heart myLike<%=i%>"></i></button></td>
      </tr>
          <%}%>
      </table>
@@ -60,42 +60,79 @@
      <form action="players" method="get" id="frmSbt">
          <input type="hidden"  id="sbtInfo"/>
      </form>
+         <form action="players" method="get" id="frmRmv">
+             <input type="hidden"  id="rmvInfo"/>
+         </form>
      </div>
-     <%valueArray.add("");%>
      <script type="text/javascript">
          let table = document.getElementById("myTable");
          let divPlayer = document.getElementById("dsPlayers");
          let formSbt = document.getElementById("sbtInfo");
          let formDiv = document.getElementById("frmSbt");
+         let formRmv = document.getElementById("frmRmv");
+         let rmvDiv = document.getElementById("rmvInfo");
          let getLength = <%=testNames.length%>;
          let mdRowInfo = "";
          let secCount = 0;
+         let getSelectedRow;
+         let rw;
+         let isHaerted = false;
+
              for(let h = 0; h < parseInt(getLength); h++) {
                  if(localStorage.getItem("setLiked" + h) != null || localStorage.getItem("setDisLike" + h != null)){
                      document.getElementById("thmbUp" + h).innerHTML = localStorage.getItem("setLiked" + h);
                      document.getElementById("thmbDown" + h).innerHTML = localStorage.getItem("setDisLike" + h);
                  }
-                 document.getElementById("heartBtn" + h).addEventListener("click", e => {
-                     console.log("toggleHeart clicked");
-                     e.target.classList.add("fas","heart","fa-heart");
-                     let getSelectedRow = e.target.closest('td');
-                     const rw = getSelectedRow.parentElement;
-                     let rowInfo = '';
-                     for (let i = 0, row; row = table.rows[i]; i++) {
-                         for (let j = 0, col; col = row.cells[j]; j++) {
-                             rowInfo = table.rows[parseInt(rw.rowIndex)].textContent.trim();
-                             //.cells[1].textContent.trim();
-                         }
-                     }
-                     let stRowInfo = rowInfo.toString().split('\n').filter(el => String(el).trim());
-                     mdRowInfo = stRowInfo.map(el => String(el).trim());
-                     localStorage.setItem("setPlayerLiked" + h, mdRowInfo);
-                     //set the actual value
-                     formSbt.setAttribute("value", "testValue");
-                     //name of the param
-                     formSbt.setAttribute("name", "testName");
-                     formDiv.submit();
-                 });
+                 if(localStorage.getItem("setPlayerLiked" + h) === null) {
+                     document.getElementById("heartBtn" + h).addEventListener("click", e => {
+                         document.querySelectorAll('.myLike' + h).forEach(item => {
+                             if (item.classList.contains("heart")) {
+                                 item.classList.remove("heart");
+                                 item.classList.toggle("far");
+                             } else {
+                                 console.log("has heart");
+                                 item.classList.toggle("fas");
+                                 item.classList.add("heart");
+                                 getSelectedRow = item.closest("td");
+                                 rw = getSelectedRow.parentElement;
+                                 isHaerted = true;
+                             }
+                             if (isHaerted) {
+                                 console.log("rw " + rw + "getSelectedRow " + getSelectedRow);
+                                 let rowInfo = '';
+                                 for (let i = 0, row; row = table.rows[i]; i++) {
+                                     for (let j = 0, col; col = row.cells[j]; j++) {
+                                         rowInfo = table.rows[parseInt(rw.rowIndex)].textContent.trim();
+                                     }
+                                 }
+                                 let stRowInfo = rowInfo.toString().split('\n').filter(el => String(el).trim());
+                                 mdRowInfo = stRowInfo.map(el => String(el).trim());
+                                 localStorage.setItem("setPlayerLiked" + h, mdRowInfo[0]);
+                                 formSbt.setAttribute("value", localStorage.getItem("setPlayerLiked" + h));
+                                 formSbt.setAttribute("name", "favName");
+                                 formDiv.submit();
+                             }
+                         });
+                     });
+                 }else{
+                     document.querySelectorAll('.myLike' + h).forEach(item => {
+                         console.log("there is liked in local...");
+                         item.classList.toggle("fas");
+                         item.classList.add("heart");
+                     });
+                     document.getElementById("heartBtn" + h).addEventListener("click", e => {
+                         document.querySelectorAll('.myLike' + h).forEach(item => {
+                             if (item.classList.contains("heart")) {
+                                 item.classList.remove("heart");
+                                 item.classList.toggle("far");
+                                 rmvDiv.setAttribute("name", "favRmv");
+                                 formRmv.submit();
+                                 localStorage.removeItem("setPlayerLiked" + h);
+                             }
+                         });
+                     });
+                 }
+
                  document.getElementById("thumbsUp" + h).addEventListener("click", (e) => {
                      console.log("button clicked ");
                      getDataUp(h);
