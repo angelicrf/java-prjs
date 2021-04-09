@@ -41,7 +41,7 @@
          List<String> valueArray = new ArrayList<String>();
        %>
      <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle" id="myTable">
-     <tr><th>Like</th><th>First Name</th><th>Id</th></tr>
+     <tr><th>Like</th><th>First Name</th><th>Id</th><th>Favorite</th></tr>
      <% for (int i=0; i< testNames.length;i++){ %>
      <tr>
          <td>
@@ -52,6 +52,7 @@
          </td>
          <td><span id="custName"><%=testNames[i] %></span></td>
          <td><p id="spcId"><%=i%></p></td>
+         <td><button id="heartBtn<%=i%>"><i class="far fa-heart"></i></button></td>
      </tr>
          <%}%>
      </table>
@@ -74,16 +75,16 @@
                      document.getElementById("thmbUp" + h).innerHTML = localStorage.getItem("setLiked" + h);
                      document.getElementById("thmbDown" + h).innerHTML = localStorage.getItem("setDisLike" + h);
                  }
-                 document.getElementById("thumbsUp" + h).addEventListener("click", (e) => {
-                     console.log("button clicked ");
+                 document.getElementById("heartBtn" + h).addEventListener("click", e => {
+                     console.log("toggleHeart clicked");
+                     e.target.classList.add("fas","heart","fa-heart");
                      let getSelectedRow = e.target.closest('td');
                      const rw = getSelectedRow.parentElement;
-                     getDataUp(h);
                      let rowInfo = '';
                      for (let i = 0, row; row = table.rows[i]; i++) {
                          for (let j = 0, col; col = row.cells[j]; j++) {
-                              rowInfo = table.rows[parseInt(rw.rowIndex)].textContent.trim();
-                                 //.cells[1].textContent.trim();
+                             rowInfo = table.rows[parseInt(rw.rowIndex)].textContent.trim();
+                             //.cells[1].textContent.trim();
                          }
                      }
                      let stRowInfo = rowInfo.toString().split('\n').filter(el => String(el).trim());
@@ -95,6 +96,10 @@
                      formSbt.setAttribute("name", "testName");
                      formDiv.submit();
                  });
+                 document.getElementById("thumbsUp" + h).addEventListener("click", (e) => {
+                     console.log("button clicked ");
+                     getDataUp(h);
+                 });
                  document.getElementById("thumbsDown" + h).addEventListener("click", (e) => {
                      console.log("buttonDown clicked ");
                      let getSelectedRow = e.target.closest('td').cellIndex;
@@ -102,8 +107,7 @@
                      localStorage.setItem("setPlayerDisLike" + h, mdRowInfo);
                  });
              }
-        //
-        // let stValuePrLiked = document.getElementById("valPrLiked").getAttribute("data-value");
+
          function getDataUp(h){
              let valLike = localStorage.getItem("setLiked" + h);
              let count = 3;

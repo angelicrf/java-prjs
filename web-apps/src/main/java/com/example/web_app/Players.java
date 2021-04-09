@@ -47,7 +47,7 @@ public class Players extends HttpServlet {
                 try {
                     Thread.sleep(3000);
                     System.out.println("getName is " + getPlayerValue);
-                    mongodbAddLikePlayers(getPlayerValue.toString(), "Mike", "USA");
+                    mongodbAddLikePlayers(getPlayerValue.toString(), "Favorite", "France");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
