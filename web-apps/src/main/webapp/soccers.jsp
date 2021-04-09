@@ -12,7 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>Succers Players</title>
 </head>
-<body class="btn-light">
+<body class="btn-light" style="height: 1300px;">
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
     </table>
     <%}%>
 </div>
-<footer style="position: fixed; margin-left: -50px; margin-right: -70px; bottom: 0;">
+<footer style="position: absolute; margin-left: -50px; margin-right: -70px; bottom: 0;">
     <div class='container-fluid'>
         <div class="card">
             <div class="heading text-center">
