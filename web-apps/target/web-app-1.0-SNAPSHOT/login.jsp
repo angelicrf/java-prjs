@@ -56,12 +56,14 @@
                         <input type="file" name="file" />
                         <input type="submit" value="Upload" />
                     </form>
-                    <h5 class="card-title">User Profile</h5>
-                    <h4 class="card-content" id="clUserName">here is the data</h4>
+                    <i style="color: #e0a02b;  font-size: 2em; padding-right: 10px;" class="fas fa-file-signature"></i><span class="card-title" style="font-size: 25px; font-weight: bold;">User Profile</span>
+                    <br><br>
+                    <i style="visibility: hidden; color: #e0a02b;  font-size: 2em;" class="fas fa-user-tag" id="iconName"></i><span style="font-size: 18px;" class="card-content" id="clUserName">here is the data</span>
+                    <br><br>
+                    <i style="visibility: hidden; color: #e0a02b;  font-size: 2em;" class="fab fa-gratipay" id="iconLike"></i><span style="font-size: 18px;" class="card-content" id="likedUser">Liked: </span>
                 </div>
             </div>
                 <div id="gData" style="visibility: hidden;">
-<%--                    <img class="card-img-top" src="./images/golf-0.jpg" alt="Card image cap">--%>
                     <div class="container card-img-top" id="clUserImg"></div>
                     <div class="card-header">User Profile</div>
                     <ul class="list-group list-group-flush">
@@ -82,7 +84,10 @@
                      document.getElementById("gData").style.display= "none";
                      document.getElementById("generalUser").style.display= "auto";
                      document.getElementById("generalUser").style.visibility = "visible";
-                     document.getElementById("clUserName").innerText = "Name: " + localStorage.getItem("userName");
+                     document.getElementById("iconName").style.visibility = "visible";
+                     document.getElementById("clUserName").innerText = " " + localStorage.getItem("userName");
+                     document.getElementById("iconLike").style.visibility = "visible";
+                     document.getElementById("likedUser").innerText = " " + allStorage();
                  }
                  if (localStorage.getItem('userId') != null) {
                      console.log("gdata is ok");
@@ -103,6 +108,18 @@
                      storeUserImg.append(newUserImg);
                      document.getElementById("clUserAccessTkn").innerText = "AccessToken : " +  localStorage.getItem("userAccessToken");
                  }
+             }
+             function allStorage() {
+                 valueFromLocal = "";
+                 keys = Object.keys(localStorage);
+                 let findLocalSt = keys.filter( s => s.includes("setPlayerLiked"));
+                 console.log(findLocalSt);
+                 if(findLocalSt === undefined || findLocalSt === null){
+                     valueFromLocal = "NON";
+                 }else {
+                     valueFromLocal = localStorage.getItem(findLocalSt);
+                 }
+                 return  valueFromLocal;
              }
          </script>
     <% }

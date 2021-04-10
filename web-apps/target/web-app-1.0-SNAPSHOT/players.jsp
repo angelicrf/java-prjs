@@ -103,15 +103,12 @@
                                  for (let i = 0, row; row = table.rows[i]; i++) {
                                      for (let j = 0, col; col = row.cells[j]; j++) {
                                          rowInfo = table.rows[parseInt(rw.rowIndex)].textContent.trim();
-                                         //.cells[1].textContent.trim();
                                      }
                                  }
                                  let stRowInfo = rowInfo.toString().split('\n').filter(el => String(el).trim());
                                  mdRowInfo = stRowInfo.map(el => String(el).trim());
                                  localStorage.setItem("setPlayerLiked" + h, mdRowInfo[0]);
-                                 //set the actual value
                                  formSbt.setAttribute("value", localStorage.getItem("setPlayerLiked" + h));
-                                 //name of the param
                                  formSbt.setAttribute("name", "favName");
                                  formDiv.submit();
                              }
@@ -128,9 +125,6 @@
                              if (item.classList.contains("heart")) {
                                  item.classList.remove("heart");
                                  item.classList.toggle("far");
-                                 //send something to mongo
-                                 rmvDiv.setAttribute("value", localStorage.getItem("setPlayerLiked" + h));
-                                 //name of the param
                                  rmvDiv.setAttribute("name", "favRmv");
                                  formRmv.submit();
                                  localStorage.removeItem("setPlayerLiked" + h);
