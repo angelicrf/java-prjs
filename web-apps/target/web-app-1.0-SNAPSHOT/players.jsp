@@ -37,11 +37,38 @@
  <%ArrayList<String> listPlayers = (ArrayList<String>) request.getAttribute("playerNames");%>
  <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) request.getAttribute("playersFirstNames");%>
  <%ArrayList<String> listCountry = (ArrayList<String>) request.getAttribute("country");%>
-     <%String[] testNames = new String[]{"tg", "tf"};
-         List<String> valueArray = new ArrayList<String>();
-       %>
-     <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle" id="myTable">
-     <tr><th>Like</th><th>First Name</th><th>Id</th><th>Favorite</th></tr>
+     <%if(listCountry != null){%>
+     <h2 class="mt-4 btn-danger text-center"><%= request.getAttribute("tournamentName")%></h2>
+   <table id="myTable" class="mt-4 table text-center table-responsive table-hover table-striped tbStyle">
+       <tr><th>Rate</th><th>Players First Name</th><th>Players Last Name</th><th>Country</th><th>Favorite</th></tr>
+       <% for (int i=0; i< listPlayers.size();i++){ %>
+       <tr>
+           <td>
+               <button id="thumbsUp<%=i%>"><i class="fa fa-thumbs-up myThmbUp"></i></button>
+               <span id="thmbUp<%=i%>"></span>
+               <button id="thumbsDown<%=i%>"><i class="fa fa-thumbs-down ml-2 myThmbDown"></i></button>
+               <span id="thmbDown<%=i%>"></span>
+           </td>
+           <td><span id="custName"> <%=listFirstNamePlayers.get(i) %></span></td>
+           <td><span id="custLName"> <%=listPlayers.get(i) %></span></td>
+           <td><span id="custCountry"><%=listCountry.get(i) %></span></td>
+           <td><button id="heartBtn<%=i%>"><i class="far fa-heart myLike<%=i%>"></i></button></td>
+       </tr>
+       <%} %>
+   </table>
+    <%}else{%>
+    <h3>players page</h3>
+     <%}%>
+     <div style="visibility: hidden" id="dsPlayers">
+         <form action="players" method="get" id="frmSbt">
+             <input type="hidden"  id="sbtInfo"/>
+         </form>
+         <form action="players" method="get" id="frmRmv">
+             <input type="hidden" id="rmvInfo"/>
+         </form>
+     </div>
+  <%--   <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle" id="myTable">
+     <tr><th>Like</th><th>First Name</th><th>Favorite</th></tr>
      <% for (int i=0; i< testNames.length;i++){ %>
      <tr>
          <td>
@@ -50,20 +77,12 @@
              <button id="thumbsDown<%=i%>"><i class="fa fa-thumbs-down ml-2 myThmbDown"></i></button>
              <span id="thmbDown<%=i%>"></span>
          </td>
-         <td><span id="custName"><%=testNames[i] %></span></td>
-         <td><p id="spcId"><%=i%></p></td>
+&lt;%&ndash;         <td><span id="custName"><%=testNames[i] %></span></td>&ndash;%&gt;
          <td><button id="heartBtn<%=i%>"><i class="far fa-heart myLike<%=i%>"></i></button></td>
      </tr>
          <%}%>
-     </table>
-     <div style="visibility: hidden" id="dsPlayers">
-     <form action="players" method="get" id="frmSbt">
-         <input type="hidden"  id="sbtInfo"/>
-     </form>
-         <form action="players" method="get" id="frmRmv">
-             <input type="hidden"  id="rmvInfo"/>
-         </form>
-     </div>
+     </table>--%>
+
      <script type="text/javascript">
          let table = document.getElementById("myTable");
          let divPlayer = document.getElementById("dsPlayers");
@@ -71,7 +90,10 @@
          let formDiv = document.getElementById("frmSbt");
          let formRmv = document.getElementById("frmRmv");
          let rmvDiv = document.getElementById("rmvInfo");
-         let getLength = <%=testNames.length%>;
+         let getLength = 0;
+         <%if(listPlayers != null){%>
+             getLength = <%=listPlayers.size()%>;
+         <%}%>
          let mdRowInfo = "";
          let secCount = 0;
          let getSelectedRow;
@@ -107,8 +129,15 @@
                                  }
                                  let stRowInfo = rowInfo.toString().split('\n').filter(el => String(el).trim());
                                  mdRowInfo = stRowInfo.map(el => String(el).trim());
+                                 console.log("mdRowInfo 0 " + mdRowInfo[0] + "mdInfo 1 " +  mdRowInfo[1] + "mdInfo2 " + mdRowInfo [2]);
                                  localStorage.setItem("setPlayerLiked" + h, mdRowInfo[0]);
-                                 formSbt.setAttribute("value", localStorage.getItem("setPlayerLiked" + h));
+                                 localStorage.setItem("setPlayerLikedLast" + h, mdRowInfo[1]);
+                                 localStorage.setItem("setPlayerLikedCountry" + h, mdRowInfo[2]);
+                                 formSbt.setAttribute("value",JSON.stringify({
+                                     name:localStorage.getItem("setPlayerLiked" + h),
+                                     lastName: localStorage.getItem("setPlayerLikedLast" + h),
+                                     plCountry: localStorage.getItem("setPlayerLikedCountry" + h)
+                                 }));
                                  formSbt.setAttribute("name", "favName");
                                  formDiv.submit();
                              }
@@ -209,43 +238,6 @@
                  }
          }
      </script>
-
-     <%--<%if(listCountry != null){%>
-     <h2 class="mt-4 btn-danger text-center"><%= request.getAttribute("tournamentName")%></h2>
-    <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle">
-        <tr><th>Players First Name</th><th>Players Last Name</th><th>Country</th></tr>
-        <% for (int i=0; i< listPlayers.size();i++){ %>
-        <tr>
-            <td>
-                <div id="hlId" data-value="<%=i%>"></div>
-                <i onclick="myFunction(this)" class="fa fa-thumbs-up myThmbUp"></i>
-                <span id="countedNum<%=i%>"></span>
-                <i onclick="myFunctionTwo(this)" class="fa fa-thumbs-down ml-2 myThmbDown"></i>
-                <span id="countedTwo<%=i%>"></span>
-                <script type="text/javascript">
-                    let count = 3;
-                    let disCount = 3;
-                    function myFunction(x) {
-                        count ++;
-                        document.getElementById("countedNum<%=i%>").innerHTML = count;
-                        return count;
-                    }
-                    function myFunctionTwo(x) {
-                        disCount ++;
-                        document.getElementById("countedTwo<%=i%>").innerHTML = disCount;
-                        count --;
-                        document.getElementById("countedNum").innerHTML = count;
-                        return count;
-                    }
-                </script>
-                <span><%=listPlayers.get(i) %></span>  </td>
-            <td> <%=listFirstNamePlayers.get(i) %>  </td>
-            <td> <%=listCountry.get(i) %>  </td>
-            <%} %>
-        </tr>
-    </table>
-     <%}else%>
-     <h3>players page</h3>--%>
 </div>
 </div>
 <footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">

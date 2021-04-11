@@ -32,6 +32,8 @@ public class Players extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Object getPlayerValue = request.getParameter("favName");
+        //Object getPlayerLastNameValue = request.getParameter("favLast");
+        //Object getPlayerCountryValue =  request.getParameter("favCountry");
         Object getAllPlayers = request.getParameter("getPlayers");
         Object getRmvPlayer = request.getParameter("favRmv");
         if(getAllPlayers != null) {
@@ -47,9 +49,12 @@ public class Players extends HttpServlet {
             CompletableFuture.runAsync(() -> {
                 try {
                     Thread.sleep(3000);
-                    System.out.println("getName is " + getPlayerValue);
-                    mongodbAddLikePlayers(getPlayerValue.toString(), "LikedHeart", "Germany");
-                } catch (InterruptedException e) {
+                    JSONObject td = new JSONObject(getPlayerValue.toString());
+                    String plFName = td.getString("name");
+                    String plLastName = td.getString("lastName");
+                    String plCountry = td.getString("plCountry");
+                    mongodbAddLikePlayers(plFName, plLastName, plCountry);
+                } catch (InterruptedException | JSONException e) {
                     e.printStackTrace();
                 }
             });
@@ -73,7 +78,12 @@ public class Players extends HttpServlet {
         }
         //out.println("Num One is " +  getNumOne + " Num two is " + getNUmTwo + " result is " + calcResult);
     }
- private void mongodbAddLikePlayers(String plLikedName,String plLikedLName,String plLikeCountry){
+
+    private List<String> getGetPlayerValue(List<String> getPlayerValue) {
+        return getPlayerValue;
+    }
+
+    private void mongodbAddLikePlayers(String plLikedName,String plLikedLName,String plLikeCountry){
      MongoClient mongoClient = MongoClients.create("mongodb+srv://new-admin-calc:123456calc@clustercalc.xuacu.mongodb.net/calculate?retryWrites=true&w=majority");
      MongoDatabase database = mongoClient.getDatabase("calculate");
      MongoCollection<Document> collection = database.getCollection("likedplayers");
