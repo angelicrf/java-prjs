@@ -12,7 +12,7 @@
             crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>calculator</title>
+    <title>players</title>
 </head>
 <body class="btn-light" style="height: 1300px;">
 <div class="pos-f-t">
@@ -31,28 +31,77 @@
 </div>
 <div class="container">
  <div class="text-center mt-4">
-     <form method="get" action="players">
-         <input class="btn btn-info" name="getPlayers"  type="submit" value="GetPlayers"/>
-     </form>
- <%ArrayList<String> listPlayers = (ArrayList<String>) request.getAttribute("playerNames");%>
- <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) request.getAttribute("playersFirstNames");%>
- <%ArrayList<String> listCountry = (ArrayList<String>) request.getAttribute("country");%>
+     <h2>page players</h2>
+       <%-- <form method="post" action="players" id="myForm">
+             <input type="submit" name="showAll" value="dataUpload" class="btn-danger btn">
+         </form>--%>
+     <button style="visibility: hidden" id="newForm" type="button" onclick="postData('http://localhost:8081/web_app_war_exploded/players?showAll=GetPlayers')"></button>
+      <button style="visibility: hidden" id="respId" onclick="async function tgf() {await this.getParamUri()} tgf()"></button>
+         <div style="visibility: hidden" id="newText">here is the text</div>
+     </div>
+     <script type="text/javascript">
+         let form = document.getElementById("newForm");
+         let respBtn =  document.getElementById("respId");
+         let newTxt = document.getElementById("newText");
+         if((! localStorage.getItem("btnClick") && ! localStorage.getItem("firstLoad"))) {
+             respBtn.click();
+         }else{ respBtn.setAttribute("disabled" ,"disabled");
+             localStorage.removeItem("btnClick");
+             localStorage.removeItem("firstLoad");
+         }
+             async function getParamUri() {
+                 return await new Promise((resolve, reject) => {
+                     console.log('getParamUri called');
+                     fetch('http://localhost:8081/web_app_war_exploded/players?showAll=GetPlayers', {
+                         method: 'GET',
+                         mode: 'cors',
+                         cache: 'no-cache',
+                         headers: {
+                             'Accept': 'application/json , text/javascript, *!/!*',
+                             'User-Agent': 'Mozilla/5.0',
+                             'Content-Type': 'application/json, application/x-www-form-urlencoded'
+                         }
+                     }).then(res => {
+                         return res.text();
+                     }).then(data => {
+                         newTxt.style.visibility = "visible";
+                     })
+                         .catch(err => {
+                             console.log("the err is " + err);
+                             reject(err);
+                         }).finally(async function () {
+                         (function () {
+                             if (window.localStorage) {
+                                 if (!localStorage.getItem('firstLoad')) {
+                                     localStorage['firstLoad'] = true;
+                                     window.location.reload();
+                                     localStorage.setItem("btnClick", "btnClicked");
+                                 } else localStorage.removeItem('firstLoad');
+                             }
+                         })();
+                     });
+                 })
+             }
+  </script>
+ <%ArrayList<String> listPlayers = (ArrayList<String>) session.getAttribute("playerNames");%>
+ <%ArrayList<String> listFirstNamePlayers = (ArrayList<String>) session.getAttribute("playersFirstNames");%>
+ <%ArrayList<String> listCountry = (ArrayList<String>) session.getAttribute("country");%>
      <%if(listCountry != null){%>
-     <h2 class="mt-4 btn-danger text-center"><%= request.getAttribute("tournamentName")%></h2>
+     <h2 class="mt-4 btn-danger text-center"><%= session.getAttribute("tournamentName")%></h2>
    <table id="myTable" class="mt-4 table text-center table-responsive table-hover table-striped tbStyle">
        <tr><th>Rate</th><th>Players First Name</th><th>Players Last Name</th><th>Country</th><th>Favorite</th></tr>
        <% for (int i=0; i< listPlayers.size();i++){ %>
        <tr>
            <td>
-               <button id="thumbsUp<%=i%>"><i class="fa fa-thumbs-up myThmbUp"></i></button>
+               <button class="btn" id="thumbsUp<%=i%>"><i class="fa fa-thumbs-up myThmbUp"></i></button>
                <span id="thmbUp<%=i%>"></span>
-               <button id="thumbsDown<%=i%>"><i class="fa fa-thumbs-down ml-2 myThmbDown"></i></button>
+               <button class="btn" id="thumbsDown<%=i%>"><i class="fa fa-thumbs-down ml-2 myThmbDown"></i></button>
                <span id="thmbDown<%=i%>"></span>
            </td>
            <td><span id="custName"> <%=listFirstNamePlayers.get(i) %></span></td>
            <td><span id="custLName"> <%=listPlayers.get(i) %></span></td>
            <td><span id="custCountry"><%=listCountry.get(i) %></span></td>
-           <td><button id="heartBtn<%=i%>"><i class="far fa-heart myLike<%=i%>"></i></button></td>
+           <td><button class="btn" id="heartBtn<%=i%>"><i class="far fa-heart myLike<%=i%>"></i></button></td>
        </tr>
        <%} %>
    </table>
@@ -67,22 +116,6 @@
              <input type="hidden" id="rmvInfo"/>
          </form>
      </div>
-  <%--   <table class="mt-4 table text-center table-responsive table-hover table-striped tbStyle" id="myTable">
-     <tr><th>Like</th><th>First Name</th><th>Favorite</th></tr>
-     <% for (int i=0; i< testNames.length;i++){ %>
-     <tr>
-         <td>
-             <button id="thumbsUp<%=i%>"><i class="fa fa-thumbs-up myThmbUp"></i></button>
-             <span id="thmbUp<%=i%>"></span>
-             <button id="thumbsDown<%=i%>"><i class="fa fa-thumbs-down ml-2 myThmbDown"></i></button>
-             <span id="thmbDown<%=i%>"></span>
-         </td>
-&lt;%&ndash;         <td><span id="custName"><%=testNames[i] %></span></td>&ndash;%&gt;
-         <td><button id="heartBtn<%=i%>"><i class="far fa-heart myLike<%=i%>"></i></button></td>
-     </tr>
-         <%}%>
-     </table>--%>
-
      <script type="text/javascript">
          let table = document.getElementById("myTable");
          let divPlayer = document.getElementById("dsPlayers");
@@ -98,9 +131,8 @@
          let secCount = 0;
          let getSelectedRow;
          let rw;
-         let isHaerted = false;
-
-             for(let h = 0; h < parseInt(getLength); h++) {
+         let isHearted = false;
+         for(let h = 0; h < parseInt(getLength); h++) {
                  if(localStorage.getItem("setLiked" + h) != null || localStorage.getItem("setDisLike" + h != null)){
                      document.getElementById("thmbUp" + h).innerHTML = localStorage.getItem("setLiked" + h);
                      document.getElementById("thmbDown" + h).innerHTML = localStorage.getItem("setDisLike" + h);
@@ -117,9 +149,9 @@
                                  item.classList.add("heart");
                                  getSelectedRow = item.closest("td");
                                  rw = getSelectedRow.parentElement;
-                                 isHaerted = true;
+                                 isHearted = true;
                              }
-                             if (isHaerted) {
+                             if (isHearted) {
                                  console.log("rw " + rw + "getSelectedRow " + getSelectedRow);
                                  let rowInfo = '';
                                  for (let i = 0, row; row = table.rows[i]; i++) {
@@ -154,9 +186,16 @@
                              if (item.classList.contains("heart")) {
                                  item.classList.remove("heart");
                                  item.classList.toggle("far");
+                                 rmvDiv.setAttribute("value",JSON.stringify({
+                                     name:localStorage.getItem("setPlayerLiked" + h),
+                                     lastName: localStorage.getItem("setPlayerLikedLast" + h),
+                                     plCountry: localStorage.getItem("setPlayerLikedCountry" + h)
+                                 }));
                                  rmvDiv.setAttribute("name", "favRmv");
                                  formRmv.submit();
                                  localStorage.removeItem("setPlayerLiked" + h);
+                                 localStorage.removeItem("setPlayerLikedCountry" + h);
+                                 localStorage.removeItem("setPlayerLikedLast" + h);
                              }
                          });
                      });
@@ -173,7 +212,6 @@
                      localStorage.setItem("setPlayerDisLike" + h, mdRowInfo);
                  });
              }
-
          function getDataUp(h){
              let valLike = localStorage.getItem("setLiked" + h);
              let count = 3;
@@ -238,7 +276,6 @@
                  }
          }
      </script>
-</div>
 </div>
 <footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">
     <div class='container-fluid'>

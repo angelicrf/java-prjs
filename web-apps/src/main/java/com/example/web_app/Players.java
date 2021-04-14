@@ -21,30 +21,34 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @WebServlet(name = "players", value = "/players")
-
 public class Players extends HttpServlet {
-
     OkHttpClient client = new OkHttpClient();
     Object tournamentName = new Object();
     List<String> nameArray = new ArrayList<String>();
     List<String> firstnameArray = new ArrayList<String>();
     List<String> countryArray = new ArrayList<String>();
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+       // exmp String getShowAll = request.getParameter("showAll");
+        System.out.println("from post ");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/players.jsp");
+        dispatcher.forward(request, response);
+    }
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        System.out.println("doGet also called...");
         Object getPlayerValue = request.getParameter("favName");
-        //Object getPlayerLastNameValue = request.getParameter("favLast");
-        //Object getPlayerCountryValue =  request.getParameter("favCountry");
-        Object getAllPlayers = request.getParameter("getPlayers");
+        Object getAllPlayers = request.getParameter("showAll");
         Object getRmvPlayer = request.getParameter("favRmv");
-        if(getAllPlayers != null) {
-            CompletableFuture.runAsync(() -> {
-                try {
-                    getTournamentInfo(request);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
+            if (getAllPlayers != null) {
+                CompletableFuture.runAsync(() -> {
+                    System.out.println("from get " + getAllPlayers);
+                    try {
+                        getTournamentInfo(request);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
         if(getPlayerValue != null) {
             CompletableFuture.runAsync(() -> {
                 try {
@@ -60,30 +64,29 @@ public class Players extends HttpServlet {
             });
         }
       if(getRmvPlayer != null){
+          System.out.println("deleted item is " + getRmvPlayer);
           CompletableFuture.runAsync(() -> {
              try {
                  Thread.sleep(2000);
-                 removeFromMongo(getRmvPlayer.toString());
-             }catch (InterruptedException e){
+                 JSONObject tdl = new JSONObject(getRmvPlayer.toString());
+                 String plFNameDl = tdl.getString("name");
+                 removeFromMongo(plFNameDl.toString());
+             }catch (InterruptedException | JSONException e){
                  e.printStackTrace();
              }
           });
       }
        try{
-            Thread.sleep(5000);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/players.jsp");
-            dispatcher.forward(request,response);
-        } catch (ServletException | IOException | InterruptedException e) {
+           Thread.sleep(2000);
+           RequestDispatcher dispatcher = request.getRequestDispatcher("/players.jsp");
+           dispatcher.forward(request, response);
+           //response.sendRedirect("http://localhost:8081/web_app_war_exploded/players.jsp");
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //out.println("Num One is " +  getNumOne + " Num two is " + getNUmTwo + " result is " + calcResult);
     }
 
-    private List<String> getGetPlayerValue(List<String> getPlayerValue) {
-        return getPlayerValue;
-    }
-
-    private void mongodbAddLikePlayers(String plLikedName,String plLikedLName,String plLikeCountry){
+ private void mongodbAddLikePlayers(String plLikedName,String plLikedLName,String plLikeCountry){
      MongoClient mongoClient = MongoClients.create("mongodb+srv://new-admin-calc:123456calc@clustercalc.xuacu.mongodb.net/calculate?retryWrites=true&w=majority");
      MongoDatabase database = mongoClient.getDatabase("calculate");
      MongoCollection<Document> collection = database.getCollection("likedplayers");
@@ -105,12 +108,13 @@ public class Players extends HttpServlet {
              e.printStackTrace();
          }
      }
- private void removeFromMongo(String fvName) {
+
+ private void removeFromMongo(String delName) {
      MongoClient mongoClient = MongoClients.create("mongodb+srv://new-admin-calc:123456calc@clustercalc.xuacu.mongodb.net/calculate?retryWrites=true&w=majority");
      MongoDatabase database = mongoClient.getDatabase("calculate");
      MongoCollection<Document> collection = database.getCollection("likedplayers");
      try {
-       collection.deleteOne(new Document("likedPlName", fvName));
+       collection.deleteOne(new Document("likedPlName", delName));
      }catch (Exception e){
          e.printStackTrace();
      }
@@ -132,8 +136,7 @@ public class Players extends HttpServlet {
      try {
          JSONObject jst = new JSONObject(json);
          this.tournamentName = jst.getJSONObject("results").getJSONObject("tournament").get("name");
-         request.setAttribute("tournamentName", this.tournamentName.toString());
-
+         request.getSession().setAttribute("tournamentName", this.tournamentName.toString());
          playerName = jst.getJSONObject("results").getJSONArray("entry_list");
          for (int i = 0 ; i < playerName.length(); i++){
              JSONObject obj = playerName.getJSONObject(i);
@@ -141,14 +144,13 @@ public class Players extends HttpServlet {
              this.firstnameArray.add(obj.getString("first_name"));
              this.countryArray.add(obj.getString("country"));
          }
-
-         request.setAttribute("playerNames", this.nameArray);
-         request.setAttribute("playersFirstNames", this.firstnameArray);
-         request.setAttribute("country", this.countryArray);
+         request.getSession().setAttribute("playerNames", this.nameArray);
+         request.getSession().setAttribute("playersFirstNames", this.firstnameArray);
+         request.getSession().setAttribute("country", this.countryArray);
+         //request.getSession().setAttribute("displayNewData", this.getAllPlayers);
          System.out.println(this.countryArray);
      } catch (JSONException e) {
          e.printStackTrace();
      }
  }
-
 }
