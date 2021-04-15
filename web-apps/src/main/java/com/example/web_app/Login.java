@@ -1,6 +1,7 @@
 package com.example.web_app;
 
 import com.mongodb.client.*;
+import com.pusher.rest.Pusher;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -112,7 +114,11 @@ public class Login extends HttpServlet {
             e.printStackTrace();
         }
     }
-
+    private void pusherNotification() {
+        Pusher pusher = new Pusher("1188390", "f2e9aaeace529c524f7e", "98b5447f7926065411bb");
+        pusher.setCluster("us3");
+        pusher.trigger("my-channel", "my-event", Collections.singletonMap("message", "Hello World"));
+    }
     private void cltMongoDb(HttpServletRequest request,String clName,String clPassword,String sinUp) {
         MongoClient mongoClient = MongoClients.create("mongodb+srv://new-admin-calc:123456calc@clustercalc.xuacu.mongodb.net/calculate?retryWrites=true&w=majority");
         MongoDatabase database = mongoClient.getDatabase("calculate");

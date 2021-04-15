@@ -13,6 +13,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
@@ -43,8 +44,36 @@
 <div class="container mt-4 text-center pt-4 calcMain">
     <h2>Golf Clubs Login</h2>
     <div id="stUserName"></div>
-    <script type="text/javascript">
+    <dialog open style="position: fixed; left: 0; top: 0; width: 320px; margin-left: 10px;">
+        <div class="alert alert-warning" role="alert">
+            <img src="images/golf-1.jpg" style="width: 50px; height: 50px; margin-left: -15px;"  alt="logo"/><span style="font-size: small; padding-left: 8px;">Subscribe to Golf Clubs Events?</span>
+            <br>
+            <button style="margin-top: -13px;" id="sbsOk">Ok</button>
+            <button style="margin-left: 15px; margin-top: -13px;" id="sbsNo">No</button>
+        </div>
+    </dialog>
+   <script type="text/javascript">
         console.log("newLogin local");
+        let isSubscribe = false;
+        document.getElementById("sbsOk").addEventListener('click', () => {
+            document.querySelector('dialog').removeAttribute('open');
+            return isSubscribe = true;
+        });
+        document.getElementById("sbsNo").addEventListener('click', () => {
+            document.querySelector('dialog').removeAttribute('open');
+            return isSubscribe = false;
+        });
+       if(isSubscribe) {
+           console.log("is cubsribed...");
+           let pusher = new Pusher('f2e9aaeace529c524f7e', {
+               cluster: 'us3'
+           });
+           let channel = pusher.subscribe('golf-clubs');
+           channel.bind('golf-evt-clubs', function (data) {
+               console.log("inside pusher....");
+               alert('An event was triggered with message: channel Golf-Events ');
+           });
+       }
         if(localStorage.getItem("userName") != null){
             let stDataUser = localStorage.getItem("userName");
             document.getElementById("stUserName").innerText = "Welcome " + stDataUser;
@@ -62,6 +91,7 @@
     <div id="fromUserName" data-value="<%=usrName%>"></div>
     <script>
         let compareName = document.getElementById("fromUserName").getAttribute("data-value");
+        console.log("pusher start..");
         if(localStorage.getItem("userName") !== compareName ){
             document.getElementById("fromUserName").innerText = Welcome + compareName;
         }
@@ -138,6 +168,15 @@
             dsPlData.style.color = "white";
            // dsPlData.style.marginLeft = "700px";
             dsPlData.innerText = "Hello " + usrFirst.title + " " + usrLName.title + " " + usrId_.title;
+        let pusher = new Pusher('f2e9aaeace529c524f7e', {
+            cluster: 'us3'
+        });
+        let channel = pusher.subscribe('my-channel');
+        setTimeout(() => {
+            channel.bind('my-event', function (data) {
+                alert('An event was triggered with message: ' + data.message);
+            }, 2000);
+        });
     }
     function signOut() {
         let auth2 = gapi.auth2.getAuthInstance();
@@ -159,7 +198,6 @@
     }
 
 </script>
-
 <script src="https://apis.google.com/js/platform.js"  async defer></script>
 <footer style="position: absolute; margin-left: -70px; margin-right: -60px; bottom: 0;">
     <div class='container-fluid'>
