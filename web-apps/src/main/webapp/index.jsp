@@ -38,6 +38,7 @@
                <p><label><i class="fas fa-futbol mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/soccers.jsp">Soccer Players</a></p>
                <p><label><i class="fas fa-calendar mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/calendarclbs.jsp">Calendar</a></p>
                <p><label><i class="fas fa-user-circle mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/login.jsp">My Account</a></p>
+               <p><label><i class="fas fa-user-circle mr-3 ml-2"></i></label><a class="navbar-brand" href="${pageContext.request.contextPath}/upImg.jsp">Gain Points</a></p>
         </div>
     </div>
 </div>
@@ -57,12 +58,17 @@
         let isSubscribe = false;
         document.getElementById("sbsOk").addEventListener('click', () => {
             document.querySelector('dialog').removeAttribute('open');
+            localStorage.setItem("subscribed", "yes");
             return isSubscribe = true;
         });
         document.getElementById("sbsNo").addEventListener('click', () => {
             document.querySelector('dialog').removeAttribute('open');
+            localStorage.setItem("subscribed", "no");
             return isSubscribe = false;
         });
+        if(localStorage.getItem("subscribed")){
+            document.querySelector('dialog').removeAttribute('open');
+        }
        if(isSubscribe) {
            console.log("is cubsribed...");
            let pusher = new Pusher('f2e9aaeace529c524f7e', {
@@ -199,7 +205,7 @@
 
 </script>
 <script src="https://apis.google.com/js/platform.js"  async defer></script>
-<footer style="position: absolute; margin-left: -70px; margin-right: -60px; bottom: 0;">
+<footer style="position: absolute; left: 0; right: 0; bottom: 0;">
     <div class='container-fluid'>
         <div class="card">
             <div class="heading text-center">

@@ -1,11 +1,11 @@
 body{
     position: relative;
-    background-image: url(./images/golfMain.jpg);
+    /*background-image: url(./images/golfMain.jpg);
     background-repeat: no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: cover;*/
 }
 .newBtn, .container {
     border-radius: 15px;
