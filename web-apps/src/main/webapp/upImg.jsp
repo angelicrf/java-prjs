@@ -51,7 +51,7 @@
     function preload () {
         let getImgsCards = toStoreImgCards();
             if(getImgsCards !== null) {
-                console.log("inside getImgCards..");
+                console.log("inside getImgCardsUpdated..");
                 for (let i = 0; i < holdImgCards.length; i++) {
                     this.load.image("glfCard" + i, "images/cards/" + i + ".png");
                 }

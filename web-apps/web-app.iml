@@ -35,6 +35,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/jar_files/mongodb-driver-sync-4.0.2/com" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/newJar/jar_files/bson-4.0.2/org" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/newJar/jar_files/mongodb-driver-core-4.0.2/com" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/newJar/jar_files/mongodb-driver-sync-4.0.2/com" />
     </content>
     <orderEntry type="jdk" jdkName="8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
