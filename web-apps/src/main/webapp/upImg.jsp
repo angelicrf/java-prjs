@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>game</title>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="./index.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -38,25 +38,59 @@
     let game = new Phaser.Game(config) ;
     function preload ()
     {
-        this.load.setBaseURL('http://labs.phaser.io');
-        this.load.image('sky', 'assets/skies/space3.png');
-        this.load.image('logo', 'assets/sprites/diamond.png');
-        this.load.image('red', 'assets/particles/red.png');
+        this.load.image('glfCard', 'images/card.jpeg');
+/*        this.load.image('cyanCardBack', 'images/card2.png');
+        this.load.image('magentaCardFront', 'images/card3.png');
+        this.load.image('magentaCardBack', 'images/card4.png');*/
+    }
+
+    class Card {
+        constructor(scene) {
+            this.render = (x, y, sprite) => {
+                let card = scene.add.image(x, y, sprite)
+                    .setScale(0.3, 0.3).setInteractive();
+                scene.input.setDraggable(card);
+                return card;
+            }
+        }
     }
     function create ()
     {
-        this.add.image(500, 400, 'sky');
-        let particles = this.add.particles('red');
-        let emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 1, end: 0 },
-            blendMode: 'ADD'
-        });
-        let logo = this.physics.add.image(500, 200, 'logo');
-        logo.setVelocity(100, 200);
-        logo.setBounce(1, 1);
-        logo.setCollideWorldBounds(true);
-        emitter.startFollow(logo);
+        this.dealText = this.add.text(55, 350, ['PLAY CARDS'])
+            .setFontSize(18).setFontFamily('Trebuchet MS')
+            .setColor('#00ffff').setInteractive();
+        let self = this;
+        /*this.card = this.add.image(320, 300, 'glfCard')
+                    .setScale(0.3, 0.3)
+                    .setInteractive();*/
+        //this.input.setDraggable(this.card);
+        //this.input.setDraggable(new Card(this));
+        this.dealCards = () => {
+            console.log("inside dealCards...");
+            let playerCard = new Card(this);
+           for (let i = 0; i < 5; i++) {
+                playerCard.render(320 + (i * 100), 300, 'glfCard');
+                console.log("rendered...");
+            }
+        }
+     this.dealCards();
+        this.dealText.on('pointerdown', function () {
+            self.dealCards();
+        })
+
+        this.dealText.on('pointerover', function () {
+            self.dealText.setColor('#ff69b4');
+        })
+
+        this.dealText.on('pointerout', function () {
+            self.dealText.setColor('#00ffff');
+        })
+
+       this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+            console.log("inside input on");
+            gameObject.x = dragX;
+            gameObject.y = dragY;
+        })
     }
 </script>
 </body>

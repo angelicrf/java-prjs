@@ -277,7 +277,7 @@
          }
      </script>
 </div>
-<footer style="position: absolute; margin-left: -50px; margin-right: -60px; bottom: 0;">
+<footer style="position: absolute; left: 0; right: 0; bottom: 0;">
     <div class='container-fluid'>
         <div class="card">
             <div class="heading text-center">
