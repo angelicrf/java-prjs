@@ -12,15 +12,19 @@
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body style="background-color: #c6cece; height: 1600px;">
+<body style="background-color: #c6cece; height: 2200px;">
 <h2>Game Page</h2>
 <div id="gameDisplay" class="container btn-info text-center"></div>
 <script>
+    let goodItems = [];
+    goodItems.push('glfCard39');
+    goodItems.push('glfCard40');
+    goodItems.push('glfCard41');
     let gameDisp = document.getElementById("gameDisplay");
     let config = {
         type: Phaser.AUTO,
         width: 1000,
-        height: 800,
+        height: 1600,
         scale:{
             parent: gameDisp
         },
@@ -36,14 +40,23 @@
         }
     };
     let game = new Phaser.Game(config) ;
-    function preload ()
-    {
-        this.load.image('glfCard', 'images/card.jpeg');
-/*        this.load.image('cyanCardBack', 'images/card2.png');
-        this.load.image('magentaCardFront', 'images/card3.png');
-        this.load.image('magentaCardBack', 'images/card4.png');*/
+    let holdImgCards = [];
+    let floor;
+    function toStoreImgCards(){
+        for(let i = 0; i < 54; i++) {
+            holdImgCards.push( "glfCard" + i);
+        }
+        return holdImgCards;
     }
-
+    function preload () {
+        let getImgsCards = toStoreImgCards();
+            if(getImgsCards !== null) {
+                console.log("inside getImgCards..");
+                for (let i = 0; i < holdImgCards.length; i++) {
+                    this.load.image("glfCard" + i, "images/cards/" + i + ".png");
+                }
+            }
+    }
     class Card {
         constructor(scene) {
             this.render = (x, y, sprite) => {
@@ -56,23 +69,21 @@
     }
     function create ()
     {
-        this.dealText = this.add.text(55, 350, ['PLAY CARDS'])
+        //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
+        let graphics = this.add.graphics();
+        graphics.lineStyle(2, 0xffff00, 1);
+        graphics.strokeRoundedRect(150, 530, 700, 450, 32);
+        this.dealText = this.add.text(25, 720, ['PLAY CARDS'])
             .setFontSize(18).setFontFamily('Trebuchet MS')
             .setColor('#00ffff').setInteractive();
         let self = this;
-        /*this.card = this.add.image(320, 300, 'glfCard')
-                    .setScale(0.3, 0.3)
-                    .setInteractive();*/
-        //this.input.setDraggable(this.card);
-        //this.input.setDraggable(new Card(this));
         this.dealCards = () => {
             console.log("inside dealCards...");
             let playerCard = new Card(this);
-           for (let i = 0; i < 5; i++) {
-                playerCard.render(320 + (i * 100), 300, 'glfCard');
-                console.log("rendered...");
-            }
-        }
+            if(holdImgCards !== null) {
+            lowChanceWin(this);
+            highChanceWin(this);
+        }}
      this.dealCards();
         this.dealText.on('pointerdown', function () {
             self.dealCards();
@@ -91,6 +102,35 @@
             gameObject.x = dragX;
             gameObject.y = dragY;
         })
+    }
+    function lowChanceWin(ev){
+        let result;
+        let playerCard = new Card(ev);
+        for (let i = 0; i < 5; i++){
+        result = holdImgCards[Math.floor(Math.random() * holdImgCards.length)];
+        while(goodItems.includes(result)) {
+            result = holdImgCards[Math.floor(Math.random() * holdImgCards.length)];
+        }
+            playerCard.render(320 + (i * 100), 300, result);
+        }
+    }
+    function highChanceWin(tf){
+        let rt2;
+        let pd2 = new Card(tf);
+        let fourItems = [];
+        while (!goodItems.includes(rt2)) {
+            rt2 = goodItems[Math.floor(Math.random() * goodItems.length)];
+        }
+        fourItems.push(rt2);
+        for (let i = 0; i < 4; i++) {
+            let rt3 = holdImgCards[Math.floor(Math.random() * holdImgCards.length)];
+            fourItems.push(rt3);
+        }
+        let copyFourItems = [].concat(fourItems);
+        let stCopyFour = copyFourItems.sort(() => 0.5 - Math.random());
+        for(let i =0; i < 5; i++){
+            pd2.render(320 + (i * 100), 1200, stCopyFour[i]);
+        }
     }
 </script>
 </body>
