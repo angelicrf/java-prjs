@@ -42,6 +42,7 @@
     let game = new Phaser.Game(config) ;
     let holdImgCards = [];
     let floor;
+    let isFlipped = false;
     function toStoreImgCards(){
         for(let i = 0; i < 54; i++) {
             holdImgCards.push( "glfCard" + i);
@@ -56,19 +57,47 @@
                     this.load.image("glfCard" + i, "images/cards/" + i + ".png");
                 }
             }
+        this.load.image('backCard', 'images/cards/back.jpg');
+        this.load.image('flower', 'images/cards/5.png');
     }
     class Card {
         constructor(scene) {
+            this.card = null;
             this.render = (x, y, sprite) => {
-                let card = scene.add.image(x, y, sprite)
+                this.card = scene.add.image(x, y, sprite)
                     .setScale(0.3, 0.3).setInteractive();
-                scene.input.setDraggable(card);
-                return card;
+                scene.input.setDraggable(this.card);
+                return this.card;
             }
+            return this.card;
         }
     }
     function create ()
     {
+        let backFace = this.add.image(100, 150, 'backCard').setScale(0.3,0.3);
+        let holdTween = async() => {
+           return await new Promise((resolve,reject) =>
+            {
+                this.tweens.add({
+                    targets: backFace,
+                    duration: 500,
+                    scaleX: 0.3 * -0.01,
+                    ease: "Linear",
+                    repeat: 0,
+                    onComplete: () => {
+                        backFace.destroy();
+                        isFlipped = true;
+                        return resolve(isFlipped);
+                    }
+                });
+            });
+        }
+        holdTween().then((rf) => {
+            console.log(rf);
+            if(rf){
+                this.add.image(100, 150, 'flower').setScale(0.3, 0.3);
+            }
+        });
         //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffff00, 1);
@@ -79,7 +108,6 @@
         let self = this;
         this.dealCards = () => {
             console.log("inside dealCards...");
-            let playerCard = new Card(this);
             if(holdImgCards !== null) {
             lowChanceWin(this);
             highChanceWin(this);

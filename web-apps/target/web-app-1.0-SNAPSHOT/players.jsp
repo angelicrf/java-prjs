@@ -35,7 +35,6 @@
        <%-- <form method="post" action="players" id="myForm">
              <input type="submit" name="showAll" value="dataUpload" class="btn-danger btn">
          </form>--%>
-     <button style="visibility: hidden" id="newForm" type="button" onclick="postData('http://localhost:8081/web_app_war_exploded/players?showAll=GetPlayers')"></button>
       <button style="visibility: hidden" id="respId" onclick="async function tgf() {await this.getParamUri()} tgf()"></button>
          <div style="visibility: hidden" id="newText">here is the text</div>
      </div>
