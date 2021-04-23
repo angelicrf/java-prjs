@@ -82,7 +82,9 @@
     {  //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffff00, 1);
-        graphics.strokeRoundedRect(150, 530, 700, 450, 32);
+        //graphics.strokeRoundedRect(520, 700, 700, 450, 32);
+        let zone = this.add.zone(520, 700, 700, 450).setRectangleDropZone(700, 450);
+        graphics.strokeRect(zone.x - zone.input.hitArea.width / 2 , zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         this.dealText = this.add.text(25, 720, ['PLAY CARDS'])
             .setFontSize(18).setFontFamily('Trebuchet MS')
             .setColor('#00ffff').setInteractive();
@@ -136,15 +138,12 @@
         this.dealText.on('pointerout', function () {
             self.dealText.setColor('#00ffff');
         })
-
-       this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+       /*this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
             console.log("inside input on");
             let addTextureKey = [];
             addTextureKey.push(gameObject);
             let stTextureKey = addTextureKey.map(ef => ef.texture.key);
-            //console.log("stTexture is " + JSON.stringify(stTextureKey[0]));
             let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
-            console.log(strTextureKey);
             if(strTextureKey === "backCard"){
                self.isSelected = true;
                gameObject.x = dragX;
@@ -156,8 +155,48 @@
            }else{
                gameObject.x = dragX;
                gameObject.y = dragY;
+               gameObject.input.enabled = false;
+             //   graphics.clear();
+             //   graphics.lineStyle(2, 0xffff00, 1);
+             //   graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
            }
-            //return self.finalCoords;
+        })*/
+        this.input.on('dragstart', function(pointer,gameObject){
+            this.children.bringToTop(gameObject);
+        },this)
+        this.input.on('drag', function(pointer,gameObject,dragX,dragY){
+            gameObject.x = dragX;
+            gameObject.y = dragY;
+        })
+        this.input.on('dragenter', function(pointer,gameObject,dropZone){
+            graphics.clear();
+            graphics.lineStyle(2, 0xffff00, 1);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2 , zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+        })
+        this.input.on('dragleave', function(pointer,gameObject,dropZone){
+            graphics.clear();
+            graphics.lineStyle(2, 0xffff00, 1);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2 , zone.y - zone.input.hitArea.height / 2 , zone.input.hitArea.width, zone.input.hitArea.height);
+        })
+        this.input.on('drop', function(pointer,gameObject,dropZone){
+            console.log("inside dropZone..." );
+            let addTextureKey = [];
+            addTextureKey.push(gameObject);
+            let stTextureKey = addTextureKey.map(ef => ef.texture.key);
+            let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
+            if(strTextureKey === "backCard") {
+                self.createTweens(self, gameObject.x, gameObject.y);
+                gameObject.input.enabled = false;
+            }
+        })
+        this.input.on('dragend',function(pointer,gameObject,dropped){
+            if(!dropped){
+                gameObject.x = gameObject.input.dragStartX;
+                gameObject.y = gameObject.input.dragStartY;
+            }
+            graphics.clear();
+            graphics.lineStyle(2, 0xffff00, 1);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         })
     }
     function lowChanceWin(ev){
