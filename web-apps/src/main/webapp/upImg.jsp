@@ -37,12 +37,17 @@
         scene: {
             preload: preload,
             create: create
+            //update: update,
+            //render: render
         }
     };
     let game = new Phaser.Game(config) ;
     let holdImgCards = [];
     let floor;
     let isFlipped = false;
+    let holdTween = null;
+    let cardInex = 0;
+
     function toStoreImgCards(){
         for(let i = 0; i < 54; i++) {
             holdImgCards.push( "glfCard" + i);
@@ -72,33 +77,9 @@
             return this.card;
         }
     }
+
     function create ()
-    {
-        let backFace = this.add.image(100, 150, 'backCard').setScale(0.3,0.3);
-        let holdTween = async() => {
-           return await new Promise((resolve,reject) =>
-            {
-                this.tweens.add({
-                    targets: backFace,
-                    duration: 500,
-                    scaleX: 0.3 * -0.01,
-                    ease: "Linear",
-                    repeat: 0,
-                    onComplete: () => {
-                        backFace.destroy();
-                        isFlipped = true;
-                        return resolve(isFlipped);
-                    }
-                });
-            });
-        }
-        holdTween().then((rf) => {
-            console.log(rf);
-            if(rf){
-                this.add.image(100, 150, 'flower').setScale(0.3, 0.3);
-            }
-        });
-        //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
+    {  //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffff00, 1);
         graphics.strokeRoundedRect(150, 530, 700, 450, 32);
@@ -106,12 +87,43 @@
             .setFontSize(18).setFontFamily('Trebuchet MS')
             .setColor('#00ffff').setInteractive();
         let self = this;
+        this.finalCoords = [];
+        this.isSelected = false;
         this.dealCards = () => {
             console.log("inside dealCards...");
             if(holdImgCards !== null) {
             lowChanceWin(this);
             highChanceWin(this);
+
         }}
+        this.createTweens = (ev,scX,scY) => {
+            console.log(scX, scY);
+            ev.backFace = ev.add.image(parseInt(scX),parseInt(scY), 'backCard').setScale(0.3,0.3);
+            holdTween = async() => {
+                return await new Promise((resolve,reject) =>
+                {
+                    ev.tweens.add({
+                        targets: ev.backFace,
+                        duration: 500,
+                        scaleX: 0.3 * -0.5,
+                        ease: "Linear",
+                        repeat: 0,
+                        onComplete: () => {
+                            console.log("inside onComplete....");
+                            ev.backFace.visible = false;
+                            isFlipped = true;
+                            return resolve(isFlipped);
+                        }
+                    });
+                });
+            }
+            holdTween().then((rf) => {
+                console.log(rf);
+                if(rf){
+                    ev.add.image(parseInt(scX), parseInt(scY), 'flower').setScale(0.3, 0.3);
+                }
+            });
+        }
      this.dealCards();
         this.dealText.on('pointerdown', function () {
             self.dealCards();
@@ -127,8 +139,23 @@
 
        this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
             console.log("inside input on");
-            gameObject.x = dragX;
-            gameObject.y = dragY;
+            let addTextureKey = [];
+            addTextureKey.push(gameObject);
+            let stTextureKey = addTextureKey.map(ef => ef.texture.key);
+            let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
+            if(strTextureKey === "backCard"){
+               self.isSelected = true;
+               gameObject.x = dragX;
+               gameObject.y = dragY;
+               self.finalCoords.push(Object.assign({myX: gameObject.x , myY: gameObject.y}));
+               setTimeout(() => {
+                   self.createTweens(self, self.finalCoords.slice(-1)[0].myX, self.finalCoords.slice(-1)[0].myY);
+               },3000);
+           }else{
+               gameObject.x = dragX;
+               gameObject.y = dragY;
+           }
+            //return self.finalCoords;
         })
     }
     function lowChanceWin(ev){
@@ -157,9 +184,15 @@
         let copyFourItems = [].concat(fourItems);
         let stCopyFour = copyFourItems.sort(() => 0.5 - Math.random());
         for(let i =0; i < 5; i++){
-            pd2.render(320 + (i * 100), 1200, stCopyFour[i]);
+            cardInex = i;
+            pd2.render(320 + (i * 100), 1200, 'backCard');
+            //pd2.render(320 + (i * 100), 1200, stCopyFour[i]);
         }
     }
+/*    function update (){
+    }
+    function render() {
+    }*/
 </script>
 </body>
 </html>
