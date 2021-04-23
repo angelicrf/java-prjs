@@ -43,11 +43,17 @@
     };
     let game = new Phaser.Game(config) ;
     let holdImgCards = [];
+    let copyFourItems = null;
     let floor;
     let isFlipped = false;
+    let isSelected = false;
+    let isSelected2 = false;
+    let isSelected3 = false;
+    let isSelected4 = false;
+    let isSelected5 = false;
+    let isDraggedItem = false;
     let holdTween = null;
     let cardInex = 0;
-
     function toStoreImgCards(){
         for(let i = 0; i < 54; i++) {
             holdImgCards.push( "glfCard" + i);
@@ -78,32 +84,29 @@
         }
     }
 
-    function create ()
-    {  //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
+    function create () {  //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffff00, 1);
         //graphics.strokeRoundedRect(520, 700, 700, 450, 32);
         let zone = this.add.zone(520, 700, 700, 450).setRectangleDropZone(700, 450);
-        graphics.strokeRect(zone.x - zone.input.hitArea.width / 2 , zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+        graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         this.dealText = this.add.text(25, 720, ['PLAY CARDS'])
             .setFontSize(18).setFontFamily('Trebuchet MS')
             .setColor('#00ffff').setInteractive();
         let self = this;
         this.finalCoords = [];
-        this.isSelected = false;
         this.dealCards = () => {
             console.log("inside dealCards...");
-            if(holdImgCards !== null) {
-            lowChanceWin(this);
-            highChanceWin(this);
-
-        }}
-        this.createTweens = (ev,scX,scY) => {
+            if (holdImgCards !== null) {
+                lowChanceWin(this);
+                displayBackCards(this);
+            }
+        }
+        this.createTweens = (ev, scX, scY) => {
             console.log(scX, scY);
-            ev.backFace = ev.add.image(parseInt(scX),parseInt(scY), 'backCard').setScale(0.3,0.3);
-            holdTween = async() => {
-                return await new Promise((resolve,reject) =>
-                {
+            ev.backFace = ev.add.image(parseInt(scX), parseInt(scY), 'backCard').setScale(0.3, 0.3);
+            holdTween = async () => {
+                return await new Promise((resolve, reject) => {
                     ev.tweens.add({
                         targets: ev.backFace,
                         duration: 500,
@@ -121,52 +124,56 @@
             }
             holdTween().then((rf) => {
                 console.log(rf);
-                if(rf){
-                    ev.add.image(parseInt(scX), parseInt(scY), 'flower').setScale(0.3, 0.3);
+                if (rf) {
+                    if (!isSelected) {
+                        console.log("array of images " + copyFourItems);
+                        console.log("firstIsSelected " + isSelected );
+                        ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[0]).setScale(0.3, 0.3);
+                        isSelected = true;
+                    } else if(isSelected && !isSelected2 && !isSelected3 && !isSelected4 && !isSelected5){
+                        console.log("secondIsSelected " + isSelected );
+                        ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[1]).setScale(0.3, 0.3);
+                        isSelected2 = true;
+                    } else if (isSelected2 && isSelected && !isSelected3 && !isSelected4 && !isSelected5) {
+                        console.log("thirdIsSelected " + isSelected + isSelected2 );
+                        ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[2]).setScale(0.3, 0.3);
+                        isSelected3 = true;
+                    } else if (isSelected2 && isSelected && isSelected3 && !isSelected4 && !isSelected5) {
+                        console.log("fouthIsSelected " + isSelected + isSelected2 + isSelected3 );
+                        ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[3]).setScale(0.3, 0.3);
+                        isSelected4 = true;
+                    } else if (isSelected2 && isSelected && isSelected3 && isSelected4 && !isSelected5 ) {
+                        console.log("fifthIsSelected " + isSelected + isSelected2 + isSelected4 + isSelected3);
+                        ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[4]).setScale(0.3, 0.3);
+                        isSelected5 = true;
+                    }
                 }
-            });
+            })
         }
      this.dealCards();
         this.dealText.on('pointerdown', function () {
             self.dealCards();
         })
-
         this.dealText.on('pointerover', function () {
             self.dealText.setColor('#ff69b4');
         })
-
         this.dealText.on('pointerout', function () {
             self.dealText.setColor('#00ffff');
         })
-       /*this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
-            console.log("inside input on");
-            let addTextureKey = [];
-            addTextureKey.push(gameObject);
-            let stTextureKey = addTextureKey.map(ef => ef.texture.key);
-            let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
-            if(strTextureKey === "backCard"){
-               self.isSelected = true;
-               gameObject.x = dragX;
-               gameObject.y = dragY;
-               self.finalCoords.push(Object.assign({myX: gameObject.x , myY: gameObject.y}));
-               setTimeout(() => {
-                   self.createTweens(self, self.finalCoords.slice(-1)[0].myX, self.finalCoords.slice(-1)[0].myY);
-               },3000);
-           }else{
-               gameObject.x = dragX;
-               gameObject.y = dragY;
-               gameObject.input.enabled = false;
-             //   graphics.clear();
-             //   graphics.lineStyle(2, 0xffff00, 1);
-             //   graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-           }
-        })*/
         this.input.on('dragstart', function(pointer,gameObject){
             this.children.bringToTop(gameObject);
         },this)
         this.input.on('drag', function(pointer,gameObject,dragX,dragY){
             gameObject.x = dragX;
             gameObject.y = dragY;
+            let addTextureKey = [];
+            addTextureKey.push(gameObject);
+            let stTextureKey = addTextureKey.map(ef => ef.texture.key);
+            let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
+            if(strTextureKey === "backCard" && !isDraggedItem) {
+                highChanceWin(self);
+                isDraggedItem = true;
+            }
         })
         this.input.on('dragenter', function(pointer,gameObject,dropZone){
             graphics.clear();
@@ -222,12 +229,14 @@
             let rt3 = holdImgCards[Math.floor(Math.random() * holdImgCards.length)];
             fourItems.push(rt3);
         }
-        let copyFourItems = [].concat(fourItems);
-        let stCopyFour = copyFourItems.sort(() => 0.5 - Math.random());
+        copyFourItems = [].concat(fourItems);
+        return copyFourItems.sort(() => 0.5 - Math.random());
+    }
+    function displayBackCards(gy){
+        let pd3 = new Card(gy);
         for(let i =0; i < 5; i++){
             cardInex = i;
-            pd2.render(320 + (i * 100), 1200, 'backCard');
-            //pd2.render(320 + (i * 100), 1200, stCopyFour[i]);
+            pd3.render(320 + (i * 100), 1200, 'backCard');
         }
     }
 /*    function update (){
