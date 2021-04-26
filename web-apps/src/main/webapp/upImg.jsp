@@ -43,6 +43,12 @@
     };
     let game = new Phaser.Game(config) ;
     let holdImgCards = [];
+    let newNameArray = [];
+    newNameArray.push({
+        topImg : 'top',
+        btnImg : 'btn'
+    });
+    let newNameObj = Object.assign({topImg: null, btnImg: null});
     let copyFourItems = null;
     let floor;
     let isFlipped = false;
@@ -51,7 +57,15 @@
     let isSelected3 = false;
     let isSelected4 = false;
     let isSelected5 = false;
+    //
+    let isTopSelected = false;
+    let isTopSelected2 = false;
+    let isTopSelected3 = false;
+    let isTopSelected4 = false;
+    let isTopSelected5 = false;
     let isDraggedItem = false;
+    //holdTopImgs
+    let holdTopImgs = [];
     let holdTween = null;
     let cardInex = 0;
     function toStoreImgCards(){
@@ -69,7 +83,6 @@
                 }
             }
         this.load.image('backCard', 'images/cards/back.jpg');
-        this.load.image('flower', 'images/cards/5.png');
     }
     class Card {
         constructor(scene) {
@@ -130,22 +143,27 @@
                         console.log("firstIsSelected " + isSelected );
                         ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[0]).setScale(0.3, 0.3);
                         isSelected = true;
+                        findCardsName();
                     } else if(isSelected && !isSelected2 && !isSelected3 && !isSelected4 && !isSelected5){
                         console.log("secondIsSelected " + isSelected );
                         ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[1]).setScale(0.3, 0.3);
                         isSelected2 = true;
+                        findCardsName();
                     } else if (isSelected2 && isSelected && !isSelected3 && !isSelected4 && !isSelected5) {
                         console.log("thirdIsSelected " + isSelected + isSelected2 );
                         ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[2]).setScale(0.3, 0.3);
                         isSelected3 = true;
+                        findCardsName();
                     } else if (isSelected2 && isSelected && isSelected3 && !isSelected4 && !isSelected5) {
                         console.log("fouthIsSelected " + isSelected + isSelected2 + isSelected3 );
                         ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[3]).setScale(0.3, 0.3);
                         isSelected4 = true;
+                        findCardsName();
                     } else if (isSelected2 && isSelected && isSelected3 && isSelected4 && !isSelected5 ) {
                         console.log("fifthIsSelected " + isSelected + isSelected2 + isSelected4 + isSelected3);
                         ev.add.image(parseInt(scX), parseInt(scY), copyFourItems[4]).setScale(0.3, 0.3);
                         isSelected5 = true;
+                        findCardsName();
                     }
                 }
             })
@@ -194,7 +212,25 @@
             if(strTextureKey === "backCard") {
                 self.createTweens(self, gameObject.x, gameObject.y);
                 gameObject.input.enabled = false;
-            }
+            }else {
+                console.log("holdTopImgCards is " + holdTopImgs);
+                if(strTextureKey === holdTopImgs[0]){
+                            isTopSelected = true;
+                            findCardsName();
+                        }else if(strTextureKey === holdTopImgs[1]){
+                            isTopSelected2 = true;
+                            findCardsName();
+                        }else if(strTextureKey === holdTopImgs[2]){
+                            isTopSelected3 = true;
+                            findCardsName();
+                        }else if (strTextureKey === holdTopImgs[3]){
+                            isTopSelected4 = true;
+                            findCardsName();
+                        }else if(strTextureKey === holdTopImgs[4]){
+                            isTopSelected5 = true;
+                            findCardsName();
+                        }
+                }
         })
         this.input.on('dragend',function(pointer,gameObject,dropped){
             if(!dropped){
@@ -214,7 +250,121 @@
         while(goodItems.includes(result)) {
             result = holdImgCards[Math.floor(Math.random() * holdImgCards.length)];
         }
+        //push images into a new array
+            holdTopImgs.push(result);
             playerCard.render(320 + (i * 100), 300, result);
+        }
+    }
+    function findCardsName(){
+        console.log("findCardName is called ");
+        let nameTopImg = null;
+        let nameBtnImg = null;
+
+        if(isTopSelected){
+            console.log("inside the isTopSelecte");
+            hasItemsSearch(nameTopImg, 'top');
+            isTopSelected = false;
+        }
+        if(isTopSelected2){
+            console.log("inside the isTopSelected2");
+            hasItemsSearch(nameTopImg, 'top');
+            isTopSelected2 = false;
+        }
+        if(isTopSelected3){
+            console.log("inside the isTopSelected3");
+            hasItemsSearch(nameTopImg, 'top');
+            isTopSelected3 = false;
+        }
+        if(isTopSelected4){
+            console.log("inside the isTopSelected4");
+            hasItemsSearch(nameTopImg ,'top');
+            isTopSelected4 = false;
+        }
+        if(isTopSelected5){
+            console.log("inside the isTopSelected5");
+            hasItemsSearch(nameTopImg, 'top');
+            isTopSelected5 = false;
+        }
+        //back cards names
+        if(isSelected){
+            console.log("inside the isSelected");
+            hasItemsSearch(nameBtnImg, 'btn');
+            isSelected = false;
+        }
+        if(isSelected2){
+            console.log("inside the isSelected2");
+            hasItemsSearch(nameTopImg, 'btn');
+            isSelected2 = false;
+        }
+        if(isSelected3){
+            console.log("inside the isSelected3");
+            hasItemsSearch(nameBtnImg, 'btn');
+            isSelected3 = false;
+        }
+        if(isSelected4){
+            console.log("inside the isSelected4");
+            hasItemsSearch(nameBtnImg, 'btn');
+            isSelected4 = false;
+        }
+        if(isSelected5){
+            console.log("inside the isSelected5");
+            hasItemsSearch(nameBtnImg, 'btn');
+            isSelected5 = false;
+        }
+        if(newNameArray !== null){
+            newNameArray.forEach(el => console.log("newNameArrayOne" + el.topImg + " " + el.btnImg))
+        }
+    }
+    function hasItemsSearch(nameImg, sectionPrt){
+        let hasItem = false;
+        let hasItem2 = false;
+        let hasItem3 = false;
+        nameImg = holdTopImgs[0];
+        console.log(holdTopImgs[0]);
+        if(sectionPrt === 'top') {
+            if (newNameArray[0].topImg === sectionPrt) {
+                newNameArray[0].topImg = nameImg;
+            } else if (newNameArray[0].topImg !== sectionPrt && !hasItem && !hasItem2 && !hasItem3) {
+                newNameArray[1].topImg = nameImg;
+                hasItem = true;
+            }
+            if (hasItem) {
+                newNameArray[2].topImg = nameImg;
+                hasItem2 = true;
+                hasItem = false;
+            }
+            if (hasItem2 && !hasItem) {
+                newNameArray[3].topImg = nameImg;
+                hasItem2 = false;
+                hasItem3 = true;
+            }
+            if (!hasItem2 && !hasItem && hasItem3) {
+                newNameArray[4].topImg = nameImg;
+            }
+            console.log("newArrayItems is " + JSON.stringify(newNameArray));
+            return newNameArray;
+        }else if (sectionPrt === 'btn'){
+            if (newNameArray[0].btnImg === sectionPrt) {
+                newNameArray[0].btnImg = nameImg;
+            } else if (newNameArray[0].btnImg !== sectionPrt && !hasItem && !hasItem2 && !hasItem3) {
+                newNameArray[1].btnImg = nameImg;
+                hasItem = true;
+            }
+            if (hasItem) {
+                newNameArray[2].btnImg = nameImg;
+                hasItem2 = true;
+                hasItem = false;
+            }
+            if (hasItem2 && !hasItem) {
+                newNameArray[3].btnImg = nameImg;
+                hasItem2 = false;
+                hasItem3 = true;
+            }
+            if (!hasItem2 && !hasItem && hasItem3) {
+                newNameArray[4].btnImg = nameImg;
+            }
+            console.log("newArrayItems is " + JSON.stringify(newNameArray));
+            return newNameArray;
         }
     }
     function highChanceWin(tf){
