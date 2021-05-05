@@ -37,7 +37,7 @@
         scene: {
             preload: preload,
             create: create
-            //update: update,
+            //update: update
             //render: render
         }
     };
@@ -65,6 +65,8 @@
     let holdTopImgs = [];
     let holdTween = null;
     let cardInex = 0;
+    let handScale = null;
+    let bcCardScale = null;
     function toStoreImgCards(){
         for(let i = 0; i < 54; i++) {
             holdImgCards.push( "glfCard" + i);
@@ -79,14 +81,20 @@
                     this.load.image("glfCard" + i, "images/cards/" + i + ".png");
                 }
             }
+            for(let i = 1; i < 5; i++) {
+                this.load.image('player' + i, 'images/player_hand.jpg');
+            }
         this.load.image('backCard', 'images/cards/back.jpg');
     }
     class Card {
-        constructor(scene) {
+        constructor(scene = {}) {
             this.card = null;
             this.render = (x, y, sprite) => {
-                this.card = scene.add.image(x, y, sprite)
-                    .setScale(0.3, 0.3).setInteractive();
+               this.card = bcCardScale !== null ? scene.add.image(x, y, sprite).setScale(0.3, 0.3).setInteractive()
+                           :  scene.add.image(x, y, 'player1').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
+                              scene.add.image(x, y, 'player2').setScale(0.12, 0.12).setInteractive() &&
+                              scene.add.image(x, y, 'player3').setScale(0.12, 0.12).setInteractive() &&
+                              scene.add.image(x, y, 'player4').setScale(0.12, 0.12).setInteractive();
                 scene.input.setDraggable(this.card);
                 return this.card;
             }
@@ -108,9 +116,10 @@
         this.dealCards = () => {
             console.log("inside dealCards...");
             if (holdImgCards !== null) {
+                handPlayers(this);
+                displayBackCards(this);
                 lowChanceWin(this);
                 highChanceWin(this);
-                displayBackCards(this);
             }
         }
         this.createTweens = (ev, scX, scY) => {
@@ -191,96 +200,82 @@
             addTextureKey.push(gameObject);
             let stTextureKey = addTextureKey.map(ef => ef.texture.key);
             let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
+            if(!strTextureKey === "player") {
                 if ((countTop === 0 && countTop !== 1)) {
-                    if(strTextureKey !== "backCard") {
-                        console.log("isNotDragedCackCardItem....");
+                    if (strTextureKey !== "backCard") {
                         gameObject.input.enabled = true;
                         gameObject.x = dragX;
                         gameObject.y = dragY;
                         gameObject.input.enabled = false;
-                    }
-                    else if(strTextureKey === "backCard" && isDraggedItem){
-                        console.log("fromTop BackCard");
+                    } else if (strTextureKey === "backCard" && isDraggedItem) {
                         gameObject.input.enabled = false;
                     }
-                } else if(countTop === 1 && countTop !== 0){
-                    if(strTextureKey === "backCard") {
+                } else if (countTop === 1 && countTop !== 0) {
+                    if (strTextureKey === "backCard") {
                         if (countBtn === 0) {
-                            console.log("countTop is one" + countTop);
                             gameObject.x = dragX;
                             gameObject.y = dragY;
                             isDraggedItem = true;
                         }
-                    }else if(strTextureKey !== "backCard"){
-                        if(countBtn === 1) {
-                            console.log("countTop is one" + countTop);
+                    } else if (strTextureKey !== "backCard") {
+                        if (countBtn === 1) {
                             gameObject.x = dragX;
                             gameObject.y = dragY;
                             isDraggedItem = true;
                         }
                     }
-                }//third one
-            else if(countTop === 2 && countTop !== 0 && countTop !== 1) {
+                } else if (countTop === 2 && countTop !== 0 && countTop !== 1) {
                     if (strTextureKey === "backCard") {
                         if (countBtn === 1) {
-                            console.log("countTop is one" + countTop);
                             gameObject.x = dragX;
                             gameObject.y = dragY;
                             isDraggedItem = true;
                         }
                     } else if (strTextureKey !== "backCard") {
                         if (countBtn === 2) {
-                            console.log("countTop is one" + countTop);
                             gameObject.x = dragX;
                             gameObject.y = dragY;
                             isDraggedItem = true;
                         }
                     }
-                }//fourth one
-                else if(countTop === 3 && countTop !== 2 && countTop !== 0 && countTop !== 1) {
+                } else if (countTop === 3 && countTop !== 2 && countTop !== 0 && countTop !== 1) {
                     if (strTextureKey === "backCard") {
                         if (countBtn === 2) {
-                            console.log("countTop is one" + countTop);
                             gameObject.x = dragX;
                             gameObject.y = dragY;
                             isDraggedItem = true;
                         }
                     } else if (strTextureKey !== "backCard") {
                         if (countBtn === 3) {
-                            console.log("countTop is one" + countTop);
                             gameObject.x = dragX;
                             gameObject.y = dragY;
                             isDraggedItem = true;
                         }
                     }
-                }///fifth one
-                else if(countTop === 4 && countTop !== 3 && countTop !== 2 && countTop !== 0 && countTop !== 1) {
+                } else if (countTop === 4 && countTop !== 3 && countTop !== 2 && countTop !== 0 && countTop !== 1) {
                     if (strTextureKey === "backCard") {
                         if (countBtn === 3) {
-                            console.log("countTop is one" + countTop);
                             gameObject.x = dragX;
                             gameObject.y = dragY;
                             isDraggedItem = true;
                         }
                     } else if (strTextureKey !== "backCard") {
                         if (countBtn === 4) {
-                            console.log("countTop is one" + countTop);
                             gameObject.x = dragX;
                             gameObject.y = dragY;
                             isDraggedItem = true;
                         }
                     }
-                }//sixth
-                else if(countTop === 5 && countTop !== 4 && countTop !== 3 && countTop !== 2 && countTop !== 0 && countTop !== 1) {
+                } else if (countTop === 5 && countTop !== 4 && countTop !== 3 && countTop !== 2 && countTop !== 0 && countTop !== 1) {
                     if (strTextureKey === "backCard") {
                         if (countBtn === 4) {
-                            console.log("countTop is one" + countTop);
                             gameObject.x = dragX;
                             gameObject.y = dragY;
                             isDraggedItem = true;
                         }
                     }
                 }
+            }//end players
         })
         this.input.on('dragenter', function(pointer,gameObject,dropZone){
             graphics.clear();
@@ -308,7 +303,7 @@
                     isDraggedItem = false;
                 }
                 gameObject.input.enabled = false;
-            }else {
+            }else if(!strTextureKey === "player"){
                 console.log("holdTopImgCards is " + holdTopImgs);
                 let nameTopImg = null;
                     if (strTextureKey === holdTopImgs[0]) {
@@ -430,15 +425,27 @@
         return copyFourItems.sort(() => 0.5 - Math.random());
     }
     function displayBackCards(gy){
+        bcCardScale = "bcCardScale";
         let pd3 = new Card(gy);
         for(let i =0; i < 5; i++){
-            cardInex = i;
-            pd3.render(320 + (i * 100), 1200, 'backCard');
+            pd3.render(320 + (i * 100), 1100, 'backCard');
         }
+        return bcCardScale;
     }
-/*    function update (){
+    function handPlayers(hd){
+        handScale = "handScale";
+        let pd4 = new Card(hd);
+            pd4.render(320, 70, 'player1');
+            pd4.render(320 + (350), 70, 'player2');
+            pd4.render(320, 1350, 'player3');
+            pd4.render(320 + 350, 1350, 'player4');
+        return handScale;
     }
-    function render() {
+/*   function update (){
+       let pd5 = new Card(this);
+       //pd5.render(320, 1350, 'player');
+    }*/
+/*    function render() {
     }*/
 </script>
 </body>
