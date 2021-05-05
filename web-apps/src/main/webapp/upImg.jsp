@@ -60,7 +60,8 @@
     let isTopSelected4 = false;
     let isTopSelected5 = false;
     let isDraggedItem = false;
-    //holdTopImgs
+    let countTop = 0;
+    let countBtn = 0;
     let holdTopImgs = [];
     let holdTween = null;
     let cardInex = 0;
@@ -108,6 +109,7 @@
             console.log("inside dealCards...");
             if (holdImgCards !== null) {
                 lowChanceWin(this);
+                highChanceWin(this);
                 displayBackCards(this);
             }
         }
@@ -185,16 +187,89 @@
             this.children.bringToTop(gameObject);
         },this)
         this.input.on('drag', function(pointer,gameObject,dragX,dragY){
-            gameObject.x = dragX;
-            gameObject.y = dragY;
             let addTextureKey = [];
             addTextureKey.push(gameObject);
             let stTextureKey = addTextureKey.map(ef => ef.texture.key);
             let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
-            if(strTextureKey === "backCard" && !isDraggedItem) {
-                highChanceWin(self);
-                isDraggedItem = true;
-            }
+                if ((countTop === 0 && countTop !== 1)) {
+                    if(strTextureKey !== "backCard") {
+                        gameObject.input.enabled = true;
+                        gameObject.x = dragX;
+                        gameObject.y = dragY;
+                        gameObject.input.enabled = false;
+                    }
+                    else if(strTextureKey === "backCard" && isDraggedItem){
+                        gameObject.input.enabled = false;
+                    }
+                } else if(countTop === 1 && countTop !== 0){
+                    if(strTextureKey === "backCard") {
+                        if (countBtn === 0) {
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                            isDraggedItem = true;
+                        }
+                    }else if(strTextureKey !== "backCard"){
+                        if(countBtn === 1) {
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                            isDraggedItem = true;
+                        }
+                    }
+                }
+            else if(countTop === 2 && countTop !== 0 && countTop !== 1) {
+                    if (strTextureKey === "backCard") {
+                        if (countBtn === 1) {
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                            isDraggedItem = true;
+                        }
+                    } else if (strTextureKey !== "backCard") {
+                        if (countBtn === 2) {
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                            isDraggedItem = true;
+                        }
+                    }
+                }
+                else if(countTop === 3 && countTop !== 2 && countTop !== 0 && countTop !== 1) {
+                    if (strTextureKey === "backCard") {
+                        if (countBtn === 2) {
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                            isDraggedItem = true;
+                        }
+                    } else if (strTextureKey !== "backCard") {
+                        if (countBtn === 3) {
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                            isDraggedItem = true;
+                        }
+                    }
+                }
+                else if(countTop === 4 && countTop !== 3 && countTop !== 2 && countTop !== 0 && countTop !== 1) {
+                    if (strTextureKey === "backCard") {
+                        if (countBtn === 3) {
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                            isDraggedItem = true;
+                        }
+                    } else if (strTextureKey !== "backCard") {
+                        if (countBtn === 4) {
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                            isDraggedItem = true;
+                        }
+                    }
+                }
+                else if(countTop === 5 && countTop !== 4 && countTop !== 3 && countTop !== 2 && countTop !== 0 && countTop !== 1) {
+                    if (strTextureKey === "backCard") {
+                        if (countBtn === 4) {
+                            gameObject.x = dragX;
+                            gameObject.y = dragY;
+                            isDraggedItem = true;
+                        }
+                    }
+                }
         })
         this.input.on('dragenter', function(pointer,gameObject,dropZone){
             graphics.clear();
@@ -212,40 +287,52 @@
             addTextureKey.push(gameObject);
             let stTextureKey = addTextureKey.map(ef => ef.texture.key);
             let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
-            if(strTextureKey === "backCard") {
-                self.createTweens(self, gameObject.x, gameObject.y);
+            if(strTextureKey === "backCard" && isDraggedItem) {
+                if((countBtn === 0 && countTop === 1) || (countBtn === 1 && countTop === 2)
+                    || (countBtn === 2 && countTop === 3) || (countBtn === 3 && countTop === 4)
+                    || (countBtn === 4 && countTop === 5)
+                ){
+                    self.createTweens(self, gameObject.x, gameObject.y);
+                    countBtn++;
+                    isDraggedItem = false;
+                }
                 gameObject.input.enabled = false;
             }else {
                 console.log("holdTopImgCards is " + holdTopImgs);
                 let nameTopImg = null;
-                if(strTextureKey === holdTopImgs[0]){
-                           console.log("inTop0");
-                            isTopSelected = true;
-                            hasItemsSearch(nameTopImg, 'top');
-                            isTopSelected = false;
-                        }else if(strTextureKey === holdTopImgs[1]){
-                            console.log("inTop1");
-                            isTopSelected2 = true;
-                            hasItemsSearch(nameTopImg, 'top');
-                            isTopSelected2 = false;
-                        }else if(strTextureKey === holdTopImgs[2]){
-                            console.log("inTop2");
-                            isTopSelected3 = true;
-                            hasItemsSearch(nameTopImg, 'top');
-                            isTopSelected3 = false;
-                        }else if (strTextureKey === holdTopImgs[3]){
-                            console.log("inTop3");
-                            isTopSelected4 = true;
-                            hasItemsSearch(nameTopImg, 'top');
-                            isTopSelected4 = false;
-                        }else if(strTextureKey === holdTopImgs[4]){
-                            console.log("inTop4");
-                            isTopSelected5 = true;
-                            hasItemsSearch(nameTopImg, 'top');
-                            isTopSelected5 = false;
-                        }
+                    if (strTextureKey === holdTopImgs[0]) {
+                        console.log("inTop0");
+                        isTopSelected = true;
+                        countTop++;
+                        hasItemsSearch(nameTopImg, 'top');
+                        isTopSelected = false;
+                    } else if (strTextureKey === holdTopImgs[1]) {
+                        console.log("inTop1");
+                        isTopSelected2 = true;
+                        countTop++;
+                        hasItemsSearch(nameTopImg, 'top');
+                        isTopSelected2 = false;
+                    } else if (strTextureKey === holdTopImgs[2]) {
+                        console.log("inTop2");
+                        isTopSelected3 = true;
+                        countTop++;
+                        hasItemsSearch(nameTopImg, 'top');
+                        isTopSelected3 = false;
+                    } else if (strTextureKey === holdTopImgs[3]) {
+                        console.log("inTop3");
+                        isTopSelected4 = true;
+                        countTop++;
+                        hasItemsSearch(nameTopImg, 'top');
+                        isTopSelected4 = false;
+                    } else if (strTextureKey === holdTopImgs[4]) {
+                        console.log("inTop4");
+                        isTopSelected5 = true;
+                        countTop++;
+                        hasItemsSearch(nameTopImg, 'top');
+                        isTopSelected5 = false;
+                    }
                 }
-        })
+            })
         this.input.on('dragend',function(pointer,gameObject,dropped){
             if(!dropped){
                 gameObject.x = gameObject.input.dragStartX;
@@ -272,18 +359,23 @@
         if(sectionPrt === 'top') {
             if (isTopSelected && !isTopSelected5 && !isTopSelected3 && !isTopSelected2 && !isTopSelected4) {
                 nameImg = holdTopImgs[0];
+                //countTop++;
                 newNameArray[0].topImg = nameImg;
             }else if (!isTopSelected && isTopSelected2) {
                 nameImg = holdTopImgs[1];
+                //countTop++;
                 newNameArray[1].topImg = nameImg;
             }else if (isTopSelected3 && !isTopSelected && !isTopSelected2) {
                 nameImg = holdTopImgs[2];
+                //countTop++;
                 newNameArray[2].topImg = nameImg;
             }else if (isTopSelected4 && !isTopSelected3 && !isTopSelected && !isTopSelected2) {
                 nameImg = holdTopImgs[3];
+                //countTop++;
                 newNameArray[3].topImg = nameImg;
             }else if (isTopSelected5 && !isTopSelected4 && !isTopSelected3 && !isTopSelected && !isTopSelected2) {
                 nameImg = holdTopImgs[4];
+                //countTop++;
                 newNameArray[4].topImg = nameImg;
             }
             console.log("newArrayItems is " + JSON.stringify(newNameArray));
