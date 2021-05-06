@@ -90,11 +90,12 @@
         constructor(scene = {}) {
             this.card = null;
             this.render = (x, y, sprite) => {
+                //{ cursor: 'url(/images/player_hand.jpg), pointer' }
                this.card = bcCardScale !== null ? scene.add.image(x, y, sprite).setScale(0.3, 0.3).setInteractive()
                            :  scene.add.image(x, y, 'player1').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
-                              scene.add.image(x, y, 'player2').setScale(0.12, 0.12).setInteractive() &&
-                              scene.add.image(x, y, 'player3').setScale(0.12, 0.12).setInteractive() &&
-                              scene.add.image(x, y, 'player4').setScale(0.12, 0.12).setInteractive();
+                              scene.add.image(x, y, 'player2').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
+                              scene.add.image(x, y, 'player3').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
+                              scene.add.image(x, y, 'player4').setScale(0.12, 0.12).setInteractive().setAngle(45);
                 scene.input.setDraggable(this.card);
                 return this.card;
             }
@@ -103,6 +104,9 @@
     }
 
     function create () {  //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
+        this.input.setDefaultCursor('url(../images/player_hand.jpg), default');
+        //let gameCursor = this.add.sprite(320, , 'player1').setInteractive({ cursor: 'url(images/player_hand.jpg), pointer' });
+
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffff00, 1);
         //graphics.strokeRoundedRect(520, 700, 700, 450, 32);
@@ -200,7 +204,9 @@
             addTextureKey.push(gameObject);
             let stTextureKey = addTextureKey.map(ef => ef.texture.key);
             let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
-            if(!strTextureKey === "player") {
+            console.log("dragItem is " + strTextureKey);
+            if(strTextureKey !== "player1" || strTextureKey !== "player2" ||
+               strTextureKey !== "player3" || strTextureKey !== "player4" || strTextureKey !== "player5"  ) {
                 if ((countTop === 0 && countTop !== 1)) {
                     if (strTextureKey !== "backCard") {
                         gameObject.input.enabled = true;
@@ -303,7 +309,8 @@
                     isDraggedItem = false;
                 }
                 gameObject.input.enabled = false;
-            }else if(!strTextureKey === "player"){
+            }else if(strTextureKey !== "player1" || strTextureKey !== "player2" ||
+                strTextureKey !== "player3" || strTextureKey !== "player4" || strTextureKey !== "player5" ){
                 console.log("holdTopImgCards is " + holdTopImgs);
                 let nameTopImg = null;
                     if (strTextureKey === holdTopImgs[0]) {
