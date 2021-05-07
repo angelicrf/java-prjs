@@ -25,6 +25,7 @@
         type: Phaser.AUTO,
         width: 1000,
         height: 1600,
+        backgroundColor : 'rgb(82, 82, 122)',
         scale:{
             parent: gameDisp
         },
@@ -81,10 +82,11 @@
                     this.load.image("glfCard" + i, "images/cards/" + i + ".png");
                 }
             }
-            for(let i = 1; i < 5; i++) {
-                this.load.image('player' + i, 'images/player_hand.jpg');
+            for(let i = 1; i < 3; i++) {
+                this.load.image('player' + i, 'images/playerOne.png');
             }
         this.load.image('backCard', 'images/cards/back.jpg');
+        this.load.image('winImg', 'images/playerCard.png');
     }
     class Card {
         constructor(scene = {}) {
@@ -92,10 +94,9 @@
             this.render = (x, y, sprite) => {
                 //{ cursor: 'url(/images/player_hand.jpg), pointer' }
                this.card = bcCardScale !== null ? scene.add.image(x, y, sprite).setScale(0.3, 0.3).setInteractive({cursor: `url('./images/playerCard_2.jpg'), pointer`})
-                           :  scene.add.image(x, y, 'player1').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
-                              scene.add.image(x, y, 'player2').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
-                              scene.add.image(x, y, 'player3').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
-                              scene.add.image(x, y, 'player4').setScale(0.12, 0.12).setInteractive().setAngle(45);
+                           :  scene.add.image(x, y, 'player1').setInteractive() &&
+                              scene.add.image(x, y, 'player2').setInteractive();
+
                 scene.input.setDraggable(this.card);
                 return this.card;
             }
@@ -106,7 +107,6 @@
     function create () {  //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
         //this.input.setDefaultCursor(`url('./images/playerCard_2.jpg'), pointer`);
         //http://i.imgur.com/jaYSPxo.png
-        //let gameCursor = this.add.sprite(320, , 'player1').setInteractive({ cursor: 'url(images/player_hand.jpg), pointer' });
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffff00, 1);
         //graphics.strokeRoundedRect(520, 700, 700, 450, 32);
@@ -117,6 +117,7 @@
             .setColor('#00ffff').setInteractive();
         let self = this;
         this.finalCoords = [];
+        //this.add.image(320,70,'player1').setInteractive();
         this.dealCards = () => {
             console.log("inside dealCards...");
             if (holdImgCards !== null) {
@@ -187,6 +188,26 @@
                 }
             })
         }
+
+        this.winResutImg = tf => {
+            tf.winShow = tf.add.image(-520,0,'winImg').setAlpha(0.5);
+            tf.tweens.add({
+                targets: tf.winShow,
+                ease: 'Sine.easeInOut',
+                x: '520',
+                y: '700',
+                angle: { value: 360, duration: 6000 },
+                scaleX: { value: 0.1, duration: 3000, yoyo: true, ease: 'Quad.easeInOut' },
+                scaleY: { value: 0.1, duration: 3000, yoyo: true, ease: 'Cubic.easeInOut' },
+                repeat: 0,
+                delay: function (i, total, target) {
+                    return i * 95;
+                }
+                //function (t) {
+                //return Math.pow(Math.sin(t * 3), 3);
+                //}
+            })
+        }
      this.dealCards();
         this.dealText.on('pointerdown', function () {
             self.dealCards();
@@ -206,8 +227,7 @@
             let stTextureKey = addTextureKey.map(ef => ef.texture.key);
             let strTextureKey = JSON.stringify(stTextureKey[0]).slice(1,JSON.stringify(stTextureKey[0]).length -1);
             console.log("dragItem is " + strTextureKey);
-            if(strTextureKey !== "player1" || strTextureKey !== "player2" ||
-               strTextureKey !== "player3" || strTextureKey !== "player4" || strTextureKey !== "player5"  ) {
+            if(strTextureKey !== "player1" || strTextureKey !== "player2" ){
                 if ((countTop === 0 && countTop !== 1)) {
                     if (strTextureKey !== "backCard") {
                         gameObject.input.enabled = true;
@@ -306,12 +326,16 @@
                     || (countBtn === 4 && countTop === 5)
                 ){
                     self.createTweens(self, gameObject.x, gameObject.y);
+                    if(countBtn === 4 && countTop === 5){
+                        // if one player wins
+                        console.log("we are at the end");
+                        self.winResutImg(self);
+                    }
                     countBtn++;
                     isDraggedItem = false;
                 }
                 gameObject.input.enabled = false;
-            }else if(strTextureKey !== "player1" || strTextureKey !== "player2" ||
-                strTextureKey !== "player3" || strTextureKey !== "player4" || strTextureKey !== "player5" ){
+            }else if(strTextureKey !== "player1" || strTextureKey !== "player2"){
                 console.log("holdTopImgCards is " + holdTopImgs);
                 let nameTopImg = null;
                     if (strTextureKey === holdTopImgs[0]) {
@@ -443,12 +467,11 @@
     function handPlayers(hd){
         handScale = "handScale";
         let pd4 = new Card(hd);
-            pd4.render(320, 70, 'player1');
-            pd4.render(320 + (350), 70, 'player2');
-            pd4.render(320, 1350, 'player3');
-            pd4.render(320 + 350, 1350, 'player4');
+            pd4.render(520, 60, 'player1');
+            pd4.render(520, 1350, 'player2');
         return handScale;
     }
+
 /*   function update (){
        let pd5 = new Card(this);
        //pd5.render(320, 1350, 'player');
