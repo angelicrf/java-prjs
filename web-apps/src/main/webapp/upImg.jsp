@@ -12,7 +12,7 @@
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body style="background-color: #c6cece; height: 2200px;">
+<body class="container container-fluid" style="background-color: #c6cece; height: 2200px;">
 <h2>Game Page</h2>
 <div id="gameDisplay" class="container btn-info text-center"></div>
 <script>
@@ -91,7 +91,7 @@
             this.card = null;
             this.render = (x, y, sprite) => {
                 //{ cursor: 'url(/images/player_hand.jpg), pointer' }
-               this.card = bcCardScale !== null ? scene.add.image(x, y, sprite).setScale(0.3, 0.3).setInteractive()
+               this.card = bcCardScale !== null ? scene.add.image(x, y, sprite).setScale(0.3, 0.3).setInteractive({cursor: `url('./images/playerCard_2.jpg'), pointer`})
                            :  scene.add.image(x, y, 'player1').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
                               scene.add.image(x, y, 'player2').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
                               scene.add.image(x, y, 'player3').setScale(0.12, 0.12).setInteractive().setAngle(45) &&
@@ -104,9 +104,9 @@
     }
 
     function create () {  //floor = this.add.rectangle(520, 700, 700, 450, 0x6666ff);
-        //this.input.setDefaultCursor('url(../images/player_hand.jpg), default');
+        //this.input.setDefaultCursor(`url('./images/playerCard_2.jpg'), pointer`);
+        //http://i.imgur.com/jaYSPxo.png
         //let gameCursor = this.add.sprite(320, , 'player1').setInteractive({ cursor: 'url(images/player_hand.jpg), pointer' });
-
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffff00, 1);
         //graphics.strokeRoundedRect(520, 700, 700, 450, 32);
@@ -128,7 +128,8 @@
         }
         this.createTweens = (ev, scX, scY) => {
             console.log(scX, scY);
-            ev.backFace = ev.add.image(parseInt(scX), parseInt(scY), 'backCard').setScale(0.3, 0.3);
+            ev.backFace = ev.add.image(parseInt(scX), parseInt(scY), 'backCard')
+                .setInteractive({cursor: `url('./images/playerCard_2.jpg'), pointer`}).setScale(0.3, 0.3);
             holdTween = async () => {
                 return await new Promise((resolve, reject) => {
                     ev.tweens.add({
