@@ -1,0 +1,3 @@
+#!/bin/bash
+docker image rm -f angelique/myjava_app && \
+docker container rm angelique/myjava_app
