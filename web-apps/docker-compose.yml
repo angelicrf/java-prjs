@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  tomcat:
+    build: .
+    environment:
+      TOMCAT_USERNAME: root
+      TOMCAT_PASSWORD: root
+    ports:
+        - "8080:8080"
+    container_name: tomcat

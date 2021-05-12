@@ -1,2 +1,3 @@
 #!/bin/bash
-docker image build -t angelique/myjava_app ./
+#docker image build -t angelique/myjava_app ./
+docker-compose up
