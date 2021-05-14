@@ -17,7 +17,7 @@
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body style="height: 1300px;">
+<body style="height: 2800px;">
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -205,6 +205,145 @@
 
 </script>
 <script src="https://apis.google.com/js/platform.js"  async defer></script>
+<div style="margin-top: 30px;">
+<div style="margin: 0 auto; width: 1200px; height: 550px;">
+    <div class="d-inline-flex p-3 bg-secondary text-white">
+        <div class="row" style="width: 1200px;">
+            <div class="col-sm bg-info">
+                <img style="margin: 0 auto; width: 300px; height: 300px;" src="images/golf-2.jpg" alt="firstTitle"/>
+                <h2>Title One</h2>
+                <div style="width: 300px;" class="p-2">Just answer a few questions and your event website will be online in minutes, registering players and sponsors</div></div>
+            <div class="col-sm bg-warning">
+                <img style="margin: 0 auto; width: 300px; height: 300px;" src="images/golf-3.jpg" alt="firstTitle" />
+                <h2>Title Two</h2>
+                <div style="width: 300px;" class="p-2">Prizes and contests are essential for creating excitement and generating revenue for your golf event. Perfect Golf Event is the one-stop shop</div></div>
+            <div class="col-sm bg-primary">
+                <img style="margin: 0 auto; width: 300px; height: 300px;" src="images/golf-4.jpg" alt="firstTitle"/>
+                <h2>Title Three</h2>
+                <div style="width: 300px;" class="p-2">Our proven online and hands-on support helps you attract more players, sign more sponsors and deliver a Perfect Golf Event</div></div>
+        </div>
+    </div>
+</div>
+</div>
+<div style="margin-top: 30px;">
+    <div style="margin: 0 auto; width: 1200px; height: 550px;" class="btn-light">
+        <div class="d-inline-flex p-3 bg-secondary text-white">
+            <div class="row" style="width: 1200px;">
+                <div id="fClassCol" class="col-sm">
+                    <i style="margin: 0 auto; width: 300px; height: 300px;" class="fas fa-home"></i>
+                    <div style="width: 300px;">
+                        <h3>Par Package</h3>
+                        <div class="p-2 text-white">Custom Golf Event Website</div>
+                        <h2 style="color: #1f1fc6">FREE</h2>
+                        <div class="p-2 text-white">No Credit Card Required to Get Started:</div>
+                        <ul class="text-white">
+                            <li>Accept Online Player/Sponsor Registrations</li>
+                            <li>Outline Player and Sponsor Packages</li>
+                            <li>Accept Donations</li>
+                            <li>Fast and Easy Player Pairings</li>
+                            <li>Track Revenue/Expenses</li>
+                            <li>Communicate and Promote Event Details</li>
+                            <li>Up to the Minute Reports</li>
+                            <li>And Much More…</li>
+                        </ul>
+                        <br>
+                        <input id="fBtnOne" width="110px" class="btn btn-primary" type="button" value="Compare Features"/>
+                        <input id="fBtnTwo" style="margin-left: 20px" width="110px" class="btn btn-danger" value="Get Started" type="button" />
+                    </div>
+                </div>
+                <div id="sClassCol" class="col-sm">
+                    <i style="margin: 0 auto; width: 300px; height: 300px;" class="fas fa-home"></i>
+                    <h3>Birdie Package</h3>
+                    <div class="p-2 text-white">Custom, Full-Feature Website</div>
+                    <h2 style="color: #1f1fc6">$246</h2>
+                    <div style="width: 300px;" class="p-2">
+                        <div class="text-white p-2">Includes everything in the Par Package plus</div>
+                        <ul class="text-white">
+                            <li>Ability to Feature Sponsor logos</li>
+                            <li>Custom Top Banner on the Home Page, created by Perfect Golf Event Design Team</li>
+                            <li>Quick Player Pairings</li>
+                            <li>Free Domain Registration - Custom Domain Name (example: yourgolfevent.com)</li>
+                            <li>Access Online Marketing Tools, Upload Lists and Email</li>
+                            <li>Collect Payments Fast and Easy on the day of your event with our NEW Quick Pay option</li>
+                        </ul>
+                        <br>
+                    <input id="sBtnOne" width="110px" class="btn btn-primary" type="button" value="Compare Features"/>
+                    <input id="sBtnTwo" width="110px" class="btn btn-danger" value="Get Started" type="button" />
+                    </div>
+                  </div>
+                <div id="tClassCol" class="col-sm">
+                    <i style="margin: 0 auto; width: 300px; height: 300px;" class="fas fa-home"></i>
+                    <h3>Eagle Package</h3>
+                    <div style="width: 300px;" class="p-2 text-white">Full-Feature Website + Social Media Promotions + Hole-in-One Prizes</div>
+                    <h2 style="color: #1f1fc6">$630</h2>
+                <div style="width: 300px;" class="p-2">Includes everything in the Birdie Package plus:</div>
+                 <ul>
+                   <li>Custom Social Media Images to help promote your event</li>
+                   <li>One-Page Guide on How to "Harness the Power of Social Media for Your Golf Event"</li>
+                   <li>$10,000 Hole in One Contest</li>
+                   <li>Three Other Hole-in-One Prizes!</li>
+                   <li>Three Other Hole-in-One Prizes!</li>
+                   <li>2’ x 6’ Sponsor "Thank You" Banner</li>
+                </ul>
+                    <br>
+                    <input id="tBtnOne" width="110px" class="btn btn-primary" type="button" value="Compare Features"/>
+                    <input id="tBtnTwo" width="110px" class="btn btn-danger" value="Get Started" type="button" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let firstBtnOne = document.getElementById("fBtnOne");
+    let secondBtnTwo = document.getElementById("fBtnTwo");
+    let firstClassCol = document.getElementById("fClassCol");
+
+    let fBtnTwo = document.getElementById("sBtnOne");
+    let secBtnTwo = document.getElementById("sBtnTwo");
+    let secondClassCol = document.getElementById("sClassCol");
+
+    let fBtnThree = document.getElementById("tBtnOne");
+    let secBtnThree = document.getElementById("tBtnTwo");
+    let thirdClassCol = document.getElementById("tClassCol");
+
+    function msOver(stName, colorName) {
+        stName.addEventListener('mouseover', () => {
+            stName.style.backgroundColor = colorName;
+            stName.style.border = "1px solid black";
+        });
+    }
+    function msOut(stName,colorName) {
+        stName.addEventListener('mouseout', () => {
+            stName.style.backgroundColor = colorName;
+            stName.style.border = "none !important;";
+        });
+    }
+    function onClickedOne(stName) {
+        stName.addEventListener('click', () => {
+            console.log("btn one clicked");
+        });
+    }
+    function onClickedTwo(stName) {
+        stName.addEventListener('click', () => {
+            console.log("btn two clicked");
+        });
+    }
+    msOut(firstClassCol, 'yellow');
+    msOver(firstClassCol, 'blue');
+    onClickedOne(firstBtnOne);
+    onClickedTwo(secondBtnTwo);
+    //
+    msOut(secondClassCol, 'red');
+    msOver(secondClassCol, 'green');
+    onClickedOne(fBtnTwo);
+    onClickedTwo(secBtnTwo);
+    //
+    msOut(thirdClassCol, 'orange');
+    msOver(thirdClassCol, 'purple');
+    onClickedOne(fBtnThree);
+    onClickedTwo(secBtnThree);
+
+</script>
 <footer style="position: absolute; left: 0; right: 0; bottom: 0;">
     <div class='container-fluid'>
         <div class="card">
