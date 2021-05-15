@@ -17,7 +17,7 @@
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body style="height: 2800px;">
+<body style="height: 3400px;">
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -293,6 +293,24 @@
         </div>
     </div>
 </div>
+<div style="width: 100%; height: 570px; background-color: #c3d0db; margin-top: 410px;">
+    <div class="container" style="background-color: #9E9E9E">
+        <div class="text-white" style="text-align: center">
+            <h2>Watch your Introductory video!</h2>
+        </div>
+        <div style="text-align: center; position: relative;">
+            <img src="./images/golf-5.jpg" style="width: 750px; height: 520px;"  alt="imgBcgrnd"/>
+            <div style="position: absolute; margin-top: -475px; margin-left: 230px; border: 10px solid black; border-radius: 20px;">
+                <img src="./images/golfMain.jpg" style="width: 650px; height: 420px;"  alt="imgVideo"/>
+            </div>
+            <div style="position: absolute; margin-top: -290px; margin-left:530px;">
+                <button type="button" onclick="watchVideo()">
+                <i style="width: 60px; height: 60px;" class="fa fa-play-circle"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     let firstBtnOne = document.getElementById("fBtnOne");
     let secondBtnTwo = document.getElementById("fBtnTwo");
@@ -327,6 +345,9 @@
         stName.addEventListener('click', () => {
             console.log("btn two clicked");
         });
+    }
+    function watchVideo(){
+        console.log("video watched");
     }
     msOut(firstClassCol, 'yellow');
     msOver(firstClassCol, 'blue');
