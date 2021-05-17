@@ -17,7 +17,7 @@
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body style="height: 3400px;">
+<body style="height: 4500px;">
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -300,14 +300,166 @@
         </div>
         <div style="text-align: center; position: relative;">
             <img src="./images/golf-5.jpg" style="width: 750px; height: 520px;"  alt="imgBcgrnd"/>
-            <div style="position: absolute; margin-top: -475px; margin-left: 230px; border: 10px solid black; border-radius: 20px;">
-                <img src="./images/golfMain.jpg" style="width: 650px; height: 420px;"  alt="imgVideo"/>
+        </div>
+            <div style="margin-top: -430px;">
+               <div style="position: absolute; margin: auto; left: 0; right: 0;text-align: center; z-index: 1;">
+                  <img src="./images/golfMain.jpg" style="width: 650px; border: 10px solid black; border-radius: 20px; height: 420px;"  alt="imgVideo"/>
+                </div>
             </div>
-            <div style="position: absolute; margin-top: -290px; margin-left:540px;">
-                <button type="button" onclick="watchVideo()">
-                <i style="width: 60px; height: 60px;" class="fa fa-play-circle"></i>
-                </button>
+            <div style="margin-top: 130px;">
+                <div style="position: absolute; margin: auto; left: 0; right: 0;text-align: center; z-index: 1;">
+                    <button type="button" onclick="watchVideo()">
+                          <i style="width: 60px; height: 60px;" class="fa fa-play-circle"></i>
+                      </button>
+                </div>
             </div>
+    </div>
+</div>
+<div style="margin-top: 30px;">
+    <div style="margin: 0 auto; height: 610px; width: 100%;background-color: #cec9c9">
+     <div style="margin-top: 15px; text-align: center;" class="text-white">
+         <h2>GOLF TOURNAMENT IDEAS</h2>
+     </div>
+        <div style="margin-top: 20px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div style="position: relative;">
+                        <img src="./images/golf-1.jpg" style="text-align: center; width:340px; height: 480px;" alt="fImg"/>
+                        <div style="text-align: center; position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);" class="p-2 text-white">A critical part of organizing a successful fundraising tournament is promoting a golf event website. Forget printing flyers and focus on great golf event software and technology.</div>
+                            <input onclick="getGuideOne()" class="btn btn-primary" style="border-radius: 15px; position: absolute;bottom: 8px;left: 16px;" type="button" value="View the Guide" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div style="position: relative;">
+                            <img src="./images/golf-1.jpg" style="text-align: center; width:340px; height: 480px;" alt="fImg"/>
+                            <div style="text-align: center; position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);" class="p-2 text-white">Charity golf events with a Captain’s Choice format over a standard 18 holes are a dime a dozen. What’s the solution to a dwindling head count and repetitive event structure?.</div>
+                            <input onclick="getGuideTwo()" class="btn btn-primary" style="border-radius: 15px; position: absolute; bottom: 8px;left: 16px;" type="button" value="View the Guide" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div style="position: relative;">
+                            <img src="./images/golf-1.jpg" style="text-align: center; width:340px; height: 480px;" alt="fImg"/>
+                            <div style="text-align: center; position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);" class="p-2 text-white">FREE Webinars for charity golf fundraising event organizers. Learn how to raise more money, attract sponsors/players and create a memorable golf tournament.</div>
+                            <input onclick="getWebinars()" class="btn btn-primary" style="border-radius: 15px; position: absolute; bottom: 8px;left: 16px;" type="button" value="View webinars" />
+                        </div>
+                    </div>
+                </div>
+                    <div style="border-radius: 20px; text-align: center; margin-top: 10px;" >
+                        <button onclick="allResources()" class="btn btn-info p-3">Check Out All of Our Resources</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 30px;">
+    <div style="width: 100%; height: 550px; background-color: #7d7272">
+    <div style="text-align: center; margin-top: 40px;">
+        <h2 style="color: aliceblue">Perfect Golf Events Reviews</h2>
+        <h3 style="color: white">Trusted by Thousands</h3>
+    </div>
+        <div id="carouselAuto" class="carousel slide" data-ride="carousel" data-interval="3000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img style="height: 300px" class="d-block w-100" src="./images/golf-2.jpg" alt="slide_One">
+                    </div>
+                    <div class="carousel-item">
+                        <img style="height: 300px;" class="d-block w-100" src="./images/golf-3.jpg" alt="slide_two">
+                    </div>
+                    <div class="carousel-item">
+                        <img style="height: 300px;" class="d-block w-100" src="./images/golf-4.jpg" alt="slide_three">
+                    </div>
+                </div>
+        </div>
+        <div id="carouselComments" class="carousel slide carousel-multi-item" data-ride="carousel">
+            <div style="display: flex; margin-left: 200px;" class="carousel-inner" role="listbox">
+                <div class="carousel-item active">
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars1"></div>
+                            <div class="card-content">
+                              <h2> CommentOne</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars2"></div>
+                            <div class="card-content">
+                                <h2> CommentOne-Two</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars3"></div>
+                            <div class="card-content">
+                                <h2> CommentOne-Three</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars4"></div>
+                            <div class="card-content">
+                                <h2> CommentTwo</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars5"></div>
+                            <div class="card-content">
+                                <h2> CommentTwo-One</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars6"></div>
+                            <div class="card-content">
+                                <h2> CommentTwo-Two</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars7"></div>
+                            <div class="card-content">
+                                <h2> CommentThree-One</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars8"></div>
+                            <div class="card-content">
+                                <h2> CommentThree-Two</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars9"></div>
+                            <div class="card-content">
+                                <h2> CommentThree-Three</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselComments" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselComments" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
     </div>
 </div>
@@ -323,6 +475,7 @@
     let fBtnThree = document.getElementById("tBtnOne");
     let secBtnThree = document.getElementById("tBtnTwo");
     let thirdClassCol = document.getElementById("tClassCol");
+    let cardStars = document.getElementById("cardStars");
 
     function msOver(stName, colorName) {
         stName.addEventListener('mouseover', () => {
@@ -349,6 +502,42 @@
     function watchVideo(){
         console.log("video watched");
     }
+    function getGuideOne(){
+        console.log("get GuideOne clicked..");
+    }
+    function getGuideTwo(){
+        console.log("get GuideTwo clicked..");
+    }
+    function getWebinars(){
+        console.log("get Webinars clicked..");
+    }
+    function  allResources(){
+        console.log(" chek out all resources..");
+    }
+    function createStars(){
+        let saveStars = [];
+        let saveDivs = [];
+       // let dispIds = getDivIds();
+     /*   let j = 0;
+        while(j < 10){
+            console.log("inside firstFor..." + j);
+            let showDiv = document.getElementById('cardStars' + j);
+            console.log("insideShowDiv " + showDiv);
+            //showDiv.style.color = "white";
+            saveDivs.push(showDiv);
+            return saveDivs;
+        }*/
+        console.log("saveDivs are " + JSON.stringify(saveDivs));
+        let showDiv = document.getElementById('cardStars1');
+        for (let i = 0; i < 6 ; i++){
+         let myDiv = document.createElement("div");
+         myDiv.setAttribute('class', 'fa fa-star');
+         saveStars.push(myDiv);
+         showDiv.appendChild(saveStars[i]);
+        }
+    }
+
+    createStars();
     msOut(firstClassCol, 'yellow');
     msOver(firstClassCol, 'blue');
     onClickedOne(firstBtnOne);
