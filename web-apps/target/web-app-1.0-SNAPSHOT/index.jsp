@@ -17,7 +17,7 @@
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body style="height: 4500px;">
+<body style="height: 4800px;">
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -353,7 +353,7 @@
     </div>
 </div>
 <div style="margin-top: 30px;">
-    <div style="width: 100%; height: 550px; background-color: #7d7272">
+    <div style="width: 100%; height: 750px; background-color: #7d7272">
     <div style="text-align: center; margin-top: 40px;">
         <h2 style="color: aliceblue">Perfect Golf Events Reviews</h2>
         <h3 style="color: white">Trusted by Thousands</h3>
@@ -376,51 +376,31 @@
                 <div class="carousel-item active">
                     <div class="col-md-3" style="float: left">
                         <div class="card mb-2">
-                            <div id="cardStars1"></div>
+                            <div id="cardStars1"><span style="float: right" id="todayDate"></span></div>
                             <div class="card-content">
-                              <h2> CommentOne</h2>
+                              <h3 id="headerCard"> CommentOne</h3>
+                                <p id="textPar"></p>
+                                <p id="nameCustomer"></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3" style="float: left">
                         <div class="card mb-2">
-                            <div id="cardStars2"></div>
+                            <div id="cardStars2"><span style="float: right" id="todayDate1"></span></div>
                             <div class="card-content">
-                                <h2> CommentOne-Two</h2>
+                                <h3 id="headerCard1"> CommentOne</h3>
+                                <p id="textPar1"></p>
+                                <p id="nameCustomer1"></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3" style="float: left">
                         <div class="card mb-2">
-                            <div id="cardStars3"></div>
+                            <div id="cardStars3"><span style="float: right" id="todayDate2"></span></div>
                             <div class="card-content">
-                                <h2> CommentOne-Three</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="col-md-3" style="float: left">
-                        <div class="card mb-2">
-                            <div id="cardStars4"></div>
-                            <div class="card-content">
-                                <h2> CommentTwo</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3" style="float: left">
-                        <div class="card mb-2">
-                            <div id="cardStars5"></div>
-                            <div class="card-content">
-                                <h2> CommentTwo-One</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3" style="float: left">
-                        <div class="card mb-2">
-                            <div id="cardStars6"></div>
-                            <div class="card-content">
-                                <h2> CommentTwo-Two</h2>
+                                <h3 id="headerCard2"> CommentOne</h3>
+                                <p id="textPar2"></p>
+                                <p id="nameCustomer2"></p>
                             </div>
                         </div>
                     </div>
@@ -428,25 +408,63 @@
                 <div class="carousel-item">
                     <div class="col-md-3" style="float: left">
                         <div class="card mb-2">
-                            <div id="cardStars7"></div>
+                            <div id="cardStars4"><span style="float: right" id="todayDate3"></span></div>
                             <div class="card-content">
-                                <h2> CommentThree-One</h2>
+                                <h3 id="headerCard3"> CommentOne</h3>
+                                <p id="textPar3"></p>
+                                <p id="nameCustomer3"></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3" style="float: left">
                         <div class="card mb-2">
-                            <div id="cardStars8"></div>
+                            <div id="cardStars5"><span style="float: right" id="todayDate4"></span></div>
                             <div class="card-content">
-                                <h2> CommentThree-Two</h2>
+                                <h3 id="headerCard4"> CommentOne</h3>
+                                <p id="textPar4"></p>
+                                <p id="nameCustomer4"></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3" style="float: left">
                         <div class="card mb-2">
-                            <div id="cardStars9"></div>
+                            <div id="cardStars6"><span style="float: right" id="todayDate5"></span></div>
                             <div class="card-content">
-                                <h2> CommentThree-Three</h2>
+                                <h3 id="headerCard5"> CommentOne</h3>
+                                <p id="textPar5"></p>
+                                <p id="nameCustomer5"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars7"><span style="float: right" id="todayDate6"></span></div>
+                            <div class="card-content">
+                                <h3 id="headerCard6"> CommentOne</h3>
+                                <p id="textPar6"></p>
+                                <p id="nameCustomer6"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars8"><span style="float: right" id="todayDate7"></span></div>
+                            <div class="card-content">
+                                <h3 id="headerCard7"> CommentOne</h3>
+                                <p id="textPar7"></p>
+                                <p id="nameCustomer7"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="float: left">
+                        <div class="card mb-2">
+                            <div id="cardStars9"><span style="float: right" id="todayDate8"></span></div>
+                            <div class="card-content">
+                                <h3 id="headerCard8"> CommentOne</h3>
+                                <p id="textPar8"></p>
+                                <p id="nameCustomer8"></p>
                             </div>
                         </div>
                     </div>
@@ -476,6 +494,42 @@
     let secBtnThree = document.getElementById("tBtnTwo");
     let thirdClassCol = document.getElementById("tClassCol");
     let cardStars = document.getElementById("cardStars");
+    let todayDate = document.getElementById("todayDate");
+    let todayDate1 = document.getElementById("todayDate1");
+    let todayDate2 = document.getElementById("todayDate2");
+    let todayDate3 = document.getElementById("todayDate3");
+    let todayDate4 = document.getElementById("todayDate4");
+    let todayDate5 = document.getElementById("todayDate5");
+    let todayDate6 = document.getElementById("todayDate6");
+    let todayDate7 = document.getElementById("todayDate7");
+    let todayDate8 = document.getElementById("todayDate8");
+    let nameCustomer = document.getElementById("nameCustomer");
+    let nameCustomer1 = document.getElementById("nameCustomer1");
+    let nameCustomer2 = document.getElementById("nameCustomer2");
+    let nameCustomer3 = document.getElementById("nameCustomer3");
+    let nameCustomer4 = document.getElementById("nameCustomer4");
+    let nameCustomer5 = document.getElementById("nameCustomer5");
+    let nameCustomer6 = document.getElementById("nameCustomer6");
+    let nameCustomer7 = document.getElementById("nameCustomer7");
+    let nameCustomer8 = document.getElementById("nameCustomer8")
+    let textParag = document.getElementById("textPar");
+    let textParag1 = document.getElementById("textPar1");
+    let textParag2 = document.getElementById("textPar2");
+    let textParag3 = document.getElementById("textPar3");
+    let textParag4 = document.getElementById("textPar4");
+    let textParag5 = document.getElementById("textPar5");
+    let textParag6 = document.getElementById("textPar6");
+    let textParag7 = document.getElementById("textPar7");
+    let textParag8 = document.getElementById("textPar8");
+    let headerCard = document.getElementById("headerCard");
+    let headerCard1 = document.getElementById("headerCard1");
+    let headerCard2 = document.getElementById("headerCard2");
+    let headerCard3 = document.getElementById("headerCard3");
+    let headerCard4 = document.getElementById("headerCard4");
+    let headerCard5 = document.getElementById("headerCard5");
+    let headerCard6 = document.getElementById("headerCard6");
+    let headerCard7 = document.getElementById("headerCard7");
+    let headerCard8 = document.getElementById("headerCard8");
 
     function msOver(stName, colorName) {
         stName.addEventListener('mouseover', () => {
@@ -511,11 +565,10 @@
     function getWebinars(){
         console.log("get Webinars clicked..");
     }
-    function  allResources(){
+    function allResources(){
         console.log(" chek out all resources..");
     }
     function createStars(){
-        let saveStars = [];
         let showDiv1 = document.getElementById('cardStars1');
         let showDiv2 = document.getElementById('cardStars2');
         let showDiv3 = document.getElementById('cardStars3');
@@ -526,39 +579,93 @@
         let showDiv8 = document.getElementById('cardStars8');
         let showDiv9 = document.getElementById('cardStars9');
 
-        for (let i = 0; i < 6 ; i++){
+        for (let i = 0; i < 7 ; i++){
             let myDiv = document.createElement("div");
             myDiv.setAttribute('class', 'fa fa-star');
             let myDiv2 = document.createElement("div");
             myDiv2.setAttribute('class', 'fa fa-star');
             let myDiv3 = document.createElement("div");
             myDiv3.setAttribute('class', 'fa fa-star');
+            showDiv2.appendChild(myDiv2);
+            showDiv3.appendChild(myDiv);
+            showDiv4.appendChild(myDiv3);
+            getDate(todayDate);
+            getDate(todayDate1);
+            getDate(todayDate2);
+            displayHeader(headerCard,"We are hosting our first evered..");
+            displayHeader(headerCard1,"We are just beginning use Perfect..");
+            displayHeader(headerCard2,"We are hosting our first ever golf event..");
+            displayComment(textParag,"This was the 3 year we have used Perfect Golf Event and we have found the service to be comprehensive and very useful");
+            displayComment(textParag1, "We are just beginning use Perfect Gold for our Golf scramble. So far we are very pleased! They are very accessible to answer questions, etc. , which is very refreshing");
+            displayComment(textParag2, "We are hosting our first ever golf event. Dalton & Perfect Golf event were so good to work with. Graphic design is not my day job and most definitely not even a hobby. Dalton was able to take my descriptions and what was in my head and translate it to perfectly beautiful signs and banners");
+            displayCustName(nameCustomer, "Jeb Smith");
+            displayCustName(nameCustomer1, "Jayson Doyle");
+            displayCustName(nameCustomer2, "Jeremiah Finney");
+        }
+        for (let i = 0; i < 6; i++){
             let myDiv4 = document.createElement("div");
             myDiv4.setAttribute('class', 'fa fa-star');
             let myDiv5 = document.createElement("div");
             myDiv5.setAttribute('class', 'fa fa-star');
             let myDiv6 = document.createElement("div");
             myDiv6.setAttribute('class', 'fa fa-star');
+            showDiv5.appendChild(myDiv4);
+            showDiv6.appendChild(myDiv5);
+            showDiv7.appendChild(myDiv6);
+            getDate(todayDate3);
+            getDate(todayDate4);
+            getDate(todayDate5);
+            displayHeader(headerCard3,"Perfect Golf Event is SUPER easy..");
+            displayHeader(headerCard4,"This is our fifth year using PGE..");
+            displayHeader(headerCard5,"Greate services and clear..");
+            displayComment(textParag3, "Perfect Golf Event is SUPER easy to work with and the staff is very helpful.");
+            displayComment(textParag4, "This is our fifth year using PGE, get to work with and very knowledgeable. Very helpful on ways to improve our event");
+            displayComment(textParag5, "Greate services and clear expectations.");
+            displayCustName(nameCustomer3, "Preston Chang");
+            displayCustName(nameCustomer4, "Farzana Peel");
+            displayCustName(nameCustomer5, "Sally Cardenas");
+        }
+        for (let i = 0; i < 5; i++){
             let myDiv7 = document.createElement("div");
             myDiv7.setAttribute('class', 'fa fa-star');
             let myDiv8 = document.createElement("div");
             myDiv8.setAttribute('class', 'fa fa-star');
             let myDiv9 = document.createElement("div");
             myDiv9.setAttribute('class', 'fa fa-star');
-
-            showDiv1.appendChild(myDiv9);
-            showDiv2.appendChild(myDiv2);
-            showDiv3.appendChild(myDiv);
-            showDiv4.appendChild(myDiv3);
-            showDiv5.appendChild(myDiv4);
-            showDiv6.appendChild(myDiv5);
-            showDiv7.appendChild(myDiv6);
             showDiv8.appendChild(myDiv7);
             showDiv9.appendChild(myDiv8);
-       }
+            showDiv1.appendChild(myDiv9);
+            getDate(todayDate6);
+            getDate(todayDate7);
+            getDate(todayDate8);
+            displayHeader(headerCard6,"This was my first time putting together..");
+            displayHeader(headerCard7,"The customer service was always quick..");
+            displayHeader(headerCard8,"Truly a great experience..");
+            displayComment(textParag6,"This was my first time putting together a tournament and I couldn’t have done it without perfectgolfevent.com. Everything was so easy from the drag and drop website to the player pairings");
+            displayComment(textParag7, "The customer service was always quick to respond and very helpful. It was great to be able to use this service and I look forward to using it again in the future");
+            displayComment(textParag8, "Truly a great experience for our event and will be using them again! Great team and quality platform.");
+            displayCustName(nameCustomer6, "Saxon Andrade");
+            displayCustName(nameCustomer7, "Nelly Frazier");
+            displayCustName(nameCustomer8, "Kaylee Weir");
+        }
 
     }
-
+    function getDate(dateNum){
+        let getTodayDate = new Date();
+        dateNum.style.color = "#FFB74D";
+        dateNum.innerHTML = getTodayDate.toLocaleString('en-us',{month:'long', year:'numeric', day:'numeric'});
+    }
+    function displayCustName(custId,nameCust){
+        custId.style.color = "#FFB74D";
+        custId.style.fontsize = "14px";
+        custId.innerHTML = nameCust;
+    }
+    function displayComment(textId,commentText){
+        textId.innerHTML = commentText;
+    }
+    function displayHeader(hdTitle,headerText){
+        hdTitle.innerHTML = headerText;
+    }
     createStars();
     msOut(firstClassCol, 'yellow');
     msOver(firstClassCol, 'blue');
