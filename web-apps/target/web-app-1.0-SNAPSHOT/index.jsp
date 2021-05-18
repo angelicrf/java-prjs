@@ -17,7 +17,7 @@
     <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body style="height: 4800px;">
+<body style="height: 6300px;">
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -353,25 +353,34 @@
     </div>
 </div>
 <div style="margin-top: 30px;">
-    <div style="width: 100%; height: 750px; background-color: #7d7272">
+    <div style="width: 100%; height: 780px; background-color: #7d7272">
     <div style="text-align: center; margin-top: 40px;">
         <h2 style="color: aliceblue">Perfect Golf Events Reviews</h2>
         <h3 style="color: white">Trusted by Thousands</h3>
     </div>
-        <div id="carouselAuto" class="carousel slide" data-ride="carousel" data-interval="3000">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img style="height: 300px" class="d-block w-100" src="./images/golf-2.jpg" alt="slide_One">
-                    </div>
-                    <div class="carousel-item">
-                        <img style="height: 300px;" class="d-block w-100" src="./images/golf-3.jpg" alt="slide_two">
-                    </div>
-                    <div class="carousel-item">
-                        <img style="height: 300px;" class="d-block w-100" src="./images/golf-4.jpg" alt="slide_three">
-                    </div>
+        <marquee direction="left" width="100%">
+            <div class="row">
+                <div class="col">
+                    <img style="height: 300px" class="d-block w-100" src="https://cdn.perfectgolfevent.com/wp-content/uploads/2019/03/09141612/1200px-Cornell_Big_Red_logo.svg-150x150.png" alt="MarqueOne">
                 </div>
-        </div>
-        <div id="carouselComments" class="carousel slide carousel-multi-item" data-ride="carousel">
+                <div class="col">
+                    <img style="height: 300px;" class="d-block w-100" src="https://cdn.perfectgolfevent.com/wp-content/uploads/2020/11/09134016/1200px-American_Legion_Seal_SVG.svg-e1605643314583.png" alt="Marquetwo">
+                </div>
+                <div class="col">
+                    <img style="height: 300px;" class="d-block w-100" src="https://cdn.perfectgolfevent.com/wp-content/uploads/2020/11/06125323/unnamed-1-e1605635642216.png" alt="marqueThree">
+                </div>
+                <div class="col">
+                    <img style="height: 300px;" class="d-block w-100" src="https://cdn.perfectgolfevent.com/wp-content/uploads/2020/11/09141819/company_logo.png" alt="marqueFour">
+                </div>
+                <div class="col">
+                    <img style="height: 300px;" class="d-block w-100" src="https://cdn.perfectgolfevent.com/wp-content/uploads/2020/11/17074039/8680044-logo-e1605643261444.png" alt="marqueFive">
+                </div>
+                <div class="col">
+                    <img style="height: 300px;" class="d-block w-100" src="https://cdn.perfectgolfevent.com/wp-content/uploads/2019/03/09141129/p80xpv19wuqbyrmiebhy7qjip8l-e1605643196888.png" alt="marqueSix">
+                </div>
+            </div>
+        </marquee>
+        <div id="carouselComments" class="carousel slide carousel-multi-item" data-ride="carousel" data-interval="50000">
             <div style="display: flex; margin-left: 200px;" class="carousel-inner" role="listbox">
                 <div class="carousel-item active">
                     <div class="col-md-3" style="float: left">
@@ -479,6 +488,76 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
+    </div>
+</div>
+<div style="margin-top: 20px;">
+    <div style="width: 100%; height: 530px;">
+          <div id="carouselAuto" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div style="position: relative">
+                    <img style="height:530px;" class="d-block w-100" src="./images/golf-2.jpg" alt="slide_One">
+                        <div style="position: absolute; top: 8px;left: 16px; color: white; font-weight: 700;" class="h1">TEE-To-GREEN</div>
+                        <div style="position: absolute; height: 200px; width: 100%; border-top-left-radius: 40px; border-top-right-radius: 40px; background-color: rgba(203,189,168,0.7); bottom: 0;left: 0; right: 0;">
+                            <div style="color: #1f1fc6; margin-left: 30px; margin-top: 20px; font-weight: 400" class="h3">Resort Stay<span style="float: right; margin-right: 30px; color: #99225f">$180.00-$330.00</span></div>
+                            <div style="color: #1f1fc6; margin-left: 30px; margin-top: 30px; font-weight: bold" class="h3">Package</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div style="position: relative">
+                        <img style="height:530px;" class="d-block w-100" src="./images/golf-4.jpg" alt="slide_One">
+                        <div style="position: absolute; top: 8px;left: 16px; color: white; font-weight: 700;" class="h1">Hole-In-One</div>
+                        <div style="position: absolute; height: 200px; width: 100%; background-color: rgba(175,224,231,0.7); border-top-left-radius: 40px; border-top-right-radius: 40px; bottom: 0;left: 0; right: 0;">
+                            <div style="color: #1f1fc6; margin-left: 30px; margin-top: 20px; font-weight: 400" class="h3">$10,000.00 Hole-In-One<span style="float: right; margin-right: 30px; color: #99225f">$1,490.00</span></div>
+                            <div style="color: #1f1fc6; margin-left: 30px; margin-top: 30px; font-weight: bold" class="h3">Contest</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div style="position: relative">
+                        <img style="height:530px;" class="d-block w-100" src="./images/golf-3.jpg" alt="slide_One">
+                        <div style="position: absolute; top: 8px;left: 16px; color: white; font-weight: 600;" class="h1">Brand Your Event</div>
+                        <div style="position: absolute; height: 200px; width: 100%; background-color: rgba(211,163,227,0.7);border-top-left-radius: 40px; border-top-right-radius: 40px; bottom: 0;left: 0; right: 0;">
+                            <div style="color: #1f1fc6; margin-left: 30px; margin-top: 20px; font-weight: 400" class="h3">Brand Your Event, Sign and Banner<span style="float: right; margin-right: 30px; color: #99225f">$550.00</span></div>
+                            <div style="color: #1f1fc6; margin-left: 30px; margin-top: 30px; font-weight: bold" class="h3">Package</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+</div>
+<div style="margin-top: 20px;">
+   <div style="width: 100%; height: 730px; background-color: #e7ecf1">
+     <div class="container">
+         <div style="margin-top: 30px;">
+            <div style="text-align: center; font-weight: 900; color: #2879c9; padding-top: 30px;" class="h1">About Us</div>
+         </div>
+         <div style="margin-top: 50px; font-weight: 400;color: #0d3358; float: left; " class="h2">
+             YOUR ONE SOURCE FOR TOURNAMENT SUCCESS
+         </div>
+         <div style="font-weight: 400;color: #0b2c4c; float: left;" class="h3">
+             <div class="card" style="width: 580px; background-color: #c6cece; padding-top: 20px; padding-bottom: 20px;">
+                 <div class="card-content">
+                     Perfect Golf Event is organized to help golf event organizers have a more successful golf event and raise more money through technology, innovative formats and exciting fundraising contests. We assist groups looking to organize, manage and market a fundraising golf event, beginning with a free service and scaling up. Organizations benefit in three main areas: attracting more players, selling more sponsorships and ultimately raising more money.
+                 </div>
+             </div>
+         </div>
+         <div style="float: right; display: inline-block; margin-top: 60px;">
+             <img style="height:430px; border-radius: 40px; width: 450px;" src="./images/golf-4.jpg" alt="About_inst">
+         </div>
+     </div>
+   </div>
+</div>
+<div style="margin-top: 20px;">
+    <div style="width: 100%; height: 250px; background-color: #a2e2a2;">
+       <div style="font-weight: 900; text-shadow: 0.5px 0 currentColor; margin-left: 30px; padding-top: 50px; color: #1f1fc6" class="h1">SAVE TIME AND RAISE MORE MONEY</div>
+       <div class="p-2" style="font-weight: bold; margin-top: 30px; margin-left: 30px;">Our proven online and hands-on support helps you attract more players, sign more sponsors and deliver a</div>
+        <div class="h3" style="font-weight: bold; margin-left: 33px; color: #ba3333">Perfect Golf Event</div>
+        <div style="display: inline-block; float: right; margin-right: 30px; margin-top: -50px;">
+           <button type="button" onclick="" style="text-align: center; font-weight: bold; width: 250px;border-radius: 20px;" class="btn btn-success">Create Your Event Now</button>
+       </div>
     </div>
 </div>
 <script>
@@ -683,7 +762,7 @@
     onClickedTwo(secBtnThree);
 
 </script>
-<footer style="position: absolute; left: 0; right: 0; bottom: 0;">
+<footer style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%;">
     <div class='container-fluid'>
         <div class="card">
             <div class="heading text-center">
