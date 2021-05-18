@@ -515,26 +515,47 @@
         console.log(" chek out all resources..");
     }
     function createStars(){
-        let saveStars = [];
-        let saveDivs = [];
-       // let dispIds = getDivIds();
-     /*   let j = 0;
-        while(j < 10){
-            console.log("inside firstFor..." + j);
-            let showDiv = document.getElementById('cardStars' + j);
-            console.log("insideShowDiv " + showDiv);
-            //showDiv.style.color = "white";
-            saveDivs.push(showDiv);
-            return saveDivs;
-        }*/
-        console.log("saveDivs are " + JSON.stringify(saveDivs));
-        let showDiv = document.getElementById('cardStars1');
+        let showDiv1 = document.getElementById('cardStars1');
+        let showDiv2 = document.getElementById('cardStars2');
+        let showDiv3 = document.getElementById('cardStars3');
+        let showDiv4 = document.getElementById('cardStars4');
+        let showDiv5 = document.getElementById('cardStars5');
+        let showDiv6 = document.getElementById('cardStars6');
+        let showDiv7 = document.getElementById('cardStars7');
+        let showDiv8 = document.getElementById('cardStars8');
+        let showDiv9 = document.getElementById('cardStars9');
+
         for (let i = 0; i < 6 ; i++){
-         let myDiv = document.createElement("div");
-         myDiv.setAttribute('class', 'fa fa-star');
-         saveStars.push(myDiv);
-         showDiv.appendChild(saveStars[i]);
-        }
+            let myDiv = document.createElement("div");
+            myDiv.setAttribute('class', 'fa fa-star');
+            let myDiv2 = document.createElement("div");
+            myDiv2.setAttribute('class', 'fa fa-star');
+            let myDiv3 = document.createElement("div");
+            myDiv3.setAttribute('class', 'fa fa-star');
+            let myDiv4 = document.createElement("div");
+            myDiv4.setAttribute('class', 'fa fa-star');
+            let myDiv5 = document.createElement("div");
+            myDiv5.setAttribute('class', 'fa fa-star');
+            let myDiv6 = document.createElement("div");
+            myDiv6.setAttribute('class', 'fa fa-star');
+            let myDiv7 = document.createElement("div");
+            myDiv7.setAttribute('class', 'fa fa-star');
+            let myDiv8 = document.createElement("div");
+            myDiv8.setAttribute('class', 'fa fa-star');
+            let myDiv9 = document.createElement("div");
+            myDiv9.setAttribute('class', 'fa fa-star');
+
+            showDiv1.appendChild(myDiv9);
+            showDiv2.appendChild(myDiv2);
+            showDiv3.appendChild(myDiv);
+            showDiv4.appendChild(myDiv3);
+            showDiv5.appendChild(myDiv4);
+            showDiv6.appendChild(myDiv5);
+            showDiv7.appendChild(myDiv6);
+            showDiv8.appendChild(myDiv7);
+            showDiv9.appendChild(myDiv8);
+       }
+
     }
 
     createStars();
