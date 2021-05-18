@@ -388,7 +388,7 @@
                             <div id="cardStars1"><span style="float: right" id="todayDate"></span></div>
                             <div class="card-content">
                               <h3 id="headerCard"> CommentOne</h3>
-                                <p id="textPar"></p>
+                                <div id="textPar"></div>
                                 <p id="nameCustomer"></p>
                             </div>
                         </div>
@@ -398,7 +398,7 @@
                             <div id="cardStars2"><span style="float: right" id="todayDate1"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard1"> CommentOne</h3>
-                                <p id="textPar1"></p>
+                                <div id="textPar1"></div>
                                 <p id="nameCustomer1"></p>
                             </div>
                         </div>
@@ -408,7 +408,7 @@
                             <div id="cardStars3"><span style="float: right" id="todayDate2"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard2"> CommentOne</h3>
-                                <p id="textPar2"></p>
+                                <div id="textPar2"></div>
                                 <p id="nameCustomer2"></p>
                             </div>
                         </div>
@@ -420,7 +420,7 @@
                             <div id="cardStars4"><span style="float: right" id="todayDate3"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard3"> CommentOne</h3>
-                                <p id="textPar3"></p>
+                                <div id="textPar3"></div>
                                 <p id="nameCustomer3"></p>
                             </div>
                         </div>
@@ -430,7 +430,7 @@
                             <div id="cardStars5"><span style="float: right" id="todayDate4"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard4"> CommentOne</h3>
-                                <p id="textPar4"></p>
+                                <div id="textPar4"></div>
                                 <p id="nameCustomer4"></p>
                             </div>
                         </div>
@@ -440,7 +440,7 @@
                             <div id="cardStars6"><span style="float: right" id="todayDate5"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard5"> CommentOne</h3>
-                                <p id="textPar5"></p>
+                                <div id="textPar5"></div>
                                 <p id="nameCustomer5"></p>
                             </div>
                         </div>
@@ -452,7 +452,7 @@
                             <div id="cardStars7"><span style="float: right" id="todayDate6"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard6"> CommentOne</h3>
-                                <p id="textPar6"></p>
+                                <div id="textPar6"></div>
                                 <p id="nameCustomer6"></p>
                             </div>
                         </div>
@@ -462,7 +462,7 @@
                             <div id="cardStars8"><span style="float: right" id="todayDate7"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard7"> CommentOne</h3>
-                                <p id="textPar7"></p>
+                                <div id="textPar7"></div>
                                 <p id="nameCustomer7"></p>
                             </div>
                         </div>
@@ -472,7 +472,7 @@
                             <div id="cardStars9"><span style="float: right" id="todayDate8"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard8"> CommentOne</h3>
-                                <p id="textPar8"></p>
+                                <div id="textPar8"></div>
                                 <p id="nameCustomer8"></p>
                             </div>
                         </div>
@@ -555,8 +555,8 @@
        <div style="font-weight: 900; text-shadow: 0.5px 0 currentColor; margin-left: 30px; padding-top: 50px; color: #1f1fc6" class="h1">SAVE TIME AND RAISE MORE MONEY</div>
        <div class="p-2" style="font-weight: bold; margin-top: 30px; margin-left: 30px;">Our proven online and hands-on support helps you attract more players, sign more sponsors and deliver a</div>
         <div class="h3" style="font-weight: bold; margin-left: 33px; color: #ba3333">Perfect Golf Event</div>
-        <div style="display: inline-block; float: right; margin-right: 30px; margin-top: -50px;">
-           <button type="button" onclick="" style="text-align: center; font-weight: bold; width: 250px;border-radius: 20px;" class="btn btn-success">Create Your Event Now</button>
+        <div style="display: inline-block; float: right; margin-right: 30px; margin-top: -60px;">
+           <button type="button" onclick="createEvents()" style="text-align: center; font-weight: bold; width: 250px;border-radius: 20px;" class="btn btn-success">Create Your Event Now</button>
        </div>
     </div>
 </div>
@@ -647,7 +647,7 @@
     function allResources(){
         console.log(" chek out all resources..");
     }
-    function createStars(){
+    function createStars() {
         let showDiv1 = document.getElementById('cardStars1');
         let showDiv2 = document.getElementById('cardStars2');
         let showDiv3 = document.getElementById('cardStars3');
@@ -658,30 +658,7 @@
         let showDiv8 = document.getElementById('cardStars8');
         let showDiv9 = document.getElementById('cardStars9');
 
-        for (let i = 0; i < 7 ; i++){
-            let myDiv = document.createElement("div");
-            myDiv.setAttribute('class', 'fa fa-star');
-            let myDiv2 = document.createElement("div");
-            myDiv2.setAttribute('class', 'fa fa-star');
-            let myDiv3 = document.createElement("div");
-            myDiv3.setAttribute('class', 'fa fa-star');
-            showDiv2.appendChild(myDiv2);
-            showDiv3.appendChild(myDiv);
-            showDiv4.appendChild(myDiv3);
-            getDate(todayDate);
-            getDate(todayDate1);
-            getDate(todayDate2);
-            displayHeader(headerCard,"We are hosting our first evered..");
-            displayHeader(headerCard1,"We are just beginning use Perfect..");
-            displayHeader(headerCard2,"We are hosting our first ever golf event..");
-            displayComment(textParag,"This was the 3 year we have used Perfect Golf Event and we have found the service to be comprehensive and very useful");
-            displayComment(textParag1, "We are just beginning use Perfect Gold for our Golf scramble. So far we are very pleased! They are very accessible to answer questions, etc. , which is very refreshing");
-            displayComment(textParag2, "We are hosting our first ever golf event. Dalton & Perfect Golf event were so good to work with. Graphic design is not my day job and most definitely not even a hobby. Dalton was able to take my descriptions and what was in my head and translate it to perfectly beautiful signs and banners");
-            displayCustName(nameCustomer, "Jeb Smith");
-            displayCustName(nameCustomer1, "Jayson Doyle");
-            displayCustName(nameCustomer2, "Jeremiah Finney");
-        }
-        for (let i = 0; i < 6; i++){
+        for (let i = 0; i < 6; i++) {
             let myDiv4 = document.createElement("div");
             myDiv4.setAttribute('class', 'fa fa-star');
             let myDiv5 = document.createElement("div");
@@ -691,20 +668,20 @@
             showDiv5.appendChild(myDiv4);
             showDiv6.appendChild(myDiv5);
             showDiv7.appendChild(myDiv6);
-            getDate(todayDate3);
-            getDate(todayDate4);
-            getDate(todayDate5);
-            displayHeader(headerCard3,"Perfect Golf Event is SUPER easy..");
-            displayHeader(headerCard4,"This is our fifth year using PGE..");
-            displayHeader(headerCard5,"Greate services and clear..");
-            displayComment(textParag3, "Perfect Golf Event is SUPER easy to work with and the staff is very helpful.");
-            displayComment(textParag4, "This is our fifth year using PGE, get to work with and very knowledgeable. Very helpful on ways to improve our event");
-            displayComment(textParag5, "Greate services and clear expectations.");
-            displayCustName(nameCustomer3, "Preston Chang");
-            displayCustName(nameCustomer4, "Farzana Peel");
-            displayCustName(nameCustomer5, "Sally Cardenas");
+
         }
-        for (let i = 0; i < 5; i++){
+        for (let i = 0; i < 7; i++) {
+            let myDiv = document.createElement("div");
+            myDiv.setAttribute('class', 'fa fa-star');
+            let myDiv2 = document.createElement("div");
+            myDiv2.setAttribute('class', 'fa fa-star');
+            let myDiv3 = document.createElement("div");
+            myDiv3.setAttribute('class', 'fa fa-star');
+            showDiv2.appendChild(myDiv2);
+            showDiv3.appendChild(myDiv);
+            showDiv4.appendChild(myDiv3);
+        }
+        for (let i = 0; i < 5; i++) {
             let myDiv7 = document.createElement("div");
             myDiv7.setAttribute('class', 'fa fa-star');
             let myDiv8 = document.createElement("div");
@@ -714,21 +691,46 @@
             showDiv8.appendChild(myDiv7);
             showDiv9.appendChild(myDiv8);
             showDiv1.appendChild(myDiv9);
-            getDate(todayDate6);
-            getDate(todayDate7);
-            getDate(todayDate8);
-            displayHeader(headerCard6,"This was my first time putting together..");
-            displayHeader(headerCard7,"The customer service was always quick..");
-            displayHeader(headerCard8,"Truly a great experience..");
-            displayComment(textParag6,"This was my first time putting together a tournament and I couldn’t have done it without perfectgolfevent.com. Everything was so easy from the drag and drop website to the player pairings");
-            displayComment(textParag7, "The customer service was always quick to respond and very helpful. It was great to be able to use this service and I look forward to using it again in the future");
-            displayComment(textParag8, "Truly a great experience for our event and will be using them again! Great team and quality platform.");
-            displayCustName(nameCustomer6, "Saxon Andrade");
-            displayCustName(nameCustomer7, "Nelly Frazier");
-            displayCustName(nameCustomer8, "Kaylee Weir");
         }
-
     }
+        createStars();
+        getDate(todayDate);
+        getDate(todayDate1);
+        getDate(todayDate2);
+        getDate(todayDate3);
+        getDate(todayDate4);
+        getDate(todayDate5);
+        getDate(todayDate6);
+        getDate(todayDate7);
+        getDate(todayDate8);
+        displayHeader(headerCard,"We are hosting our first evered..");
+        displayHeader(headerCard1,"We are just beginning use Perfect..");
+        displayHeader(headerCard2,"We are hosting our first ever golf event..");
+        displayHeader(headerCard3,"Perfect Golf Event is SUPER easy..");
+        displayHeader(headerCard4,"This is our fifth year using PGE..");
+        displayHeader(headerCard5,"Greate services and clear..");
+        displayHeader(headerCard6,"This was my first time putting together..");
+        displayHeader(headerCard7,"The customer service was always quick..");
+        displayHeader(headerCard8,"Truly a great experience..");
+        displayComment(textParag,"This was the 3 year we have used Perfect Golf Event and we have found the service to be comprehensive and very useful");
+        displayComment(textParag1, "We are just beginning use Perfect Gold for our Golf scramble. So far we are very pleased! They are very accessible to answer questions, etc. , which is very refreshing");
+        displayComment(textParag2, "We are hosting our first ever golf event. Dalton & Perfect Golf event were so good to work with. Graphic design is not my day job and most definitely not even a hobby. Dalton was able to take my descriptions and what was in my head and translate it to perfectly beautiful signs and banners");
+        displayComment(textParag3, "Perfect Golf Event is SUPER easy to work with and the staff is very helpful.");
+        displayComment(textParag4, "This is our fifth year using PGE, get to work with and very knowledgeable. Very helpful on ways to improve our event");
+        displayComment(textParag5, "Greate services and clear expectations.");
+        displayComment(textParag6,"This was my first time putting together a tournament and I couldn’t have done it without perfectgolfevent.com. Everything was so easy from the drag and drop website to the player pairings");
+        displayComment(textParag7, "The customer service was always quick to respond and very helpful. It was great to be able to use this service and I look forward to using it again in the future");
+        displayComment(textParag8, "Truly a great experience for our event and will be using them again! Great team and quality platform.");
+        displayCustName(nameCustomer, "Jeb Smith");
+        displayCustName(nameCustomer1, "Jayson Doyle");
+        displayCustName(nameCustomer2, "Jeremiah Finney");
+        displayCustName(nameCustomer3, "Preston Chang");
+        displayCustName(nameCustomer4, "Farzana Peel");
+        displayCustName(nameCustomer5, "Sally Cardenas");
+        displayCustName(nameCustomer6, "Saxon Andrade");
+        displayCustName(nameCustomer7, "Nelly Frazier");
+        displayCustName(nameCustomer8, "Kaylee Weir");
+
     function getDate(dateNum){
         let getTodayDate = new Date();
         dateNum.style.color = "#FFB74D";
@@ -741,11 +743,25 @@
     }
     function displayComment(textId,commentText){
         textId.innerHTML = commentText;
+        textId.style.lineHeight = "20px";
+        let divHeight = textId.offsetHeight;
+        let lineHeight = parseInt(textId.style.lineHeight);
+        let lines = divHeight / lineHeight;
+        if(lines > 3){
+                //.substring(commentText.lastIndexOf("\n") + 1, -1 );
+            let createITag = document.createElement("a");
+            createITag.style.color = "#337ea0";
+            createITag.href = "${pageContext.request.contextPath}/comments.jsp";
+            createITag.innerHTML = " more...";
+            textId.appendChild(createITag);
+        }
     }
     function displayHeader(hdTitle,headerText){
         hdTitle.innerHTML = headerText;
     }
-    createStars();
+    function createEvents(){
+        console.log("create event clicked...");
+    }
     msOut(firstClassCol, 'yellow');
     msOver(firstClassCol, 'blue');
     onClickedOne(firstBtnOne);
