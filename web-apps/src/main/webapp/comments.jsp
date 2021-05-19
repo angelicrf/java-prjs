@@ -25,13 +25,26 @@
 </head>
 <body style="background-color: #9E9E9E">
     <div class="container" style="margin-top: 30px;">
-        <form style="text-align: center;" method="get" action="comments" id="clComments">
+       <%-- <form style="text-align: center;" method="get" action="comments" id="clComments">
             <input style="text-align: center; width: 250px; border-radius: 20px;" type="submit" name="allReviews" value="Reviews" class="btn-danger btn">
-        </form>
+        </form>--%>
+         <%if(request.getParameter("value") != null){%>
+            <% Object showRev = request.getParameter("value");
+               Object showDate = request.getParameter("custDate");
+               Object showHeader = request.getParameter("custHeader");
+            %>
+                   <div class="card" style="width: 550px;">
+                       <div class="card-title">
+                           <div class="h2">
+                               Date: <%=showDate%>
+                               Title review : <%=showHeader%>
+                           </div>
+                       </div>
+                       <div class="card-content">
+                           Customer review: <%=showRev%>
+                       </div>
+                   </div>
+         <%}%>
     </div>
- <%if(request.getAttribute("seeReviews") != null){%>
-    <% Object showRev = request.getAttribute("seeReviews");%>
-   <div style="background-color: red; color: #1f1fc6">All received <%=showRev%></div>
- <%}%>
 </body>
 </html>
