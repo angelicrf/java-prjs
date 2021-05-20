@@ -13,10 +13,11 @@ import java.io.IOException;
 @MultipartConfig
 public class Comments extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-       String showMsReview = request.getParameter("allReviews");
-       System.out.println(showMsReview);
-       if(showMsReview != null){
+       if(request.getParameter("allReviews") != null){
            request.setAttribute("seeReviews", "allSet");
+       }
+       if(request.getParameter("crReview") != null){
+           System.out.println("crReview is " + request.getParameter("crReview"));
        }
         RequestDispatcher dispatcher= request.getRequestDispatcher("/comments.jsp");
         dispatcher.forward(request,response);
