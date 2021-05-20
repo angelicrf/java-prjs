@@ -388,7 +388,7 @@
                             <div id="cardStars1"><span style="float: right" id="todayDate"></span></div>
                             <div class="card-content">
                               <h3 id="headerCard"> CommentOne</h3>
-                                <div id="textPar"></div>
+                                <div id="textPar" class="indexOne"></div>
                                 <p id="nameCustomer"></p>
                             </div>
                         </div>
@@ -398,7 +398,7 @@
                             <div id="cardStars2"><span style="float: right" id="todayDate1"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard1"> CommentOne</h3>
-                                <div id="textPar1"></div>
+                                <div id="textPar1" class="indexTwo"></div>
                                 <p id="nameCustomer1"></p>
                             </div>
                         </div>
@@ -408,7 +408,7 @@
                             <div id="cardStars3"><span style="float: right" id="todayDate2"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard2"> CommentOne</h3>
-                                <div id="textPar2"></div>
+                                <div id="textPar2" class="indexThree"></div>
                                 <p id="nameCustomer2"></p>
                             </div>
                         </div>
@@ -420,7 +420,7 @@
                             <div id="cardStars4"><span style="float: right" id="todayDate3"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard3"> CommentOne</h3>
-                                <div id="textPar3"></div>
+                                <div id="textPar3" class="indexFour"></div>
                                 <p id="nameCustomer3"></p>
                             </div>
                         </div>
@@ -430,7 +430,7 @@
                             <div id="cardStars5"><span style="float: right" id="todayDate4"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard4"> CommentOne</h3>
-                                <div id="textPar4" class="readMore"></div>
+                                <div id="textPar4" class="readMore indexFive"></div>
                                 <p id="nameCustomer4"></p>
                             </div>
                         </div>
@@ -440,7 +440,7 @@
                             <div id="cardStars6"><span style="float: right" id="todayDate5"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard5"> CommentOne</h3>
-                                <div id="textPar5"></div>
+                                <div id="textPar5" class="indexSix"></div>
                                 <p id="nameCustomer5"></p>
                             </div>
                         </div>
@@ -452,7 +452,7 @@
                             <div id="cardStars7"><span style="float: right" id="todayDate6"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard6"> CommentOne</h3>
-                                <div id="textPar6" class="readMore"></div>
+                                <div id="textPar6" class="readMore indexSeven"></div>
                                 <p id="nameCustomer6"></p>
                             </div>
                         </div>
@@ -462,7 +462,7 @@
                             <div id="cardStars8"><span style="float: right" id="todayDate7"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard7"> CommentOne</h3>
-                                <div id="textPar7" class="readMore"></div>
+                                <div id="textPar7" class="readMore indexEight"></div>
                                 <p id="nameCustomer7"></p>
                             </div>
                         </div>
@@ -472,7 +472,7 @@
                             <div id="cardStars9"><span style="float: right" id="todayDate8"></span></div>
                             <div class="card-content">
                                 <h3 id="headerCard8"> CommentOne</h3>
-                                <div id="textPar8" class="readMore"></div>
+                                <div id="textPar8" class="readMore indexNine"></div>
                                 <p id="nameCustomer8"></p>
                             </div>
                         </div>
@@ -694,43 +694,36 @@
         }
     }
         createStars();
-        let showDate = null, showHeader =  null, customerName = null;
-        showDate = getDate(todayDate);
-        showDate = getDate(todayDate1);
-        showDate = getDate(todayDate2);
-        showDate = getDate(todayDate3);
-        showDate = getDate(todayDate4);
-        showDate = getDate(todayDate5);
-        showDate = getDate(todayDate6);
-        showDate = getDate(todayDate7);
-        showDate = getDate(todayDate8);
-        showHeader = displayHeader(headerCard,"We are hosting our first evered..");
-        showHeader = displayHeader(headerCard1,"We are just beginning use Perfect..");
-        showHeader = displayHeader(headerCard2,"We are hosting our first ever golf event..");
-        showHeader = displayHeader(headerCard3,"Perfect Golf Event is SUPER easy..");
-        showHeader = displayHeader(headerCard4,"This is our fifth year using PGE..");
-        showHeader = displayHeader(headerCard5,"Greate services and clear..");
-        showHeader = displayHeader(headerCard6,"This was my first time putting together..");
-        showHeader = displayHeader(headerCard7,"The customer service was always quick..");
-        showHeader = displayHeader(headerCard8,"Truly a great experience..");
+        let showDate = [], showHeader = [], customerName = [];
+        showDate.push(getDate(todayDate),getDate(todayDate1),getDate(todayDate2),getDate(todayDate3),getDate(todayDate4),getDate(todayDate5),
+            getDate(todayDate6),getDate(todayDate7),getDate(todayDate8));
+        showHeader.push(displayHeader(headerCard,"We are hosting our first evered.."),
+                        displayHeader(headerCard1,"We are just beginning use Perfect.."),
+                        displayHeader(headerCard2,"We are hosting our first ever golf event.."),
+                        displayHeader(headerCard3,"Perfect Golf Event is SUPER easy.."),
+                        displayHeader(headerCard4,"This is our fifth year using PGE.."),
+                        displayHeader(headerCard5,"Greate services and clear.."),
+                        displayHeader(headerCard6,"This was my first time putting together.."),
+                        displayHeader(headerCard7,"The customer service was always quick.."),
+                        displayHeader(headerCard8,"Truly a great experience.."));
+        customerName.push(displayCustName(nameCustomer, "Jeb Smith"),
+                        displayCustName(nameCustomer1, "Jayson Doyle"),
+                        displayCustName(nameCustomer2, "Jeremiah Finney"),
+                        displayCustName(nameCustomer3, "Preston Chang"),
+                        displayCustName(nameCustomer4, "Farzana Peel"),
+                        displayCustName(nameCustomer5, "Sally Cardenas"),
+                        displayCustName(nameCustomer6, "Saxon Andrade"),
+                        displayCustName(nameCustomer7, "Nelly Frazier"),
+                        displayCustName(nameCustomer8, "Kaylee Weir"));
         displayComment(textParag,"This was the 3 year we have used Perfect Golf Event and we have found the service to be comprehensive and very useful");
         displayComment(textParag1, "We are just beginning use Perfect Gold for our Golf scramble. So far we are very pleased! They are very accessible to answer questions, etc. , which is very refreshing");
-        displayComment(textParag2, "We are hosting our first ever golf event. Dalton & Perfect Golf event were so good to work with. Graphic design is not my day job and most definitely not even a hobby. Dalton was able to take my descriptions and what was in my head and translate it to perfectly beautiful signs and banners");
+        displayComment(textParag2, "We are hosting our first ever golf event. Dalton and Perfect Golf event were so good to work with. Graphic design is not my day job and most definitely not even a hobby. Dalton was able to take my descriptions and what was in my head and translate it to perfectly beautiful signs and banners");
         displayComment(textParag3, "Perfect Golf Event is SUPER easy to work with and the staff is very helpful.");
         displayComment(textParag4, "This is our fifth year using PGE, get to work with and very knowledgeable. Very helpful on ways to improve our event");
-        displayComment(textParag5, "Greate services and clear expectations.");
+        displayComment(textParag5, "Great services and clear expectations.");
         displayComment(textParag6,"This was my first time putting together a tournament and I couldn’t have done it without perfectgolfevent.com. Everything was so easy from the drag and drop website to the player pairings");
         displayComment(textParag7, "The customer service was always quick to respond and very helpful. It was great to be able to use this service and I look forward to using it again in the future");
         displayComment(textParag8, "Truly a great experience for our event and will be using them again! Great team and quality platform.");
-        customerName = displayCustName(nameCustomer, "Jeb Smith");
-        customerName = displayCustName(nameCustomer1, "Jayson Doyle");
-        customerName = displayCustName(nameCustomer2, "Jeremiah Finney");
-        customerName = displayCustName(nameCustomer3, "Preston Chang");
-        customerName = displayCustName(nameCustomer4, "Farzana Peel");
-        customerName = displayCustName(nameCustomer5, "Sally Cardenas");
-        customerName = displayCustName(nameCustomer6, "Saxon Andrade");
-        customerName = displayCustName(nameCustomer7, "Nelly Frazier");
-        customerName = displayCustName(nameCustomer8, "Kaylee Weir");
 
     function getDate(dateNum){
         let getTodayDate = new Date();
@@ -745,6 +738,39 @@
         custId.innerHTML = nameCust;
         return nameCust;
     }
+    function getSpIndex(txtId){
+        let spIndex = 0;
+        if(txtId.classList.contains("indexOne")){
+            spIndex = 0;
+            return spIndex;
+        }else if(txtId.classList.contains("indexTwo")){
+            spIndex = 1;
+            return spIndex
+        }else if(txtId.classList.contains("indexThree")){
+            spIndex = 2;
+            return spIndex;
+        }else if(txtId.classList.contains("indexFour")){
+            spIndex = 3;
+            return spIndex;
+        }else if(txtId.classList.contains("indexFive")){
+            spIndex = 4;
+            return spIndex;
+        }else if(txtId.classList.contains("indexSix")){
+            spIndex = 5;
+            return spIndex;
+        }else if(txtId.classList.contains("indexSeven")){
+            spIndex = 6;
+            return spIndex;
+        }else if(txtId.classList.contains("indexEight")){
+            spIndex = 7;
+            return spIndex;
+        }else if(txtId.classList.contains("indexNine")){
+            spIndex = 8;
+            return spIndex;
+        }else{
+            return spIndex;
+        }
+    }
     function displayComment(textId,commentText){
         textId.innerHTML = commentText;
         textId.style.lineHeight = "20px";
@@ -756,7 +782,15 @@
                 //.substring(commentText.lastIndexOf("\n") + 1, -1 );
             let createITag = document.createElement("a");
             createITag.style.color = "#337ea0";
-            createITag.href = `${pageContext.request.contextPath}/comments.jsp?value=\${commentText}&custDate=\${showDate}&custHeader=\${showHeader}`;
+            for(let i = 0; i < showDate.length; i++ ){
+                //condition
+             let newI = getSpIndex(textId);
+             console.log("newI is " + newI);
+                if(parseInt(newI) === i){
+                    i = newI;
+                    createITag.href = `${pageContext.request.contextPath}/comments.jsp?value=\${commentText}&custDate=\${showDate[i]}&custHeader=\${showHeader[i]}&custName=\${customerName[i]}`;
+                }
+            }
             createITag.innerHTML = " more...";
             textId.appendChild(createITag);
         }

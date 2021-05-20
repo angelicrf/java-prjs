@@ -28,10 +28,12 @@
        <%-- <form style="text-align: center;" method="get" action="comments" id="clComments">
             <input style="text-align: center; width: 250px; border-radius: 20px;" type="submit" name="allReviews" value="Reviews" class="btn-danger btn">
         </form>--%>
+        <h2>Customer Review</h2>
          <%if(request.getParameter("value") != null){%>
             <% Object showRev = request.getParameter("value");
                Object showDate = request.getParameter("custDate");
                Object showHeader = request.getParameter("custHeader");
+               Object showCustName = request.getParameter("custName");
             %>
                    <div class="card" style="width: 550px;">
                        <div class="card-title">
@@ -42,9 +44,19 @@
                        </div>
                        <div class="card-content">
                            Customer review: <%=showRev%>
+                           Customer Name : <%=showCustName%>
                        </div>
                    </div>
          <%}%>
     </div>
+    <script>
+        setTimeout(() => {
+            if(window.location.href.indexOf("value") > -1){
+                console.log("contains value...");
+                window.history.pushState({}, document.title, "/web_app_war_exploded/comments.jsp" );
+            }
+        },3000);
+
+    </script>
 </body>
 </html>
