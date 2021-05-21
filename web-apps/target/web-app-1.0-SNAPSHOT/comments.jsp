@@ -1,4 +1,11 @@
-<%--
+<%@ page import="com.mongodb.client.MongoClient" %>
+<%@ page import="com.mongodb.client.MongoClients" %>
+<%@ page import="com.mongodb.client.MongoDatabase" %>
+<%@ page import="com.mongodb.client.MongoCollection" %>
+<%@ page import="org.bson.Document" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.Locale" %><%--
   Created by IntelliJ IDEA.
   User: bcuser
   Date: 5/18/21
@@ -62,12 +69,12 @@
                     window.history.pushState({}, document.title, "/web_app_war_exploded/comments.jsp" );
                 }
             },3000);
-            function makeStars() {
+            function makeStars(useDiv) {
                 for (let i = 0; i < 5; i++) {
                     let myDivStars = document.createElement("div");
                     myDivStars.style.color = "green";
                     myDivStars.setAttribute('class', 'fa fa-star');
-                    crStars.appendChild(myDivStars);
+                    useDiv.appendChild(myDivStars);
                 }
             }
             function upRate(){
@@ -79,7 +86,7 @@
             function flagReview(){
                 console.log("flag review clicked");
             }
-            makeStars();
+            makeStars(crStars);
         </script>
          <%}%>
         <div style="margin-top: 50px;">
@@ -105,9 +112,26 @@
                        Comment: <textarea style="margin-left:20px; width: 250px; height: 450px; border-radius: 20px;" name="commentCust"> Start comment...</textarea>
                    </label>
                    <br>
+                   <div id="orgStars"></div>
+                   <br>
                <input style="border-radius: 15px;width: 250px;" type="submit" class="btn-info" value="submitReview"/>
                </form>
             </div>
+            <script>
+                let orgStars = document.getElementById("orgStars");
+                function makeStarsOrg(useDiv) {
+                    for (let i = 0; i < 5; i++) {
+                        let divStar = document.createElement("div");
+                        divStar.setAttribute('class', 'far fa-star');
+                        useDiv.appendChild(divStar);
+                    }
+                }
+                makeStarsOrg(orgStars);
+                orgStars.addEventListener('click', (ev) => {
+                    ev.target.classList.remove("far");
+                    ev.target.classList.add("fas");
+                })
+            </script>
             <%}%>
         </div>
     </div>
@@ -118,6 +142,7 @@
         String commentCust = request.getParameter("commentCust");
     %>
     <div id="newCard" style="visibility: hidden; width: 550px;">
+        <h2>Thanks for your feedback! We now posted your comment to our database...</h2>
         <div class="card">
             <div class="card-title">
                 NewCustName : <%=newCustName%>
@@ -128,15 +153,25 @@
            </div>
         </div>
     </div>
+    <% MongoClient mngdb = MongoClients.create("mongodb+srv://new-admin-calc:123456calc@clustercalc.xuacu.mongodb.net/calculate?retryWrites=true&w=majority");
+       MongoDatabase db = mngdb.getDatabase("calculate");
+       int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+       int year = Calendar.getInstance().get(Calendar.YEAR);
+       String month = Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+       String todayDate = currentDay + " " + month + " " + year;
+       MongoCollection<Document> col = db.getCollection("comments");
+       Document doc = new Document("cmName", newCustName).append("cmStars" ,"5").append("cmDate", todayDate).append("cmTitle", titleCust).append("cmComment", commentCust);
+       col.insertOne(doc);
+    %>
     <script>
         let visibleComment = document.getElementById("newComment");
         let newCard = document.getElementById("newCard");
         let disClComment = document.getElementById("clComments");
+
         disClComment.style.visibility = "hidden";
         newCard.style.visibility = "visible";
         visibleComment.style.visibility = "visible";
         visibleComment.appendChild(newCard);
-
         setTimeout(() => {
             if(window.location.href.indexOf("value") > -1){
                 console.log("contains value...");

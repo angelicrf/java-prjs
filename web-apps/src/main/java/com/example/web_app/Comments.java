@@ -22,4 +22,5 @@ public class Comments extends HttpServlet {
         RequestDispatcher dispatcher= request.getRequestDispatcher("/comments.jsp");
         dispatcher.forward(request,response);
     }
+
 }
