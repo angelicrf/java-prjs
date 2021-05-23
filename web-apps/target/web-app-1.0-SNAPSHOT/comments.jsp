@@ -113,12 +113,14 @@
                    </label>
                    <br>
                    <div id="orgStars"></div>
+                   <input type="hidden" id="countId" />
                    <br>
                <input style="border-radius: 15px;width: 250px;" type="submit" class="btn-info" value="submitReview"/>
                </form>
             </div>
             <script>
                 let orgStars = document.getElementById("orgStars");
+                let countRT = document.getElementById("countId");
                 function makeStarsOrg(useDiv) {
                     for (let i = 0; i < 5; i++) {
                         let divStar = document.createElement("div");
@@ -127,10 +129,23 @@
                     }
                 }
                 makeStarsOrg(orgStars);
+                let count = 0;
                 orgStars.addEventListener('click', (ev) => {
                     ev.target.classList.remove("far");
                     ev.target.classList.add("fas");
+                    if(ev.target.classList.contains("fas")){
+                        count++;
+                        console.log("countRate is " + count);
+                        sessionStorage.setItem("countStars", count.toString());
+                        let getCountStars = parseInt(sessionStorage.getItem("countStars"));
+                        if(getCountStars > 0){
+                            console.log("we are inside of countRT");
+                            countRT.setAttribute("name", "rateCust");
+                            countRT.setAttribute("value", getCountStars.toString());
+                        }
+                    }
                 })
+
             </script>
             <%}%>
         </div>
@@ -140,6 +155,7 @@
     <%Object newCustName = request.getParameter("nameCust");
         String titleCust = request.getParameter("titleCust");
         String commentCust = request.getParameter("commentCust");
+        String cntRate = request.getParameter("rateCust");
     %>
     <div id="newCard" style="visibility: hidden; width: 550px;">
         <h2>Thanks for your feedback! We now posted your comment to our database...</h2>
@@ -160,7 +176,8 @@
        String month = Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
        String todayDate = currentDay + " " + month + " " + year;
        MongoCollection<Document> col = db.getCollection("comments");
-       Document doc = new Document("cmName", newCustName).append("cmStars" ,"5").append("cmDate", todayDate).append("cmTitle", titleCust).append("cmComment", commentCust);
+
+       Document doc = new Document("cmName", newCustName).append("cmStars" , cntRate).append("cmDate", todayDate).append("cmTitle", titleCust).append("cmComment", commentCust);
        col.insertOne(doc);
     %>
     <script>
