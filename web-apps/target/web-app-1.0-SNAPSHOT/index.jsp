@@ -383,100 +383,46 @@
         <div id="carouselComments" class="carousel slide carousel-multi-item" data-ride="carousel" data-interval="50000">
             <div style="display: flex; margin-left: 200px;" class="carousel-inner" role="listbox">
                 <div class="carousel-item active">
+                    <%for(int i =0; i < 3; i++){%>
                     <div class="col-md-3" style="float: left">
                         <div class="card mb-2">
-                            <div id="cardStars1"><span style="float: right" id="todayDate"></span></div>
+                            <div id="cardStars<%=i%>"><span style="float: right" id="todayDate<%=i%>"></span></div>
                             <div class="card-content">
-                              <h3 id="headerCard"> CommentOne</h3>
-                                <div id="textPar" class="indexOne"></div>
-                                <p id="nameCustomer"></p>
+                                <h3 id="headerCard<%=i%>"> Comment<%=i%></h3>
+                                <div id="textPar<%=i%>" class="index<%=i%>"></div>
+                                <p id="nameCustomer<%=i%>"></p>
                             </div>
-                        </div>
                     </div>
-                    <div class="col-md-3" style="float: left">
-                        <div class="card mb-2">
-                            <div id="cardStars2"><span style="float: right" id="todayDate1"></span></div>
-                            <div class="card-content">
-                                <h3 id="headerCard1"> CommentOne</h3>
-                                <div id="textPar1" class="indexTwo"></div>
-                                <p id="nameCustomer1"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3" style="float: left">
-                        <div class="card mb-2">
-                            <div id="cardStars3"><span style="float: right" id="todayDate2"></span></div>
-                            <div class="card-content">
-                                <h3 id="headerCard2"> CommentOne</h3>
-                                <div id="textPar2" class="indexThree"></div>
-                                <p id="nameCustomer2"></p>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
+                    <%}%>
                 </div>
-                <div class="carousel-item">
+               <div class="carousel-item">
+                    <%for(int i =3; i < 6; i++){%>
                     <div class="col-md-3" style="float: left">
                         <div class="card mb-2">
-                            <div id="cardStars4"><span style="float: right" id="todayDate3"></span></div>
+                            <div id="cardStars<%=i%>"><span style="float: right" id="todayDate<%=i%>"></span></div>
                             <div class="card-content">
-                                <h3 id="headerCard3"> CommentOne</h3>
-                                <div id="textPar3" class="indexFour"></div>
-                                <p id="nameCustomer3"></p>
+                                <h3 id="headerCard<%=i%>"> Comment<%=i%></h3>
+                                <div id="textPar<%=i%>" class="index<%=i%>"></div>
+                                <p id="nameCustomer<%=i%>"></p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3" style="float: left">
-                        <div class="card mb-2">
-                            <div id="cardStars5"><span style="float: right" id="todayDate4"></span></div>
-                            <div class="card-content">
-                                <h3 id="headerCard4"> CommentOne</h3>
-                                <div id="textPar4" class="readMore indexFive"></div>
-                                <p id="nameCustomer4"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3" style="float: left">
-                        <div class="card mb-2">
-                            <div id="cardStars6"><span style="float: right" id="todayDate5"></span></div>
-                            <div class="card-content">
-                                <h3 id="headerCard5"> CommentOne</h3>
-                                <div id="textPar5" class="indexSix"></div>
-                                <p id="nameCustomer5"></p>
-                            </div>
-                        </div>
-                    </div>
+                    <%}%>
                 </div>
-                <div class="carousel-item">
+             <div class="carousel-item">
+                    <%for(int i =6; i < 9; i++){%>
                     <div class="col-md-3" style="float: left">
                         <div class="card mb-2">
-                            <div id="cardStars7"><span style="float: right" id="todayDate6"></span></div>
+                            <div id="cardStars<%=i%>"><span style="float: right" id="todayDate<%=i%>"></span></div>
                             <div class="card-content">
-                                <h3 id="headerCard6"> CommentOne</h3>
-                                <div id="textPar6" class="readMore indexSeven"></div>
-                                <p id="nameCustomer6"></p>
+                                <h3 id="headerCard<%=i%>"> Comment<%=i%></h3>
+                                <div id="textPar<%=i%>" class="index<%=i%>"></div>
+                                <p id="nameCustomer<%=i%>"></p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3" style="float: left">
-                        <div class="card mb-2">
-                            <div id="cardStars8"><span style="float: right" id="todayDate7"></span></div>
-                            <div class="card-content">
-                                <h3 id="headerCard7"> CommentOne</h3>
-                                <div id="textPar7" class="readMore indexEight"></div>
-                                <p id="nameCustomer7"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3" style="float: left">
-                        <div class="card mb-2">
-                            <div id="cardStars9"><span style="float: right" id="todayDate8"></span></div>
-                            <div class="card-content">
-                                <h3 id="headerCard8"> CommentOne</h3>
-                                <div id="textPar8" class="readMore indexNine"></div>
-                                <p id="nameCustomer8"></p>
-                            </div>
-                        </div>
-                    </div>
+                    <%}%>
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselComments" role="button" data-slide="prev">
@@ -573,42 +519,6 @@
     let secBtnThree = document.getElementById("tBtnTwo");
     let thirdClassCol = document.getElementById("tClassCol");
     let cardStars = document.getElementById("cardStars");
-    let todayDate = document.getElementById("todayDate");
-    let todayDate1 = document.getElementById("todayDate1");
-    let todayDate2 = document.getElementById("todayDate2");
-    let todayDate3 = document.getElementById("todayDate3");
-    let todayDate4 = document.getElementById("todayDate4");
-    let todayDate5 = document.getElementById("todayDate5");
-    let todayDate6 = document.getElementById("todayDate6");
-    let todayDate7 = document.getElementById("todayDate7");
-    let todayDate8 = document.getElementById("todayDate8");
-    let nameCustomer = document.getElementById("nameCustomer");
-    let nameCustomer1 = document.getElementById("nameCustomer1");
-    let nameCustomer2 = document.getElementById("nameCustomer2");
-    let nameCustomer3 = document.getElementById("nameCustomer3");
-    let nameCustomer4 = document.getElementById("nameCustomer4");
-    let nameCustomer5 = document.getElementById("nameCustomer5");
-    let nameCustomer6 = document.getElementById("nameCustomer6");
-    let nameCustomer7 = document.getElementById("nameCustomer7");
-    let nameCustomer8 = document.getElementById("nameCustomer8")
-    let textParag = document.getElementById("textPar");
-    let textParag1 = document.getElementById("textPar1");
-    let textParag2 = document.getElementById("textPar2");
-    let textParag3 = document.getElementById("textPar3");
-    let textParag4 = document.getElementById("textPar4");
-    let textParag5 = document.getElementById("textPar5");
-    let textParag6 = document.getElementById("textPar6");
-    let textParag7 = document.getElementById("textPar7");
-    let textParag8 = document.getElementById("textPar8");
-    let headerCard = document.getElementById("headerCard");
-    let headerCard1 = document.getElementById("headerCard1");
-    let headerCard2 = document.getElementById("headerCard2");
-    let headerCard3 = document.getElementById("headerCard3");
-    let headerCard4 = document.getElementById("headerCard4");
-    let headerCard5 = document.getElementById("headerCard5");
-    let headerCard6 = document.getElementById("headerCard6");
-    let headerCard7 = document.getElementById("headerCard7");
-    let headerCard8 = document.getElementById("headerCard8");
 
     function msOver(stName, colorName) {
         stName.addEventListener('mouseover', () => {
@@ -648,83 +558,45 @@
         console.log(" chek out all resources..");
     }
     function createStars() {
-        let showDiv1 = document.getElementById('cardStars1');
-        let showDiv2 = document.getElementById('cardStars2');
-        let showDiv3 = document.getElementById('cardStars3');
-        let showDiv4 = document.getElementById('cardStars4');
-        let showDiv5 = document.getElementById('cardStars5');
-        let showDiv6 = document.getElementById('cardStars6');
-        let showDiv7 = document.getElementById('cardStars7');
-        let showDiv8 = document.getElementById('cardStars8');
-        let showDiv9 = document.getElementById('cardStars9');
-
-        for (let i = 0; i < 6; i++) {
-            let myDiv4 = document.createElement("div");
-            myDiv4.setAttribute('class', 'fa fa-star');
-            let myDiv5 = document.createElement("div");
-            myDiv5.setAttribute('class', 'fa fa-star');
-            let myDiv6 = document.createElement("div");
-            myDiv6.setAttribute('class', 'fa fa-star');
-            showDiv5.appendChild(myDiv4);
-            showDiv6.appendChild(myDiv5);
-            showDiv7.appendChild(myDiv6);
-
-        }
-        for (let i = 0; i < 7; i++) {
-            let myDiv = document.createElement("div");
-            myDiv.setAttribute('class', 'fa fa-star');
-            let myDiv2 = document.createElement("div");
-            myDiv2.setAttribute('class', 'fa fa-star');
-            let myDiv3 = document.createElement("div");
-            myDiv3.setAttribute('class', 'fa fa-star');
-            showDiv2.appendChild(myDiv2);
-            showDiv3.appendChild(myDiv);
-            showDiv4.appendChild(myDiv3);
-        }
-        for (let i = 0; i < 5; i++) {
-            let myDiv7 = document.createElement("div");
-            myDiv7.setAttribute('class', 'fa fa-star');
-            let myDiv8 = document.createElement("div");
-            myDiv8.setAttribute('class', 'fa fa-star');
-            let myDiv9 = document.createElement("div");
-            myDiv9.setAttribute('class', 'fa fa-star');
-            showDiv8.appendChild(myDiv7);
-            showDiv9.appendChild(myDiv8);
-            showDiv1.appendChild(myDiv9);
-        }
+        createMultipleStars(6,0,3);
+        createMultipleStars(5,3,6);
+        createMultipleStars(4,6,9);
     }
         createStars();
         let showDate = [], showHeader = [], customerName = [];
-        showDate.push(getDate(todayDate),getDate(todayDate1),getDate(todayDate2),getDate(todayDate3),getDate(todayDate4),getDate(todayDate5),
-            getDate(todayDate6),getDate(todayDate7),getDate(todayDate8));
-        showHeader.push(displayHeader(headerCard,"We are hosting our first evered.."),
-                        displayHeader(headerCard1,"We are just beginning use Perfect.."),
-                        displayHeader(headerCard2,"We are hosting our first ever golf event.."),
-                        displayHeader(headerCard3,"Perfect Golf Event is SUPER easy.."),
-                        displayHeader(headerCard4,"This is our fifth year using PGE.."),
-                        displayHeader(headerCard5,"Greate services and clear.."),
-                        displayHeader(headerCard6,"This was my first time putting together.."),
-                        displayHeader(headerCard7,"The customer service was always quick.."),
-                        displayHeader(headerCard8,"Truly a great experience.."));
-        customerName.push(displayCustName(nameCustomer, "Jeb Smith"),
-                        displayCustName(nameCustomer1, "Jayson Doyle"),
-                        displayCustName(nameCustomer2, "Jeremiah Finney"),
-                        displayCustName(nameCustomer3, "Preston Chang"),
-                        displayCustName(nameCustomer4, "Farzana Peel"),
-                        displayCustName(nameCustomer5, "Sally Cardenas"),
-                        displayCustName(nameCustomer6, "Saxon Andrade"),
-                        displayCustName(nameCustomer7, "Nelly Frazier"),
-                        displayCustName(nameCustomer8, "Kaylee Weir"));
-        displayComment(textParag,"This was the 3 year we have used Perfect Golf Event and we have found the service to be comprehensive and very useful");
-        displayComment(textParag1, "We are just beginning use Perfect Gold for our Golf scramble. So far we are very pleased! They are very accessible to answer questions, etc. , which is very refreshing");
-        displayComment(textParag2, "We are hosting our first ever golf event. Dalton and Perfect Golf event were so good to work with. Graphic design is not my day job and most definitely not even a hobby. Dalton was able to take my descriptions and what was in my head and translate it to perfectly beautiful signs and banners");
-        displayComment(textParag3, "Perfect Golf Event is SUPER easy to work with and the staff is very helpful.");
-        displayComment(textParag4, "This is our fifth year using PGE, get to work with and very knowledgeable. Very helpful on ways to improve our event");
-        displayComment(textParag5, "Great services and clear expectations.");
-        displayComment(textParag6,"This was my first time putting together a tournament and I couldn’t have done it without perfectgolfevent.com. Everything was so easy from the drag and drop website to the player pairings");
-        displayComment(textParag7, "The customer service was always quick to respond and very helpful. It was great to be able to use this service and I look forward to using it again in the future");
-        displayComment(textParag8, "Truly a great experience for our event and will be using them again! Great team and quality platform.");
+        let clMessages = ["We are hosting our first evered..","We are just beginning use Perfect..","We are hosting our first ever golf event..",
+                          "Perfect Golf Event is SUPER easy..","This is our fifth year using PGE..","Greate services and clear..",
+                          "This was my first time putting together..","The customer service was always quick..","Truly a great experience.." ]
 
+        let clFullnames = ["Jeb Smith","Jayson Doyle","Jeremiah Finney","Preston Chang","Farzana Peel","Sally Cardenas","Saxon Andrade","Nelly Frazier","Kaylee Weir"];
+        let clAllComments = ["This was the 3 year we have used Perfect Golf Event and we have found the service to be comprehensive and very useful",
+            "We are just beginning use Perfect Gold for our Golf scramble. So far we are very pleased! They are very accessible to answer questions, etc. , which is very refreshing",
+            "We are hosting our first ever golf event. Dalton and Perfect Golf event were so good to work with. Graphic design is not my day job and most definitely not even a hobby. Dalton was able to take my descriptions and what was in my head and translate it to perfectly beautiful signs and banners",
+            "Perfect Golf Event is SUPER easy to work with and the staff is very helpful.",
+            "This is our fifth year using PGE, get to work with and very knowledgeable. Very helpful on ways to improve our event",
+            "Great services and clear expectations.",
+            "This was my first time putting together a tournament and I couldn’t have done it without perfectgolfevent.com. Everything was so easy from the drag and drop website to the player pairings",
+            "The customer service was always quick to respond and very helpful. It was great to be able to use this service and I look forward to using it again in the future",
+            "Truly a great experience for our event and will be using them again! Great team and quality platform." ];
+        for(let i = 0; i < clMessages.length; i++){
+            showDate.push(getDate(document.getElementById(`todayDate\${i}`)));
+            showHeader.push(displayHeader(document.getElementById(`headerCard\${i}`),clMessages[i]));
+            customerName.push(displayCustName(document.getElementById(`nameCustomer\${i}`), clFullnames[i] ));
+            displayComment(document.getElementById(`textPar\${i}`),clAllComments[i]);
+        }
+    function createDivCarousel(start,end){
+            let myDiv = [];
+            for(let i = parseInt(start); i < parseInt(end); i++) {
+                myDiv[i] = document.createElement("div");
+                    myDiv[i].setAttribute('class', 'fa fa-star');
+                document.getElementById(`cardStars\${i}`).appendChild(myDiv[i]);
+            }
+    }
+    function createMultipleStars(howMany,start,end){
+            for(let i = 0; i < parseInt(howMany); i++){
+                createDivCarousel(start,end);
+            }
+    }
     function getDate(dateNum){
         let getTodayDate = new Date();
         dateNum.style.color = "#FFB74D";
@@ -740,45 +612,50 @@
     }
     function getSpIndex(txtId){
         let spIndex = 0;
-        if(txtId.classList.contains("indexOne")){
+        for(let i = 0; i < 9; i++) {
+            if(txtId.classList.contains(`index\${i}`)){
+             spIndex = i;
+             return spIndex;
+            }
+        }
+        /*if (txtId.classList.contains("index0")) {
             spIndex = 0;
             return spIndex;
-        }else if(txtId.classList.contains("indexTwo")){
+        }else if (txtId.classList.contains("index1")) {
             spIndex = 1;
-            return spIndex
-        }else if(txtId.classList.contains("indexThree")){
-            spIndex = 2;
-            return spIndex;
-        }else if(txtId.classList.contains("indexFour")){
-            spIndex = 3;
-            return spIndex;
-        }else if(txtId.classList.contains("indexFive")){
-            spIndex = 4;
-            return spIndex;
-        }else if(txtId.classList.contains("indexSix")){
-            spIndex = 5;
-            return spIndex;
-        }else if(txtId.classList.contains("indexSeven")){
-            spIndex = 6;
-            return spIndex;
-        }else if(txtId.classList.contains("indexEight")){
-            spIndex = 7;
-            return spIndex;
-        }else if(txtId.classList.contains("indexNine")){
-            spIndex = 8;
-            return spIndex;
-        }else{
             return spIndex;
         }
+        else if (txtId.classList.contains("index2")) {
+            spIndex = 2;
+            return spIndex;
+        }else if (txtId.classList.contains("index3")) {
+            spIndex = 3;
+            return spIndex;
+        }else if (txtId.classList.contains("index4")) {
+            spIndex = 4;
+            return spIndex;
+        }else if (txtId.classList.contains("index5")) {
+            spIndex = 5;
+            return spIndex;
+        }else if (txtId.classList.contains("index6")) {
+            spIndex = 6;
+            return spIndex;
+        }else if (txtId.classList.contains("index7")) {
+            spIndex = 7;
+            return spIndex;
+        }else if (txtId.classList.contains("index8")) {
+            spIndex = 8;
+            return spIndex;
+        }*/
     }
     function displayComment(textId,commentText){
         textId.innerHTML = commentText;
+        let stLength = commentText.length;
         textId.style.lineHeight = "20px";
         let divHeight = textId.offsetHeight;
         let lineHeight = parseInt(textId.style.lineHeight);
         let lines = divHeight / lineHeight;
-
-        if(lines > 3 || textId.classList.contains("readMore")){
+        if(lines > 3 || stLength > 150){
                 //.substring(commentText.lastIndexOf("\n") + 1, -1 );
             let createITag = document.createElement("a");
             createITag.style.color = "#337ea0";
