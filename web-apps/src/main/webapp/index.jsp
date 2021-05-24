@@ -1,3 +1,6 @@
+<%@ page import="org.bson.Document" %>
+<%@ page import="com.mongodb.client.*" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -423,8 +426,50 @@
                         </div>
                     </div>
                     <%}%>
+             </div>
+                <%
+                    MongoClient mngdb = MongoClients.create("mongodb+srv://new-admin-calc:123456calc@clustercalc.xuacu.mongodb.net/calculate?retryWrites=true&w=majority");
+                    MongoDatabase db = mngdb.getDatabase("calculate");
+                    MongoCollection<Document> col = db.getCollection("comments");
+                    FindIterable<Document> iter = col.find();
+                    MongoCursor<Document> cursor = iter.iterator();
+                    int allIds = (int) col.countDocuments();
+                    ArrayList<String> newCmName = new ArrayList<>();
+                    ArrayList<String> newCmTitle = new ArrayList<>();
+                    ArrayList<String> newCmTxt = new ArrayList<>();
+                    ArrayList<String> newCmDate = new ArrayList<>();
+                    ArrayList<String> newCmRate = new ArrayList<>();
+                    int strMng = 0; int endMng = 3;
+                    while(cursor.hasNext()){
+                        Document document = cursor.next();
+                        newCmName.add(document.getString("cmName"));
+                        newCmTitle.add(document.getString("cmTitle"));
+                        newCmTxt.add(document.getString("cmComment"));
+                        newCmDate.add(document.getString("cmDate"));
+                        newCmRate.add(document.getString("cmStars"));
+                    }
+                    int countCarousels = allIds / 3;
+                        if(countCarousels == 1 || countCarousels > 1){
+                            for(int j = 0; j < countCarousels; j++){
+                 %>
+                <div id="mngCarousel<%=j%>" class="carousel-item">
+                    <%
+                        for(int k = strMng; k < endMng; k++){%>
+                    <div id="mainCard<%=k%>" class="col-md-3" style="float: left">
+                        <div id="subCard<%=k%>" class="card mb-2">
+                            <div id="mngStars<%=k%>"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div>
+                            <div id="mainContent<%=k%>" class="card-content">
+                                <h3 id="mngHdrCard<%=k%>"><%=newCmTitle.get(k)%></h3>
+                                <div id="mngTxtCard<%=k%>"><%=newCmTxt.get(k)%></div>
+                                <p id="mngNmCard<%=k%>"><%=newCmName.get(k)%></p>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
                 </div>
-            </div>
+                <%}}%>
+                </div>
+
             <a class="carousel-control-prev" href="#carouselComments" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
@@ -433,7 +478,7 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
-        </div>
+    </div>
     </div>
 </div>
 <div style="margin-top: 20px;">
@@ -519,6 +564,16 @@
     let secBtnThree = document.getElementById("tBtnTwo");
     let thirdClassCol = document.getElementById("tClassCol");
     let cardStars = document.getElementById("cardStars");
+    let vrfCarouselNum = <%=countCarousels%>;
+
+    function mngDisplayData(){
+        //under construoction
+        for(let i = 0; i < vrfCarouselNum; i++){
+            if(i > 0 && i === 1){
+               return <%strMng = 3; endMng = 6;%>
+            }
+        }
+    }
 
     function msOver(stName, colorName) {
         stName.addEventListener('mouseover', () => {
