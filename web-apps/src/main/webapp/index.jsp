@@ -453,9 +453,16 @@
                             for(int j = 0; j < countCarousels; j++){
                  %>
                 <div id="mngCarousel<%=j%>" class="carousel-item">
-                    <%
-                        for(int k = strMng; k < endMng; k++){%>
-                    <div id="mainCard<%=k%>" class="col-md-3" style="float: left">
+                    <% for (int i = 0, start = 0, end = 0; i < countCarousels; i++, start+=3, end+=3 ) {
+                            System.out.println("i = " + i + " :: " + "start = " + start + "end = " + end);
+                            endMng = end + 3;
+                            strMng = start;
+                        }%>
+                        <%
+                            System.out.println("strMng is " + strMng + "endMng is " + endMng);
+                            for(int k = strMng; k < endMng; k++){%>
+                        <div id="mainCard
+                        </label><%=k%>" class="col-md-3" style="float: left">
                         <div id="subCard<%=k%>" class="card mb-2">
                             <div id="mngStars<%=k%>"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div>
                             <div id="mainContent<%=k%>" class="card-content">
@@ -564,16 +571,6 @@
     let secBtnThree = document.getElementById("tBtnTwo");
     let thirdClassCol = document.getElementById("tClassCol");
     let cardStars = document.getElementById("cardStars");
-    let vrfCarouselNum = <%=countCarousels%>;
-
-    function mngDisplayData(){
-        //under construoction
-        for(let i = 0; i < vrfCarouselNum; i++){
-            if(i > 0 && i === 1){
-               return <%strMng = 3; endMng = 6;%>
-            }
-        }
-    }
 
     function msOver(stName, colorName) {
         stName.addEventListener('mouseover', () => {

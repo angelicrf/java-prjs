@@ -439,7 +439,7 @@
                     ArrayList<String> newCmTxt = new ArrayList<>();
                     ArrayList<String> newCmDate = new ArrayList<>();
                     ArrayList<String> newCmRate = new ArrayList<>();
-
+                    int strMng = 0; int endMng = 3;
                     while(cursor.hasNext()){
                         Document document = cursor.next();
                         newCmName.add(document.getString("cmName"));
@@ -450,12 +450,19 @@
                     }
                     int countCarousels = allIds / 3;
                         if(countCarousels == 1 || countCarousels > 1){
-                            for(int j = 0; j < countCarousels +1; j++){
+                            for(int j = 0; j < countCarousels; j++){
                  %>
-                <div id="mngCarousel" class="carousel-item">
-                    <%for(int k = 0; k < 3; k++){%>
-<%--                      <h3 id="mngCard<%=j%>"> MNGComment<%=newCmName.get(j)%></h3>--%>
-                    <div id="mainCard<%=k%>" class="col-md-3" style="float: left">
+                <div id="mngCarousel<%=j%>" class="carousel-item">
+                    <% for (int i = 0, start = 0, end = 0; i < countCarousels; i++, start+=3, end+=3 ) {
+                            System.out.println("i = " + i + " :: " + "start = " + start + "end = " + end);
+                            endMng = end + 3;
+                            strMng = start;
+                        }%>
+                        <%
+                            System.out.println("strMng is " + strMng + "endMng is " + endMng);
+                            for(int k = strMng; k < endMng; k++){%>
+                        <div id="mainCard
+                        </label><%=k%>" class="col-md-3" style="float: left">
                         <div id="subCard<%=k%>" class="card mb-2">
                             <div id="mngStars<%=k%>"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div>
                             <div id="mainContent<%=k%>" class="card-content">

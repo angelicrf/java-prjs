@@ -15,7 +15,6 @@ public class UpImg extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
        System.out.print("getPost Called..");
     }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         System.out.println("doGet called...");
     }

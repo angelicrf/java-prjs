@@ -12,8 +12,6 @@ import java.util.concurrent.CompletableFuture;
 @WebServlet(name = "usersInfo", value = "/users")
 public class User extends HttpServlet {
     String userName = null;
-
-
     public void doGet(HttpServletRequest request, HttpServletResponse response){
         //String getPassword = request.getParameter("password");
         CompletableFuture.runAsync(() -> {
