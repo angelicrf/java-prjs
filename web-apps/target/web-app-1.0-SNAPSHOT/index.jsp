@@ -1,6 +1,9 @@
 <%@ page import="org.bson.Document" %>
 <%@ page import="com.mongodb.client.*" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.util.Arrays" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -448,19 +451,41 @@
                         newCmDate.add(document.getString("cmDate"));
                         newCmRate.add(document.getString("cmStars"));
                     }
-                    int countCarousels = allIds / 3;
-                        if(countCarousels == 1 || countCarousels > 1){
+                    int countCarousels = 0;
+                    if(allIds%3 == 0){
+                        countCarousels = allIds / 3;
+                    }else{
+                        System.out.println("modulegreater...");
+                        countCarousels = (allIds / 3) + 1 ;
+                    }
+                        if(countCarousels >= 1 ){
                             for(int j = 0; j < countCarousels; j++){
                  %>
                 <div id="mngCarousel<%=j%>" class="carousel-item">
                     <% for (int i = 0, start = 0, end = 0; i < countCarousels; i++, start+=3, end+=3 ) {
                             System.out.println("i = " + i + " :: " + "start = " + start + "end = " + end);
+                            if(allIds%3 == 0){
+                                System.out.println("Divided not greater...");
                             endMng = end + 3;
-                            strMng = start;
+                            strMng = start;}
+                            else {
+                                System.out.println("Dividedgreater...");
+                                float dividedNum = allIds / (float)3;
+                                NumberFormat nf = new DecimalFormat("##.##");
+                                String newDivNum = nf.format(dividedNum);
+                                System.out.println("newDivNum is " + newDivNum.split("\\.")[1]);
+                                String mdNewDivNum = "0." + newDivNum.split("\\.")[1];
+                                System.out.println("mdNewDivNum is " + mdNewDivNum);
+                                if(Double.parseDouble(mdNewDivNum) < 0.5){
+                                    endMng = end + 1;
+                                }else if(Double.parseDouble(mdNewDivNum) > 0.5){
+                                    endMng = end + 2;
+                                }
+                            }
                         }%>
                         <%
                             System.out.println("strMng is " + strMng + "endMng is " + endMng);
-                            for(int k = strMng; k < endMng; k++){%>
+                            for(int k = 3; k < 4; k++){%>
                         <div id="mainCard
                         </label><%=k%>" class="col-md-3" style="float: left">
                         <div id="subCard<%=k%>" class="card mb-2">
