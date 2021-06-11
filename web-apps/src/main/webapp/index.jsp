@@ -1,9 +1,11 @@
 <%@ page import="org.bson.Document" %>
 <%@ page import="com.mongodb.client.*" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.DecimalFormat" %>
-<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.Serializable" %>
+<%@ page import="com.google.api.client.util.store.DataStore" %>
+<%@ page import="java.io.IOException" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -24,6 +26,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body style="height: 6300px;">
+<%Map<Integer,Integer> hldCarousels = new LinkedHashMap<>();%>
 <div class="pos-f-t">
     <nav class="navbar navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -443,6 +446,7 @@
                     ArrayList<String> newCmDate = new ArrayList<>();
                     ArrayList<String> newCmRate = new ArrayList<>();
                     int strMng = 0; int endMng = 3;
+                    int startEntry = 0; int endEntry = 3;
                     while(cursor.hasNext()){
                         Document document = cursor.next();
                         newCmName.add(document.getString("cmName"));
@@ -458,48 +462,107 @@
                         System.out.println("modulegreater...");
                         countCarousels = (allIds / 3) + 1 ;
                     }
-                        if(countCarousels >= 1 ){
-                            for(int j = 0; j < countCarousels; j++){
+                  /*      if(countCarousels >= 1 ){
+                            for(int j = 0; j < countCarousels; j++){*/
                  %>
-                <div id="mngCarousel<%=j%>" class="carousel-item">
-                    <% for (int i = 0, start = 0, end = 0; i < countCarousels; i++, start+=3, end+=3 ) {
-                            System.out.println("i = " + i + " :: " + "start = " + start + "end = " + end);
-                            if(allIds%3 == 0){
-                                System.out.println("Divided not greater...");
+          <%--      <div id="mngCarousel<%=j%>" class="carousel-item">--%>
+                    <% //cut hldCarousels
+                        for (int i = 0, start = 0, end = 0; i < countCarousels; i++, start+=3, end+=3 ) {
+                        System.out.println("i = " + i + " :: " + "start = " + start + "end = " + (end));
+                        if (allIds % 3 == 0) {
+                            System.out.println("Divided not greater...");
                             endMng = end + 3;
-                            strMng = start;}
-                            else {
-                                System.out.println("Dividedgreater...");
-                                float dividedNum = allIds / (float)3;
-                                NumberFormat nf = new DecimalFormat("##.##");
-                                String newDivNum = nf.format(dividedNum);
-                                System.out.println("newDivNum is " + newDivNum.split("\\.")[1]);
-                                String mdNewDivNum = "0." + newDivNum.split("\\.")[1];
-                                System.out.println("mdNewDivNum is " + mdNewDivNum);
-                                if(Double.parseDouble(mdNewDivNum) < 0.5){
-                                    endMng = end + 1;
-                                }else if(Double.parseDouble(mdNewDivNum) > 0.5){
-                                    endMng = end + 2;
-                                }
+                            strMng = start;
+                        } else {
+                            System.out.println("Dividedgreater...");
+                            float dividedNum = allIds / (float) 3;
+                            NumberFormat nf = new DecimalFormat("##.##");
+                            String newDivNum = nf.format(dividedNum);
+                            System.out.println("newDivNum is " + newDivNum.split("\\.")[1]);
+                            String mdNewDivNum = "0." + newDivNum.split("\\.")[1];
+                            System.out.println("mdNewDivNum is " + mdNewDivNum);
+                            if (Double.parseDouble(mdNewDivNum) < 0.5) {
+                                endMng = end + 1;
+                                hldCarousels.put(start,endMng);
+                            } else if (Double.parseDouble(mdNewDivNum) > 0.5) {
+                                endMng = end + 2;
+                                hldCarousels.put(start,endMng);
                             }
-                        }%>
-                        <%
-                            System.out.println("strMng is " + strMng + "endMng is " + endMng);
-                            for(int k = 3; k < 4; k++){%>
-                        <div id="mainCard
-                        </label><%=k%>" class="col-md-3" style="float: left">
-                        <div id="subCard<%=k%>" class="card mb-2">
-                            <div id="mngStars<%=k%>"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div>
-                            <div id="mainContent<%=k%>" class="card-content">
-                                <h3 id="mngHdrCard<%=k%>"><%=newCmTitle.get(k)%></h3>
-                                <div id="mngTxtCard<%=k%>"><%=newCmTxt.get(k)%></div>
-                                <p id="mngNmCard<%=k%>"><%=newCmName.get(k)%></p>
-                            </div>
-                        </div>
-                    </div>
-                    <%}%>
-                </div>
-                <%}}%>
+                        }
+                    }%> <%System.out.println("strMng is " + strMng + "endMng is " + endMng);
+                    hldCarousels.replace(0,3);
+                    //cut code
+                   %>
+                    <div id="displayMngCrsl"></div>
+                      <% int getMapSize = hldCarousels.size();
+                         for (Map.Entry<Integer, Integer> entry : hldCarousels.entrySet()) {
+                            System.out.println("key is " + entry.getKey() + "value is " + entry.getValue());
+                            for(int h = 0;  h < getMapSize; h++){
+                            %>
+                          <div style="visibility: hidden" id="eachCarousel<%=h%>"></div>
+                                <%}}%>
+                                    <script>
+                                      let textCrls1 = '';
+                                      let textCrls = '';
+                                      let gtMpSize = <%=getMapSize%>;
+                                      function changeCarlsDiv(g){
+                                            if(document.getElementById("eachCarousel" + g)){
+                                                <%int pos = 0;
+                                                     System.out.println("pos is " + pos);
+                                                     int value1 = new ArrayList<>(hldCarousels.values()).get(pos);
+                                                     int key1 = new ArrayList<>(hldCarousels.keySet()).get(pos);
+                                                     System.out.println(" key1 is " + key1 + "value1 pos is " + value1);
+                                                      for(int k = key1; k < value1; k++){ %>
+                                                       textCrls1 += '<h2><%=newCmName.get(k)%></h2><div id="mainCard\${g}" class="col-md-3" style="float: left"> <div id="subCard\${g}" class="card mb-2" style="width: 350px;"> <div id="mngStars\${g}"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div> <div id="mainContent\${g}" class="card-content"> <h3 id="mngHdrCard\${g}"><%=newCmTitle.get(k)%></h3> <div id="mngTxtCard\${g}"><%=newCmTxt.get(k)%></div> <p id="mngNmCard\${g}"><%=newCmName.get(k)%></p> </div> </div> </div>';
+                                                <%}%>
+                                                document.getElementById("eachCarousel" + g).innerHTML = textCrls1;
+                                                }
+                                            }
+                                  function displayCarousels(dfCrls, tctCrls){
+                                      <% int defPos = 0;
+                                       Map<Integer,Integer> resStoreCrl = new LinkedHashMap<>(); %>
+                                      //change condition
+                                       if(document.getElementById("eachCarousel1")){
+                                           <%defPos = 1;%>
+                                       }
+                                      <% takeCarousel(hldCarousels,resStoreCrl,defPos); %>
+                                      <% int resKey = 0; int resValue = 0;
+                                      for (Map.Entry<Integer, Integer> resEntry : resStoreCrl.entrySet()) {
+                                          resKey = resEntry.getKey(); resValue = resEntry.getValue();
+                                           for(int l = resKey; l < resValue ; l++){
+                                      %>
+                                      tctCrls += '<div class="col-md-3" style="float: left"> <div class="card mb-2" style="width: 350px;"> <div><%=newCmRate.get(l)%><span style="float: right"><%=newCmDate.get(l)%></span></div> <div class="card-content"> <h3><%=newCmTitle.get(l)%></h3> <div><%=newCmTxt.get(l)%></div> <p><%=newCmName.get(l)%></p> </div> </div> </div>';
+                                      <%}}%>
+                                      document.getElementById("eachCarousel" + dfCrls).innerHTML = tctCrls;
+                                  }
+                                     displayCarousels(0,textCrls);
+                                     displayCarousels(1,textCrls1);
+                                      //changeCarlsDiv(0);
+                                    </script>
+                <%!
+                    public Map<Integer, Integer> takeCarousel(Map<Integer,Integer> hldCrl,Map<Integer,Integer> storeCrl, int pos1) throws IOException {
+                          System.out.println("pos1 is " + pos1);
+                            int value =  new ArrayList<>(hldCrl.values()).get(pos1);
+                            int key = new ArrayList<>(hldCrl.keySet()).get(pos1);
+                          System.out.println(" key is " + key + "value pos is " + value);
+                          storeCrl.put(key,value);
+                          return storeCrl;
+                    }
+                %>
+
+                   <script>
+                    function carouselCall(){
+                    console.log("carouselCalled...");
+                    let displayMngCarsls = document.getElementById("displayMngCrsl");
+                    let getCntCrsl = <%=countCarousels%>;
+                        for(let j = 0; j < getCntCrsl; j++) {
+                            displayMngCarsls.innerHTML += '<div class="carousel-item" id="mngCarousel' + j + '">MongoCMNT' + j + '</div>';
+                                document.getElementById("eachCarousel" + j).style.visibility = "visible";
+                                document.getElementById('mngCarousel' + j).append(document.getElementById("eachCarousel" + j));
+                        }
+                    }
+                    carouselCall()
+                    </script>
                 </div>
 
             <a class="carousel-control-prev" href="#carouselComments" role="button" data-slide="prev">
