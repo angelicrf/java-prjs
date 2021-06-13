@@ -518,28 +518,51 @@
                                                 document.getElementById("eachCarousel" + g).innerHTML = textCrls1;
                                                 }
                                             }
-                                  function displayCarousels(dfCrls, tctCrls){
-                                      <% int defPos = 0;
-                                       Map<Integer,Integer> resStoreCrl = new LinkedHashMap<>(); %>
-                                       if(document.getElementById("eachCarousel1")){
-                                           <%defPos = 1;%>
-                                       }
-                                      <% takeCarousel(hldCarousels,resStoreCrl,defPos); %>
-                                      <% int resKey = 0; int resValue = 0;
-                                      for (Map.Entry<Integer, Integer> resEntry : resStoreCrl.entrySet()) {
-                                          resKey = resEntry.getKey(); resValue = resEntry.getValue();
-                                           for(int l = resKey; l < resValue ; l++){
-                                      %>
-                                      tctCrls += '<div class="col-md-3" style="float: left"> <div class="card mb-2" style="width: 350px;"> <div><%=newCmRate.get(l)%><span style="float: right"><%=newCmDate.get(l)%></span></div> <div class="card-content"> <h3><%=newCmTitle.get(l)%></h3> <div><%=newCmTxt.get(l)%></div> <p><%=newCmName.get(l)%></p> </div> </div> </div>';
-                                      <%}}%>
-                                      document.getElementById("eachCarousel" + dfCrls).innerHTML = tctCrls;
+                              async function displayCarousels(dfCrls, tctCrls,idCrls){
+                                      <% Map<Integer,Integer> resStoreCrl = new LinkedHashMap<>(); %>
+                                      //change conditio
+                                      if(idCrls === 0) {
+                                          console.log("crlNum is " + sessionStorage.getItem("crlNum"));
+                                         return new Promise((resolve ,reject) => {
+                                              if(sessionStorage.getItem("crlNum") == null) {
+                                                  console.log("there is 0");
+                                                  let newForm = document.createElement("form");
+                                                  let newUrl = "http://localhost:8081/web_app_war_exploded/?someId" + "=" + idCrls;
+                                                  newForm.setAttribute("method", "post");
+                                                  newForm.setAttribute("action", newUrl);
+                                                  document.body.appendChild(newForm);
+                                                  newForm.submit();
+                                                  sessionStorage.setItem("crlNum", idCrls);
+
+                                              }else{
+                                                  setTimeout(() => {
+                                                      let getCrlsSession  = sessionStorage.getItem("crlNum");
+                                                      console.log("getCrlsession is" + getCrlsSession);
+                                                      return resolve("done sending" + getCrlsSession)}, 500);
+                                              }
+                                          }).then(value => {
+                                             console.log("value from promise is " + value);
+                                             if(value){
+                                                 <%
+                                         System.out.println("the result param is " + request.getParameter("someId"));
+                                         String defPos = request.getParameter("someId");
+                                         List<String> lsCrls = new ArrayList<>();
+                                         lsCrls.add(defPos);
+                                         //Integer exPos = new Integer(lsCrls.get(0));
+                                         System.out.println("converted int " + lsCrls.get(0));
+                                                 //takeCarousel(hldCarousels,resStoreCrl,lsCrls.get(0));
+                                                 %>
+
+                                             }
+                                         }
+                                      )}
                                   }
-                                     displayCarousels(0,textCrls);
-                                     displayCarousels(1,textCrls1);
+                                     displayCarousels(0,textCrls,0);
+                                     //displayCarousels(1,textCrls1,1);
                                       //changeCarlsDiv(0);
                                     </script>
                 <%!
-                    public Map<Integer, Integer> takeCarousel(Map<Integer,Integer> hldCrl,Map<Integer,Integer> storeCrl, int pos1) throws IOException {
+                    public Map<Integer, Integer> takeCarousel(Map<Integer,Integer> hldCrl,Map<Integer,Integer> storeCrl, Integer pos1) throws IOException {
                           System.out.println("pos1 is " + pos1);
                             int value =  new ArrayList<>(hldCrl.values()).get(pos1);
                             int key = new ArrayList<>(hldCrl.keySet()).get(pos1);
