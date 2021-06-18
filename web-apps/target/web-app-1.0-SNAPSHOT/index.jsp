@@ -507,60 +507,94 @@
                                       let gtMpSize = <%=getMapSize%>;
                                       function changeCarlsDiv(g){
                                             if(document.getElementById("eachCarousel" + g)){
-                                                <%int pos = 0;
+                                                <%int pos = 0;%>
+                                                if(g === 1){
+                                                <%pos = 1;
                                                      System.out.println("pos is " + pos);
                                                      int value1 = new ArrayList<>(hldCarousels.values()).get(pos);
                                                      int key1 = new ArrayList<>(hldCarousels.keySet()).get(pos);
                                                      System.out.println(" key1 is " + key1 + "value1 pos is " + value1);
                                                       for(int k = key1; k < value1; k++){ %>
-                                                       textCrls1 += '<h2><%=newCmName.get(k)%></h2><div id="mainCard\${g}" class="col-md-3" style="float: left"> <div id="subCard\${g}" class="card mb-2" style="width: 350px;"> <div id="mngStars\${g}"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div> <div id="mainContent\${g}" class="card-content"> <h3 id="mngHdrCard\${g}"><%=newCmTitle.get(k)%></h3> <div id="mngTxtCard\${g}"><%=newCmTxt.get(k)%></div> <p id="mngNmCard\${g}"><%=newCmName.get(k)%></p> </div> </div> </div>';
-                                                <%}%>
-                                                document.getElementById("eachCarousel" + g).innerHTML = textCrls1;
+                                                       textCrls1 += '<div id="mainCard\${g}" class="col-md-3" style="float: left"> <div id="subCard\${g}" class="card mb-2" style="width: 350px;"> <div id="mngStars\${g}"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div> <div id="mainContent\${g}" class="card-content"> <h3 id="mngHdrCard\${g}"><%=newCmTitle.get(k)%></h3> <div id="mngTxtCard\${g}"><%=newCmTxt.get(k)%></div> <p id="mngNmCard\${g}"><%=newCmName.get(k)%></p> </div> </div> </div>';
+                                                <%}%>}else{
+                                                    <% pos =0;                                                     System.out.println("pos is " + pos);
+                                                      int value = new ArrayList<>(hldCarousels.values()).get(pos);
+                                                      int key = new ArrayList<>(hldCarousels.keySet()).get(pos);
+                                                      System.out.println(" key0 is " + key + "value1 pos is " + value);
+                                                       for(int k = key; k < value; k++){ %>
+                                                    textCrls += '<div id="mainCard\${g}" class="col-md-3" style="float: left"> <div id="subCard\${g}" class="card mb-2" style="width: 350px;"> <div id="mngStars\${g}"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div> <div id="mainContent\${g}" class="card-content"> <h3 id="mngHdrCard\${g}"><%=newCmTitle.get(k)%></h3> <div id="mngTxtCard\${g}"><%=newCmTxt.get(k)%></div> <p id="mngNmCard\${g}"><%=newCmName.get(k)%></p> </div> </div> </div>';
+                                                    <%}%>
                                                 }
+                                                if(g === 0) {
+                                                    document.getElementById("eachCarousel0").innerHTML = textCrls;
+                                                }else if(g === 1) {
+                                                    document.getElementById("eachCarousel1").innerHTML = textCrls1;
+                                                 }
+                                              }
                                             }
                               async function displayCarousels(dfCrls, tctCrls,idCrls){
                                       <% Map<Integer,Integer> resStoreCrl = new LinkedHashMap<>(); %>
-                                      //change conditio
-                                      if(idCrls === 0) {
                                           console.log("crlNum is " + sessionStorage.getItem("crlNum"));
-                                         return new Promise((resolve ,reject) => {
-                                              if(sessionStorage.getItem("crlNum") == null) {
-                                                  console.log("there is 0");
+                                          return new Promise((resolve , reject) => {
+                                              if(sessionStorage.getItem("crlNum" + idCrls) == null) {
                                                   let newForm = document.createElement("form");
                                                   let newUrl = "http://localhost:8081/web_app_war_exploded/?someId" + "=" + idCrls;
                                                   newForm.setAttribute("method", "post");
                                                   newForm.setAttribute("action", newUrl);
                                                   document.body.appendChild(newForm);
                                                   newForm.submit();
-                                                  sessionStorage.setItem("crlNum", idCrls);
+                                                  sessionStorage.setItem("crlNum" + idCrls, idCrls);
 
                                               }else{
                                                   setTimeout(() => {
-                                                      let getCrlsSession  = sessionStorage.getItem("crlNum");
-                                                      console.log("getCrlsession is" + getCrlsSession);
+                                                      let getCrlsSession  = sessionStorage.getItem("crlNum" + idCrls);
                                                       return resolve("done sending" + getCrlsSession)}, 500);
                                               }
                                           }).then(value => {
-                                             console.log("value from promise is " + value);
-                                             if(value){
-                                                 <%
-                                         System.out.println("the result param is " + request.getParameter("someId"));
-                                         String defPos = request.getParameter("someId");
-                                         List<String> lsCrls = new ArrayList<>();
-                                         lsCrls.add(defPos);
-                                         //Integer exPos = new Integer(lsCrls.get(0));
-                                         System.out.println("converted int " + lsCrls.get(0));
-                                                 //takeCarousel(hldCarousels,resStoreCrl,lsCrls.get(0));
-                                                 %>
-
-                                             }
-                                         }
-                                      )}
-                                  }
-                                     displayCarousels(0,textCrls,0);
+                                              console.log("value from promise is " + value);
+                                              if(value){
+                                                  <%int defPos = toConvertInt(request.getParameter("someId"));
+                                                   takeCarousel(hldCarousels,resStoreCrl,defPos);
+                                             int resKey = 0; int resValue = 0;
+                                             for (Map.Entry<Integer, Integer> resEntry : resStoreCrl.entrySet()) {
+                                               resKey = resEntry.getKey(); resValue = resEntry.getValue();
+                                                for(int l = resKey; l < resValue ; l++){
+                                             %>
+                                                  tctCrls += '<div class="col-md-3" style="float: left"> <div class="card mb-2" style="width: 350px;"> <div><%=newCmRate.get(l)%><span style="float: right"><%=newCmDate.get(l)%></span></div> <div class="card-content"> <h3><%=newCmTitle.get(l)%></h3> <div><%=newCmTxt.get(l)%></div> <p><%=newCmName.get(l)%></p> </div> </div> </div>';
+                                              <%}}%>
+                                                  sessionStorage.removeItem("crlNum" + idCrls);
+                                                  document.getElementById("eachCarousel" + idCrls).innerHTML = tctCrls;
+                                                  }
+                                                })
+                                          }
+                                     //displayCarousels(0,textCrls,0);
                                      //displayCarousels(1,textCrls1,1);
-                                      //changeCarlsDiv(0);
+                                      changeCarlsDiv(0);
+                                      changeCarlsDiv(1);
                                     </script>
+                <%!
+                    public int toConvertInt(String num){
+                        int i;
+                        int result = 0;
+                        List<String> cmtNums = new ArrayList<>();
+                        List<Integer> cmtIntNums = new ArrayList<>();
+                        for(i = 0; i < 100; i++)
+                        {
+                           cmtNums.add(String.valueOf(i));
+                           cmtIntNums.add(i);
+                        }
+                        for(int f = 0; f < cmtNums.size(); f++){
+                            if(cmtNums.get(f).equals(num)){
+                                int findIndex = cmtNums.indexOf(num);
+                                //get element byIndex
+                                result = cmtIntNums.get(findIndex);
+                                System.out.println("result converted is " + result);
+                                return result;
+                            }
+                        }
+                        return result;
+                    }
+                %>
                 <%!
                     public Map<Integer, Integer> takeCarousel(Map<Integer,Integer> hldCrl,Map<Integer,Integer> storeCrl, Integer pos1) throws IOException {
                           System.out.println("pos1 is " + pos1);
