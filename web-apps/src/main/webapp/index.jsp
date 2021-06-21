@@ -502,33 +502,33 @@
                           <div style="visibility: hidden" id="eachCarousel<%=h%>"></div>
                                 <%}}%>
                                     <script>
-                                      let textCrls1 = '';
-                                      let textCrls = '';
+                                      let arrayLength = <%=getMapSize%>;
+                                      let scope = Array.from(new Array(arrayLength),(val,index)=> "textCrls" + index );
                                       let gtMpSize = <%=getMapSize%>;
                                       function changeCarlsDiv(g){
                                             if(document.getElementById("eachCarousel" + g)){
                                                 <%int pos = 0;%>
-                                                if(g === 1){
+                                                if(g !== 0){
                                                 <%pos = 1;
                                                      System.out.println("pos is " + pos);
                                                      int value1 = new ArrayList<>(hldCarousels.values()).get(pos);
                                                      int key1 = new ArrayList<>(hldCarousels.keySet()).get(pos);
                                                      System.out.println(" key1 is " + key1 + "value1 pos is " + value1);
                                                       for(int k = key1; k < value1; k++){ %>
-                                                       textCrls1 += '<div id="mainCard\${g}" class="col-md-3" style="float: left"> <div id="subCard\${g}" class="card mb-2" style="width: 350px;"> <div id="mngStars\${g}"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div> <div id="mainContent\${g}" class="card-content"> <h3 id="mngHdrCard\${g}"><%=newCmTitle.get(k)%></h3> <div id="mngTxtCard\${g}"><%=newCmTxt.get(k)%></div> <p id="mngNmCard\${g}"><%=newCmName.get(k)%></p> </div> </div> </div>';
+                                                       scope[g] += '<div id="mainCard\${g}" class="col-md-3" style="float: left"> <div id="subCard\${g}" class="card mb-2" style="width: 350px;"> <div id="mngStars\${g}"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div> <div id="mainContent\${g}" class="card-content"> <h3 id="mngHdrCard\${g}"><%=newCmTitle.get(k)%></h3> <div id="mngTxtCard\${g}"><%=newCmTxt.get(k)%></div> <p id="mngNmCard\${g}"><%=newCmName.get(k)%></p> </div> </div> </div>';
                                                 <%}%>}else{
-                                                    <% pos =0;                                                     System.out.println("pos is " + pos);
+                                                    <% pos = 0;                                                     System.out.println("pos is " + pos);
                                                       int value = new ArrayList<>(hldCarousels.values()).get(pos);
                                                       int key = new ArrayList<>(hldCarousels.keySet()).get(pos);
                                                       System.out.println(" key0 is " + key + "value1 pos is " + value);
                                                        for(int k = key; k < value; k++){ %>
-                                                    textCrls += '<div id="mainCard\${g}" class="col-md-3" style="float: left"> <div id="subCard\${g}" class="card mb-2" style="width: 350px;"> <div id="mngStars\${g}"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div> <div id="mainContent\${g}" class="card-content"> <h3 id="mngHdrCard\${g}"><%=newCmTitle.get(k)%></h3> <div id="mngTxtCard\${g}"><%=newCmTxt.get(k)%></div> <p id="mngNmCard\${g}"><%=newCmName.get(k)%></p> </div> </div> </div>';
+                                                    scope[g] += '<div id="mainCard\${g}" class="col-md-3" style="float: left"> <div id="subCard\${g}" class="card mb-2" style="width: 350px;"> <div id="mngStars\${g}"><%=newCmRate.get(k)%><span style="float: right"><%=newCmDate.get(k)%></span></div> <div id="mainContent\${g}" class="card-content"> <h3 id="mngHdrCard\${g}"><%=newCmTitle.get(k)%></h3> <div id="mngTxtCard\${g}"><%=newCmTxt.get(k)%></div> <p id="mngNmCard\${g}"><%=newCmName.get(k)%></p> </div> </div> </div>';
                                                     <%}%>
                                                 }
                                                 if(g === 0) {
-                                                    document.getElementById("eachCarousel" + g).innerHTML = textCrls;
+                                                    document.getElementById("eachCarousel" + g).innerHTML = scope[g];
                                                 }else if(g === 1) {
-                                                    document.getElementById("eachCarousel" + g).innerHTML = textCrls1;
+                                                    document.getElementById("eachCarousel" + g).innerHTML = scope[g];
                                                  }
                                               }
                                             }
@@ -570,8 +570,9 @@
                                           //non-considerable way
                                      //displayCarousels(0,textCrls,0);
                                      //displayCarousels(1,textCrls1,1);
-                                      changeCarlsDiv(0);
-                                      changeCarlsDiv(1);
+                                      for(let h = 0; h < scope.length; h++) {
+                                          changeCarlsDiv(h);
+                                      }
                                     </script>
                 <%!
                     public int toConvertInt(String num){
